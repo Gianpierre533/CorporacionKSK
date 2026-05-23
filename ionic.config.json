@@ -1,0 +1,7 @@
+{
+  "name": "CorporacionKSK",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
