@@ -1,0 +1,84 @@
+<!-- ============================================================
+  PANTALLA 3: LOGIN / INICIAR SESIÓN
+  Cabecera verde con título, tarjeta blanca con formulario.
+  Basado en el diseño: fondo verde arriba, card blanca abajo.
+============================================================ -->
+
+<ion-content [fullscreen]="true" class="login-content">
+  <!-- Cabecera verde -->
+  <div class="login-header">
+    <!-- Botón volver -->
+    <button class="back-btn" (click)="goBack()">
+      <ion-icon name="arrow-back-outline"></ion-icon>
+    </button>
+
+    <p class="header-breadcrumb">Acceder</p>
+    <h1 class="header-title">Iniciar Sesión</h1>
+    <p class="header-description">
+      Accede al sistema de gestión de empleados de Corporación KSK.
+    </p>
+  </div>
+
+  <!-- Tarjeta blanca con formulario -->
+  <div class="login-card">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <!-- USUARIO / EMAIL -->
+      <div class="field-group">
+        <label class="field-label">Usuario</label>
+        <div
+          class="field-input-wrapper"
+          [class.field-error]="hasError('usuario', 'required')"
+        >
+          <ion-icon name="person-outline" class="field-icon"></ion-icon>
+          <input
+            formControlName="usuario"
+            type="text"
+            class="field-input"
+            placeholder="Ingresa tu usuario"
+            autocomplete="username"
+          />
+        </div>
+        <span class="error-msg" *ngIf="hasError('usuario', 'required')">
+          El usuario es obligatorio
+        </span>
+      </div>
+
+      <!-- CONTRASEÑA -->
+      <div class="field-group">
+        <label class="field-label">Contraseña</label>
+        <div
+          class="field-input-wrapper"
+          [class.field-error]="hasError('contrasena', 'required')"
+        >
+          <ion-icon name="lock-closed-outline" class="field-icon"></ion-icon>
+          <input
+            formControlName="contrasena"
+            [type]="showPassword ? 'text' : 'password'"
+            class="field-input"
+            placeholder="Ingresa tu contraseña"
+            autocomplete="current-password"
+          />
+          <!-- Botón mostrar/ocultar contraseña -->
+          <button type="button" class="toggle-pass" (click)="togglePassword()">
+            <ion-icon
+              [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+            ></ion-icon>
+          </button>
+        </div>
+        <span class="error-msg" *ngIf="hasError('contrasena', 'required')">
+          La contraseña es obligatoria
+        </span>
+      </div>
+
+      <!-- Botón Iniciar Sesión -->
+      <button type="submit" class="btn-submit" [disabled]="isLoading">
+        <span *ngIf="!isLoading">Iniciar Sesión</span>
+        <ion-spinner
+          *ngIf="isLoading"
+          name="crescent"
+          color="light"
+        ></ion-spinner>
+      </button>
+    </form>
+  </div>
+</ion-content>

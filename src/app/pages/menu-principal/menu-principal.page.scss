@@ -1,0 +1,158 @@
+// ============================================================
+//  MENÚ PRINCIPAL - SCSS
+// ============================================================
+
+$color-verde:       #2E9E65;
+$color-verde-card:  #1E7A4A;
+$color-blanco:      #FFFFFF;
+$color-texto:       #1a1a1a;
+$color-gris:        #6B7280;
+$color-fondo:       #F4F6F8;
+$color-borde:       #E5E7EB;
+
+// --- Fondo general gris muy claro ---
+ion-content.menu-content {
+  --background: #{$color-fondo};
+}
+
+// El toolbar se vuelve verde para integrarse con la sección de saludo.
+.toolbar-transparent {
+  --background: #{$color-verde};
+  --border-width: 0;
+  background: #{$color-verde};
+  box-shadow: none;
+}
+
+.toolbar-transparent ion-title,
+.toolbar-transparent ion-icon,
+.toolbar-transparent ion-button {
+  color: $color-blanco;
+}
+
+// ============================================================
+//  SECCIÓN DE SALUDO
+//  Fondo verde con texto blanco, como cabecera visual
+// ============================================================
+.saludo-section {
+  background: $color-verde;
+  padding: 24px 24px 40px;
+  // margin-bottom negativo para que las tarjetas "suban" sobre el verde
+  margin-bottom: -20px;
+  animation: fadeInDown 0.5s ease-out;
+}
+
+.saludo-titulo {
+  color: $color-blanco;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 0 0 6px;
+}
+
+.saludo-subtitulo {
+  color: rgba($color-blanco, 0.8);
+  font-size: 14px;
+  margin: 0;
+}
+
+// ============================================================
+//  GRID DE TARJETAS
+// ============================================================
+.menu-grid {
+  padding: 28px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: slideUp 0.5s ease-out;
+}
+
+// ============================================================
+//  TARJETA INDIVIDUAL
+//  Diseño: ícono a la izquierda | texto al centro | flecha derecha
+// ============================================================
+.menu-card {
+  background: $color-blanco;
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+
+  // Efecto al presionar (en móvil se siente el tap)
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  // Variante peligro (cerrar sesión): borde rojo sutil
+  &--danger {
+    border: 1px solid rgba(239, 68, 68, 0.15);
+  }
+}
+
+// Cuadrado redondeado que contiene el ícono
+.card-icon-wrapper {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;  // no se encoge si el texto es largo
+
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
+// Bloque de texto central
+.card-info {
+  flex: 1;  // ocupa todo el espacio disponible entre ícono y flecha
+}
+
+.card-titulo {
+  font-size: 15px;
+  font-weight: 600;
+  color: $color-texto;
+  margin: 0 0 4px;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: $color-gris;
+  margin: 0;
+  line-height: 1.4;
+}
+
+// Flecha derecha
+.card-arrow {
+  color: $color-gris;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+// ============================================================
+//  VERSIÓN AL FONDO
+// ============================================================
+.version-text {
+  text-align: center;
+  font-size: 12px;
+  color: $color-gris;
+  padding: 16px 0 24px;
+  margin: 0;
+}
+
+// ============================================================
+//  ANIMACIONES
+// ============================================================
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

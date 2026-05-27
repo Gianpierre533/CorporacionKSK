@@ -1,27 +1,107 @@
-#container {
-  text-align: center;
+// ============================================================
+//  SPLASH PAGE - SCSS
+//  Variables de color definidas aquí para consistencia.
+//  En SCSS podemos usar $variables en vez de repetir valores.
+// ============================================================
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+// --- Variables de color del proyecto ---
+$color-verde-primario: #2E9E65;
+$color-verde-oscuro:   #1E7A4A;
+$color-blanco:         #FFFFFF;
+$color-empresa:        #2E9E65;
+
+// --- Quitar padding por defecto del ion-content ---
+ion-content.splash-content {
+  --background: #{$color-verde-primario};
+  --padding-top: 0;
+  --padding-bottom: 0;
 }
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
+// --- Contenedor superior verde ---
+.splash-top {
+  height: 55vh;              // 55% de la altura de pantalla
+  background: $color-verde-primario;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+
+  // Animación de entrada al cargar la pantalla
+  animation: fadeInDown 0.8s ease-out;
 }
 
-#container p {
-  font-size: 16px;
-  line-height: 22px;
+// --- Círculo del logo ---
+.logo-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: rgba($color-blanco, 0.25);  // SCSS permite rgba con variables
+  border: 3px solid rgba($color-blanco, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
 
-  color: #8c8c8c;
+  svg {
+    width: 70px;
+    height: 70px;
+  }
+}
 
+// --- Texto "Welcome" ---
+.splash-welcome {
+  color: $color-blanco;
+  font-size: 28px;
+  font-weight: 700;
   margin: 0;
+  letter-spacing: 1px;
 }
 
-#container a {
-  text-decoration: none;
+// --- Contenedor inferior blanco ---
+.splash-bottom {
+  height: 45vh;
+  background: $color-blanco;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  // Animación de entrada desde abajo
+  animation: fadeInUp 0.8s ease-out;
+}
+
+// --- Nombre de la empresa ---
+.company-name {
+  color: $color-empresa;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+// ============================================================
+//  ANIMACIONES con @keyframes
+//  fadeInDown: entra desde arriba
+//  fadeInUp:   entra desde abajo
+// ============================================================
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

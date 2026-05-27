@@ -1,0 +1,39 @@
+<ion-content [fullscreen]="true" class="bienvenida-content">
+  <div class="bienvenida-layout">
+    <div class="bienvenida-top">
+      <div class="logo-circle">
+        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="30" cy="30" r="28" fill="#2E9E65" fill-opacity="0.15" />
+          <text
+            x="50%"
+            y="55%"
+            dominant-baseline="middle"
+            text-anchor="middle"
+            fill="#2E9E65"
+            font-size="28"
+            font-weight="700"
+            font-family="sans-serif"
+          >
+            K
+          </text>
+        </svg>
+      </div>
+      <h2 class="company-name">Corporación KSK</h2>
+    </div>
+
+    <div class="bienvenida-card">
+      <h1 class="card-title">Bienvenido</h1>
+
+      <p class="card-description">
+        Sistema de gestión interna para empleados de Corporación KSK. Accede con
+        tu cuenta para continuar.
+      </p>
+
+      <div class="card-buttons">
+        <ion-button class="btn-ingresar" (click)="goToLogin()">
+          Ingresar
+        </ion-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

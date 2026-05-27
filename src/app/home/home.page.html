@@ -1,20 +1,38 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- ============================================================
+  PANTALLA 1: SPLASH / HOME
+  Pantalla de carga inicial. Se muestra 2.5 segundos y luego
+  navega automáticamente a la pantalla de bienvenida.
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+  Diseño: mitad superior verde con logo, mitad inferior blanca
+  con el nombre de la empresa.
+============================================================ -->
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content [fullscreen]="true" class="splash-content">
+  <!-- Mitad superior: fondo verde con logo -->
+  <div class="splash-top">
+    <div class="logo-circle">
+      <!-- SVG del logo con la letra K de KSK -->
+      <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="30" r="28" fill="white" fill-opacity="0.2" />
+        <text
+          x="50%"
+          y="55%"
+          dominant-baseline="middle"
+          text-anchor="middle"
+          fill="white"
+          font-size="28"
+          font-weight="700"
+          font-family="sans-serif"
+        >
+          K
+        </text>
+      </svg>
+    </div>
+    <h1 class="splash-welcome">Bienvenido</h1>
+  </div>
+
+  <!-- Mitad inferior: fondo blanco con nombre de empresa -->
+  <div class="splash-bottom">
+    <p class="company-name">Corporación KSK</p>
   </div>
 </ion-content>

@@ -2,7 +2,7 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
+    "paths": {"*": ["./*"]},
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
     "esModuleInterop": true,
@@ -14,11 +14,12 @@
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "module": "ES2022",
+    "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "es2022",
-    "module": "es2020",
-    "lib": ["es2018", "dom"],
+    "lib": ["es2022", "dom"],
+    "types": ["jest", "node"],
     "skipLibCheck": true,
     "useDefineForClassFields": false
   },

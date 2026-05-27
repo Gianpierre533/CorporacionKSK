@@ -1,0 +1,221 @@
+// ============================================================
+//  LOGIN PAGE - SCSS
+//  Dos secciones: cabecera verde + tarjeta blanca flotante.
+// ============================================================
+
+$color-verde:        #2E9E65;
+$color-verde-oscuro: #1E7A4A;
+$color-blanco:       #FFFFFF;
+$color-texto:        #1a1a1a;
+$color-gris:         #6B7280;
+$color-borde:        #E5E7EB;
+$color-error:        #EF4444;
+$color-claro:        rgba(255, 255, 255, 0.85);
+
+// --- Quitar fondo por defecto ---
+ion-content.login-content {
+  --background: #{$color-verde};
+  min-height: 100vh;
+}
+
+// ============================================================
+//  CABECERA VERDE
+// ============================================================
+.login-header {
+  padding: 72px 24px 24px;
+  position: relative;
+  animation: fadeInDown 0.5s ease-out;
+}
+
+.back-btn {
+  background: rgba($color-blanco, 0.18);
+  border: none;
+  border-radius: 14px;
+  color: $color-blanco;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-bottom: 26px;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.08);
+
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+.header-breadcrumb {
+  color: rgba($color-blanco, 0.75);
+  font-size: 12px;
+  margin: 0 0 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.header-title {
+  color: $color-blanco;
+  font-size: 34px;
+  line-height: 1.05;
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+
+.header-description {
+  color: $color-claro;
+  font-size: 14px;
+  line-height: 1.8;
+  margin: 0;
+  max-width: 290px;
+}
+
+// ============================================================
+//  TARJETA BLANCA
+// ============================================================
+.login-card {
+  background: $color-blanco;
+  border-radius: 32px 32px 0 0;
+  padding: 32px 24px 36px;
+  min-height: 48vh;
+  margin-top: -24px;
+  box-shadow: 0 -18px 48px rgba(15, 23, 42, 0.12);
+  animation: slideUp 0.5s ease-out;
+}
+
+// ============================================================
+//  CAMPOS DEL FORMULARIO
+//  Usamos clases propias en vez de ion-item para
+//  control total del diseño según el mockup.
+// ============================================================
+
+// Espaciado entre campos
+.field-group {
+  margin-bottom: 20px;
+}
+
+// Etiqueta del campo
+.field-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: $color-texto;
+  margin-bottom: 8px;
+}
+
+// Contenedor del input con ícono
+.field-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid $color-borde;
+  border-radius: 16px;
+  padding: 0 16px;
+  height: 56px;
+  background: #F8FAFC;
+  transition: border-color 0.2s, background 0.2s;
+
+  // Cuando el campo tiene foco (el usuario hace clic)
+  &:focus-within {
+    border-color: $color-verde;
+    background: $color-blanco;
+  }
+
+  // Cuando hay error de validación
+  // (esta clase la añade el TypeScript con [class.field-error])
+  &.field-error {
+    border-color: $color-error;
+    background: rgba($color-error, 0.08);
+  }
+}
+
+// Ícono dentro del input
+.field-icon {
+  color: $color-gris;
+  font-size: 18px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+// El input real (sin estilos del navegador)
+.field-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 15px;
+  color: $color-texto;
+
+  &::placeholder {
+    color: #9CA3AF;
+    font-size: 14px;
+  }
+}
+
+// Botón ojo (mostrar/ocultar contraseña)
+.toggle-pass {
+  background: none;
+  border: none;
+  color: $color-gris;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  padding: 0;
+
+  ion-icon {
+    font-size: 18px;
+  }
+}
+
+// Mensaje de error bajo el campo
+.error-msg {
+  display: block;
+  color: $color-error;
+  font-size: 12px;
+  margin-top: 5px;
+  padding-left: 4px;
+}
+
+// ============================================================
+//  BOTÓN PRINCIPAL DE LOGIN
+// ============================================================
+.btn-submit {
+  width: 100%;
+  height: 52px;
+  background: #10141f;
+  color: $color-blanco;
+  border: none;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 20px 30px rgba(16, 20, 31, 0.18);
+
+  &:active {
+    background: #181f30;
+    transform: scale(0.98);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+}
+
+// ============================================================
+//  ANIMACIONES
+// ============================================================
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

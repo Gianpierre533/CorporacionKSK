@@ -1,0 +1,124 @@
+<!-- ============================================================
+  PÁGINA: Menú Principal
+  Primera pantalla tras el login. Muestra el saludo al usuario
+  y las opciones principales de la app como tarjetas navegables.
+============================================================ -->
+
+<ion-header>
+  <ion-toolbar class="toolbar-transparent">
+    <!-- Botón hamburguesa (izquierda) -->
+    <ion-buttons slot="start">
+      <ion-button (click)="abrirMenu()">
+        <ion-icon slot="icon-only" name="menu-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title>Menú Principal</ion-title>
+
+    <!-- Campana de notificaciones (derecha) -->
+    <ion-buttons slot="end">
+      <ion-button (click)="verNotificaciones()">
+        <ion-icon slot="icon-only" name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="menu-content">
+  <!-- ======================================================
+    SECCIÓN DE SALUDO
+    Muestra el nombre del usuario que inició sesión.
+    Con *ngIf mostramos el nombre solo si existe.
+  ====================================================== -->
+  <div class="saludo-section">
+    <h1 class="saludo-titulo">¡Hola, {{ nombreUsuario }}!</h1>
+    <p class="saludo-subtitulo">Bienvenido a Corporación KSK S.A.C.</p>
+  </div>
+
+  <!-- ======================================================
+    TARJETAS DEL MENÚ
+    Cada tarjeta es un módulo de la app.
+    (click) llama al método de navegación correspondiente.
+  ====================================================== -->
+  <div class="menu-grid">
+    <!-- Catálogo de Productos -->
+    <div class="menu-card" (click)="irA('/catalogo')">
+      <div
+        class="card-icon-wrapper"
+        style="background: rgba(46, 158, 101, 0.12)"
+      >
+        <ion-icon name="cube-outline" style="color: #2e9e65"></ion-icon>
+      </div>
+      <div class="card-info">
+        <h2 class="card-titulo">Catálogo de Productos</h2>
+        <p class="card-desc">
+          Explora nuestro catálogo de productos importados
+        </p>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+    </div>
+
+    <!-- Generar Cotización -->
+    <div class="menu-card" (click)="irA('/cotizacion/nueva')">
+      <div
+        class="card-icon-wrapper"
+        style="background: rgba(46, 158, 101, 0.12)"
+      >
+        <ion-icon
+          name="document-text-outline"
+          style="color: #2e9e65"
+        ></ion-icon>
+      </div>
+      <div class="card-info">
+        <h2 class="card-titulo">Generar Cotización</h2>
+        <p class="card-desc">Crea cotizaciones rápidas para tus clientes</p>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+    </div>
+
+    <!-- Historial de Cotizaciones -->
+    <div class="menu-card" (click)="irA('/cotizacion/historial')">
+      <div
+        class="card-icon-wrapper"
+        style="background: rgba(230, 152, 30, 0.12)"
+      >
+        <ion-icon name="time-outline" style="color: #e6981e"></ion-icon>
+      </div>
+      <div class="card-info">
+        <h2 class="card-titulo">Historial de Cotizaciones</h2>
+        <p class="card-desc">Revisa tus cotizaciones generadas</p>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+    </div>
+
+    <!-- Gestión de Empleados -->
+    <div class="menu-card" (click)="irA('/empleados')">
+      <div
+        class="card-icon-wrapper"
+        style="background: rgba(99, 102, 241, 0.12)"
+      >
+        <ion-icon name="people-outline" style="color: #6366f1"></ion-icon>
+      </div>
+      <div class="card-info">
+        <h2 class="card-titulo">Gestión de Empleados</h2>
+        <p class="card-desc">Administra el registro de empleados</p>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+    </div>
+
+    <!-- Cerrar Sesión -->
+    <div class="menu-card menu-card--danger" (click)="cerrarSesion()">
+      <div class="card-icon-wrapper" style="background: rgba(239, 68, 68, 0.1)">
+        <ion-icon name="log-out-outline" style="color: #ef4444"></ion-icon>
+      </div>
+      <div class="card-info">
+        <h2 class="card-titulo" style="color: #ef4444">Cerrar Sesión</h2>
+        <p class="card-desc">Salir de la aplicación</p>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+    </div>
+  </div>
+
+  <!-- Versión de la app al fondo -->
+  <p class="version-text">Versión 1.0.0</p>
+</ion-content>
