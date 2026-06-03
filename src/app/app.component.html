@@ -1,3 +1,8 @@
-<ion-app>
+<ion-app
+  style="
+    margin-bottom: env(safe-area-inset-bottom, 0px) !important;
+    height: calc(100% - env(safe-area-inset-bottom, 0px)) !important;
+  "
+>
   <ion-router-outlet></ion-router-outlet>
 </ion-app>

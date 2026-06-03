@@ -27,28 +27,28 @@ export class ProductosService {
       id: '1',
       nombre: 'Bomba de Agua 1HP',
       descripcion: 'Bomba centrífuga de alto rendimiento para uso industrial.',
-      precio: 350.00, stock: 15, categoria: 'mecanico',
+      precio: 375.00, stock: 15, categoria: 'mecanico',
       imagen: '/assets/Productos/Bomba de agua.jpg'
     },
     {
       id: '2',
       nombre: 'Cable Eléctrico 2.5mm',
       descripcion: 'Cable eléctrico flexible antillama 2.5mm x 100m.',
-      precio: 120.00, stock: 42, categoria: 'electrico',
+      precio: 180.00, stock: 42, categoria: 'electrico',
       imagen: '/assets/Productos/cable electrico.jpg'
     },
     {
       id: '3',
       nombre: 'Interruptor Termomagnético',
       descripcion: 'Interruptor termomagnético de 2 polos 20A.',
-      precio: 45.00, stock: 8, categoria: 'electrico',
+      precio: 40.00, stock: 8, categoria: 'electrico',
       imagen: '/assets/Productos/Interruptor.jpg'
     },
     {
       id: '4',
       nombre: 'Reflector LED 100W',
       descripcion: 'Reflector LED de alta potencia para exteriores.',
-      precio: 80.00, stock: 20, categoria: 'iluminacion',
+      precio: 76.00, stock: 20, categoria: 'iluminacion',
       imagen: '/assets/Productos/reflector.jpg'
     },
     {

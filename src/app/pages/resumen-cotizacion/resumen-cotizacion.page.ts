@@ -13,6 +13,11 @@ import {
   shareSocialOutline, documentTextOutline, arrowBackOutline
 } from 'ionicons/icons';
 
+// 🔌 INTEGRACIÓN NATIVA DE CAPACITOR
+import { Filesystem, Directory } from '@capacitor/filesystem';
+import { Share } from '@capacitor/share';
+import { Capacitor } from '@capacitor/core';
+
 import { CotizacionService } from '../../services/cotizacion.service';
 import { Cotizacion } from '../../models/cotizacion.model';
 
@@ -45,18 +50,15 @@ export class ResumenCotizacionPage implements OnInit {
   }
 
   ngOnInit() {
-    // Lee el ID de la URL: /cotizacion/resumen/COT-00025
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.cotizacion = this.cotizacionService.getById(id);
     }
-    // Si no existe el ID, regresa al historial
     if (!this.cotizacion) {
       this.router.navigate(['/cotizacion/historial']);
     }
   }
 
-  // Formatea la fecha ISO a "20 may 2026"
   formatDate(iso: string): string {
     return new Date(iso).toLocaleDateString('es-PE', {
       day: '2-digit',
@@ -65,20 +67,17 @@ export class ResumenCotizacionPage implements OnInit {
     });
   }
 
-  // Compartir — usa la Web Share API nativa del dispositivo
   async compartir() {
     if (!this.cotizacion) return;
 
     const texto = this.buildTextoCompartir();
 
-    // navigator.share funciona en Android/iOS con Capacitor
     if (navigator.share) {
       await navigator.share({
         title: `Cotización ${this.cotizacion.id}`,
         text: texto
       });
     } else {
-      // Fallback: copiar al portapapeles
       await navigator.clipboard.writeText(texto);
       const toast = await this.toastCtrl.create({
         message: 'Cotización copiada al portapapeles',
@@ -90,7 +89,6 @@ export class ResumenCotizacionPage implements OnInit {
     }
   }
 
-  // Construye el texto plano de la cotización para compartir
   private buildTextoCompartir(): string {
     if (!this.cotizacion) return '';
     const c = this.cotizacion;
@@ -114,13 +112,12 @@ TOTAL: S/ ${c.total.toFixed(2)}
     `.trim();
   }
 
-  // ── Generar PDF con jsPDF ──────────────────────────────
+  // ── Generar PDF con jsPDF + Soporte Nativo Móvil ────────────────
   async guardarPdf() {
     if (!this.cotizacion) return;
 
     const loading = await this.loadingCtrl.create({
       message: 'Generando PDF...'
-      // Sin duration para controlarlo manualmente
     });
     await loading.present();
 
@@ -133,7 +130,7 @@ TOTAL: S/ ${c.total.toFixed(2)}
 
       const c = this.cotizacion;
 
-      // ── Header: KSK + Número ────────────────────────────
+      // Header: KSK + Número
       pdf.setFillColor(46, 158, 101);
       pdf.rect(0, 0, pageWidth, 35, 'F');
 
@@ -158,7 +155,7 @@ TOTAL: S/ ${c.total.toFixed(2)}
       pdf.setTextColor(0, 0, 0);
       yPos = 45;
 
-      // ── Cliente ──────────────────────────────────────────
+      // Cliente
       pdf.setFontSize(10);
       pdf.setFont('', 'bold');
       pdf.text('CLIENTE', margin, yPos);
@@ -175,7 +172,7 @@ TOTAL: S/ ${c.total.toFixed(2)}
 
       yPos += 12;
 
-      // ── Tabla de productos ───────────────────────────────
+      // Tabla de productos
       pdf.setFontSize(10);
       pdf.setFont('', 'bold');
       pdf.text('PRODUCTOS', margin, yPos);
@@ -214,7 +211,7 @@ TOTAL: S/ ${c.total.toFixed(2)}
 
       yPos += 3;
 
-      // ── Totales ──────────────────────────────────────────
+      // Totales
       pdf.setFillColor(242, 244, 246);
       pdf.rect(margin, yPos, pageWidth - 2 * margin, 5, 'F');
 
@@ -237,7 +234,7 @@ TOTAL: S/ ${c.total.toFixed(2)}
       pdf.text('TOTAL:', pageWidth - margin - 50, yPos + 4.5);
       pdf.text(`S/ ${c.total.toFixed(2)}`, pageWidth - margin - 10, yPos + 4.5);
 
-      // ── Pie de página ────────────────────────────────────
+      // Pie de página
       pdf.setTextColor(150, 150, 150);
       pdf.setFontSize(8);
       pdf.text(
@@ -247,20 +244,45 @@ TOTAL: S/ ${c.total.toFixed(2)}
         { align: 'center' }
       );
 
-      // ── Descargar usando blob (más confiable en Ionic) ───
-      const blob = pdf.output('blob');
-      const url  = URL.createObjectURL(blob);
-      const link = document.createElement('a');
-      link.href     = url;
-      link.download = `Cotizacion-${c.id}.pdf`;
-      link.click();
-      // Liberar memoria después de la descarga
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      const nombreArchivo = `Cotizacion-${c.id}.pdf`;
 
-      await loading.dismiss();
+      // ── MÓDULO INTELIGENTE DE EXPORTACIÓN ──────────────────────────────
+      if (Capacitor.isNativePlatform()) {
+        // 📱 COMPORTAMIENTO NATIVO EN SMARTPHONES (Android/iOS)
+        const pdfBase64 = pdf.output('datauristring').split(',')[1];
+
+        // Guardamos el archivo binario de forma segura en la memoria caché nativa
+        const resultado = await Filesystem.writeFile({
+          path: nombreArchivo,
+          data: pdfBase64,
+          directory: Directory.Cache
+        });
+
+        await loading.dismiss();
+
+        // Lanzamos la ventana para compartir nativa
+        await Share.share({
+          title: `Cotización ${c.id}`,
+          text: `Le enviamos el archivo PDF de la cotización ${c.id} - Corporación KSK`,
+          url: resultado.uri,
+          dialogTitle: 'Compartir cotización con el cliente'
+        });
+
+      } else {
+        // 💻 COMPORTAMIENTO WEB EN COMPUTADORA (Tu código original intacto)
+        const blob = pdf.output('blob');
+        const url  = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href     = url;
+        link.download = nombreArchivo;
+        link.click();
+        setTimeout(() => URL.revokeObjectURL(url), 1000);
+        
+        await loading.dismiss();
+      }
 
       const toast = await this.toastCtrl.create({
-        message: 'PDF generado correctamente',
+        message: 'PDF procesado correctamente',
         duration: 2000,
         color: 'success',
         position: 'bottom'

@@ -1,7 +1,7 @@
 // ============================================================
 //  PÁGINA: LoginPage
-//  Tras el login exitoso guarda el nombre en localStorage
-//  y navega al Menú Principal.
+//  Tras el login este se guarda el nombre en localStorage
+//  y e redirige al Menú Principal.
 // ============================================================
 
 import { Component } from '@angular/core';
