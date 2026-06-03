@@ -32,6 +32,10 @@ export class LoginPage {
   showPassword = false;
   isLoading = false;
 
+  get f() {
+    return this.form.controls;
+  }
+
   constructor(
     private fb: FormBuilder,
     private router: Router,

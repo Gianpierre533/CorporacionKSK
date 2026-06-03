@@ -1,33 +1,27 @@
-<!-- ============================================================
-  PANTALLA 3: LOGIN / INICIAR SESIÓN
-  Cabecera verde con título, tarjeta blanca con formulario.
-  Basado en el diseño: fondo verde arriba, card blanca abajo.
-============================================================ -->
-
 <ion-content [fullscreen]="true" class="login-content">
-  <!-- Cabecera verde -->
+  <!-- ── Cabecera verde ───────────────────────────────── -->
   <div class="login-header">
-    <!-- Botón volver -->
     <button class="back-btn" (click)="goBack()">
       <ion-icon name="arrow-back-outline"></ion-icon>
     </button>
 
-    <p class="header-breadcrumb">Acceder</p>
+    <p class="header-tag">Acceso</p>
     <h1 class="header-title">Iniciar Sesión</h1>
-    <p class="header-description">
+    <p class="header-desc">
       Accede al sistema de gestión de empleados de Corporación KSK.
     </p>
   </div>
 
-  <!-- Tarjeta blanca con formulario -->
+  <!-- ── Tarjeta blanca ───────────────────────────────── -->
   <div class="login-card">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-      <!-- USUARIO / EMAIL -->
+      <!-- USUARIO -->
       <div class="field-group">
         <label class="field-label">Usuario</label>
         <div
-          class="field-input-wrapper"
-          [class.field-error]="hasError('usuario', 'required')"
+          class="field-wrapper"
+          [class.is-error]="hasError('usuario', 'required')"
+          [class.is-filled]="f['usuario'].value"
         >
           <ion-icon name="person-outline" class="field-icon"></ion-icon>
           <input
@@ -47,8 +41,9 @@
       <div class="field-group">
         <label class="field-label">Contraseña</label>
         <div
-          class="field-input-wrapper"
-          [class.field-error]="hasError('contrasena', 'required')"
+          class="field-wrapper"
+          [class.is-error]="hasError('contrasena', 'required')"
+          [class.is-filled]="f['contrasena'].value"
         >
           <ion-icon name="lock-closed-outline" class="field-icon"></ion-icon>
           <input
@@ -58,8 +53,7 @@
             placeholder="Ingresa tu contraseña"
             autocomplete="current-password"
           />
-          <!-- Botón mostrar/ocultar contraseña -->
-          <button type="button" class="toggle-pass" (click)="togglePassword()">
+          <button type="button" class="eye-btn" (click)="togglePassword()">
             <ion-icon
               [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
             ></ion-icon>
@@ -70,14 +64,14 @@
         </span>
       </div>
 
-      <!-- Botón Iniciar Sesión -->
+      <!-- BOTÓN SUBMIT -->
       <button type="submit" class="btn-submit" [disabled]="isLoading">
-        <span *ngIf="!isLoading">Iniciar Sesión</span>
         <ion-spinner
           *ngIf="isLoading"
           name="crescent"
-          color="light"
+          class="btn-spinner"
         ></ion-spinner>
+        <span>{{ isLoading ? 'Verificando...' : 'Iniciar Sesión' }}</span>
       </button>
     </form>
   </div>

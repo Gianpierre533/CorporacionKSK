@@ -1,0 +1,350 @@
+// ============================================================
+//  RESUMEN DE COTIZACIÓN - ESTILOS
+//  Vista detallada de una cotización generada con productos,
+//  totales y opciones para compartir o guardar PDF
+// ============================================================
+
+// ── Variables de color ──────────────────────────────────
+$verde:   #2e9e65;
+$blanco:  #FFFFFF;
+$fondo:   #F4F6F8;
+$texto:   #1a1a1a;
+$gris:    #6B7280;
+$borde:   rgba(229, 231, 235, 0.9);
+
+:host { display: block; }
+
+// ── Header personalizado ────────────────────────────────
+ion-header.header-custom {
+  --background: #{$verde} !important;
+  background: #{$verde} !important;
+  &::after { display: none; }
+}
+
+// Toolbar sobre fondo verde
+.toolbar-custom {
+  --background: #{$verde} !important;
+  --border-color: transparent !important;
+  background: #{$verde} !important;
+  padding: 12px 16px;
+}
+
+// Botón de regreso
+.back-custom {
+  --color: #{$blanco};
+  --icon-font-size: 22px;
+}
+
+// Bloque de subtítulo y título del header
+.header-info { flex: 1; }
+
+.header-tag {
+  color: rgba($blanco, 0.7);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 0 0 1px;
+}
+
+.header-title {
+  color: $blanco;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+}
+
+// Badge de estado (Pendiente, Enviada, etc.)
+.estado-badge {
+  background: rgba($blanco, 0.2);
+  color: $blanco;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 8px;
+  margin-right: 4px;
+}
+
+// ── Contenido principal ─────────────────────────────────
+.resumen-content { --background: #{$fondo}; }
+
+// Contenedor de todas las cards
+.cards-container {
+  padding: 16px 14px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// ── Card base ───────────────────────────────────────────
+// Todas las secciones usan este estilo base
+.card {
+  background: $blanco;
+  border-radius: 18px;
+  border: 1px solid $borde;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+// ── Card empresa + número ───────────────────────────────
+.empresa-row {
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Badge cuadrado con las siglas KSK
+.ksk-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba($verde, 0.1);
+  border: 1px solid rgba($verde, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $verde;
+  font-size: 14px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.empresa-nombre {
+  font-size: 14px;
+  font-weight: 600;
+  color: $texto;
+  margin: 0 0 2px;
+}
+
+.empresa-sub {
+  font-size: 12px;
+  color: $gris;
+  margin: 0;
+}
+
+// Número de cotización
+.cot-numero {
+  font-size: 15px;
+  font-weight: 700;
+  color: $verde;
+  margin: 0;
+}
+
+// Fecha de la cotización
+.cot-fecha {
+  font-size: 12px;
+  color: $gris;
+  margin: 3px 0 0;
+}
+
+// ── Card cliente ────────────────────────────────────────
+.cliente-row {
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+// Avatar circular del cliente
+.cliente-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba($verde, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  ion-icon { font-size: 20px; color: $verde; }
+}
+
+// Etiqueta "CLIENTE"
+.cliente-tag {
+  font-size: 10px;
+  color: $gris;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin: 0 0 3px;
+}
+
+// Nombre del cliente
+.cliente-nombre {
+  font-size: 15px;
+  font-weight: 600;
+  color: $texto;
+  margin: 0;
+}
+
+// Teléfono del cliente con ícono
+.cliente-tel {
+  font-size: 13px;
+  color: $gris;
+  margin: 3px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  ion-icon { font-size: 13px; }
+}
+
+// ── Card productos ──────────────────────────────────────
+// Header de la sección de productos
+.productos-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.productos-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: $texto;
+  margin: 0;
+}
+
+// Badge con la cantidad de items
+.items-badge {
+  background: rgba($verde, 0.1);
+  color: $verde;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba($verde, 0.2);
+}
+
+// Lista de productos dentro de la card
+.productos-lista { padding: 0 18px; }
+
+// Fila individual de producto
+.producto-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+  gap: 10px;
+
+  // Última fila sin borde inferior
+  &--last { border-bottom: none; }
+}
+
+// Ícono del producto
+.producto-icono {
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+  background: rgba($verde, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  ion-icon { font-size: 17px; color: $verde; }
+}
+
+// Nombre y detalle del producto
+.producto-info { flex: 1; min-width: 0; }
+
+.producto-nombre {
+  font-size: 13px;
+  font-weight: 600;
+  color: $texto;
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.producto-detalle {
+  font-size: 12px;
+  color: $gris;
+  margin: 0;
+}
+
+// Subtotal del item (cantidad × precio)
+.producto-subtotal {
+  font-size: 14px;
+  font-weight: 600;
+  color: $texto;
+  flex-shrink: 0;
+}
+
+// ── Sección de totales ──────────────────────────────────
+// Fondo gris claro separado de la lista de productos
+.totales-box {
+  background: #F9FAFB;
+  border-top: 1px solid rgba(229, 231, 235, 0.6);
+  padding: 14px 18px;
+}
+
+// Fila de total individual
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.total-label { font-size: 13px; color: $gris; }
+.total-valor { font-size: 13px; color: $texto; font-weight: 500; }
+
+// Fila del total final
+.total-row--final {
+  border-top: 1px solid $borde;
+  padding-top: 12px;
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+
+.total-label--final {
+  font-size: 15px;
+  font-weight: 600;
+  color: $texto;
+}
+
+.total-valor--final {
+  font-size: 22px;
+  font-weight: 700;
+  color: $verde;
+}
+
+// ── Botones de acción ───────────────────────────────────
+// Grid de dos botones: Compartir y Guardar PDF
+.botones-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+// Botón outline (Compartir)
+.btn-compartir,
+.btn-pdf {
+  height: 52px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.15s;
+  ion-icon { font-size: 18px; }
+  &:active { transform: scale(0.97); }
+}
+
+// Outline verde
+.btn-compartir {
+  background: transparent;
+  border: 1.5px solid $verde;
+  color: $verde;
+}
+
+// Relleno verde con sombra
+.btn-pdf {
+  background: $verde;
+  border: none;
+  color: $blanco;
+  box-shadow: 0 6px 20px rgba($verde, 0.35);
+}

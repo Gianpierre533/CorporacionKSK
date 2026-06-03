@@ -10,35 +10,62 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
 
-  // --- Splash ---
+  // ── Splash ──────────────────────────────────────────────
   {
     path: '',
     loadComponent: () =>
       import('./home/home.page').then(m => m.HomePage)
   },
 
-  // --- Bienvenida ---
+  // ── Bienvenida ──────────────────────────────────────────
   {
     path: 'bienvenida',
     loadComponent: () =>
       import('./pages/bienvenida/bienvenida.page').then(m => m.BienvenidaPage)
   },
 
-  // --- Login ---
+  // ── Login ───────────────────────────────────────────────
   {
     path: 'login',
     loadComponent: () =>
       import('./pages/login/login.page').then(m => m.LoginPage)
   },
 
-  // --- Menú Principal (hub central) ---
+  // ── Menú Principal ──────────────────────────────────────
   {
     path: 'menu',
     loadComponent: () =>
       import('./pages/menu-principal/menu-principal.page').then(m => m.MenuPrincipalPage)
   },
 
-  // --- Empleados ---
+  // ── Catálogo ────────────────────────────────────────────
+  {
+    path: 'catalogo',
+    loadComponent: () =>
+      import('./pages/catalogo/catalogo.page').then(m => m.CatalogoPage)
+  },
+
+  // ── Cotizaciones ────────────────────────────────────────
+  {
+    path: 'cotizacion/nueva',
+    loadComponent: () =>
+      import('./pages/generar-cotizacion/generar-cotizacion.page')
+        .then(m => m.GenerarCotizacionPage)
+  },
+  {
+    path: 'cotizacion/resumen/:id',
+    loadComponent: () =>
+      import('./pages/resumen-cotizacion/resumen-cotizacion.page')
+        .then(m => m.ResumenCotizacionPage)
+  },
+  {
+    path: 'cotizacion/historial',
+    loadComponent: () =>
+      import('./pages/historial-cotizaciones/historial-cotizaciones.page')
+        .then(m => m.HistorialCotizacionesPage)
+  },
+
+  // ── Empleados ───────────────────────────────────────────
   {
     path: 'empleados',
     loadComponent: () =>
@@ -55,6 +82,7 @@ export const routes: Routes = [
       import('./pages/empleado-form/empleado-form.page').then(m => m.EmpleadoFormPage)
   },
 
-  // --- Comodín ---
+  // ── Comodín: siempre al final ────────────────────────────
   { path: '**', redirectTo: '' }
+
 ];

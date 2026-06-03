@@ -1,0 +1,119 @@
+<!-- ============================================================
+     HISTORIAL DE COTIZACIONES
+     Lista de cotizaciones con búsqueda y filtros por estado
+     ============================================================ -->
+
+<!-- ── Header ───────────────────────────────────────────── -->
+<ion-header class="header-custom">
+  <ion-toolbar class="toolbar-custom">
+    <!-- Botón regresar al menú -->
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/menu"
+        text=""
+        class="back-custom"
+      ></ion-back-button>
+    </ion-buttons>
+
+    <!-- Subtítulo y título -->
+    <div class="header-info">
+      <p class="header-tag">Cotizaciones</p>
+      <p class="header-title">Historial</p>
+    </div>
+
+    <!-- Badge con el total de resultados visibles -->
+    <ion-buttons slot="end">
+      <span class="badge-total">{{ cotizaciones.length }}</span>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <!-- Barra de búsqueda por número o cliente -->
+  <div class="search-container">
+    <div class="search-box">
+      <ion-icon name="search-outline" class="search-icon"></ion-icon>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Buscar por número o cliente..."
+        [value]="searchQuery"
+        (input)="onSearch($event)"
+      />
+      <!-- Botón limpiar búsqueda -->
+      <button
+        type="button"
+        class="search-clear"
+        *ngIf="searchQuery"
+        (click)="clearSearch()"
+      >
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Chips de filtro: Todos, Pendiente, Enviada, Aceptada, Rechazada -->
+  <div class="filtros-scroll">
+    <div class="filtros-container">
+      <button
+        class="chip"
+        [class.chip--active]="filtroActivo === f.key"
+        *ngFor="let f of filtros"
+        (click)="filtrarPor(f.key)"
+      >
+        {{ f.label }}
+      </button>
+    </div>
+  </div>
+</ion-header>
+
+<!-- ── Contenido ─────────────────────────────────────────── -->
+<ion-content class="historial-content">
+  <!-- Estado vacío: sin cotizaciones o sin resultados -->
+  <div class="empty-state" *ngIf="cotizaciones.length === 0">
+    <div class="empty-icon-wrapper">
+      <ion-icon name="document-text-outline"></ion-icon>
+    </div>
+    <h3 class="empty-title">
+      {{ searchQuery ? 'Sin resultados' : 'No hay cotizaciones' }}
+    </h3>
+    <p class="empty-desc">
+      {{ searchQuery ? 'Intenta con otro término de búsqueda' : 'Genera tu
+      primera cotización desde el menú principal' }}
+    </p>
+  </div>
+
+  <!-- Lista de tarjetas de cotizaciones -->
+  <div class="lista-container" *ngIf="cotizaciones.length > 0">
+    <div
+      class="cotizacion-card"
+      *ngFor="let cot of cotizaciones"
+      (click)="verResumen(cot.id)"
+    >
+      <!-- Parte superior: número + cliente | fecha + estado -->
+      <div class="card-top">
+        <div class="card-left">
+          <p class="cot-numero">{{ cot.id }}</p>
+          <p class="cot-cliente">{{ cot.cliente.nombre }}</p>
+        </div>
+        <div class="card-right">
+          <p class="cot-fecha">{{ formatDate(cot.fecha) }}</p>
+          <!-- Badge de color según el estado -->
+          <span class="estado-badge" [ngClass]="getEstadoClass(cot.estado)">
+            {{ cot.estado }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Parte inferior: cantidad de productos + total -->
+      <div class="card-bottom">
+        <div class="items-info">
+          <ion-icon name="cube-outline"></ion-icon>
+          <span
+            >{{ cot.items.length }} {{ cot.items.length === 1 ? 'producto' :
+            'productos' }}</span
+          >
+        </div>
+        <p class="cot-total">S/ {{ cot.total | number:'1.2-2' }}</p>
+      </div>
+    </div>
+  </div>
+</ion-content>

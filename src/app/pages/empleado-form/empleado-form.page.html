@@ -1,151 +1,170 @@
-<ion-header>
-  <ion-toolbar color="primary">
+<ion-header class="header-custom">
+  <ion-toolbar class="toolbar-custom">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/empleados" text="Volver"></ion-back-button>
+      <ion-back-button
+        defaultHref="/empleados"
+        text=""
+        class="back-custom"
+      ></ion-back-button>
     </ion-buttons>
-    <ion-title
-      >{{ isEditMode ? 'Editar Empleado' : 'Nuevo Empleado' }}</ion-title
-    >
+    <ion-title class="toolbar-title">
+      {{ isEditMode ? 'Editar Empleado' : 'Nuevo Empleado' }}
+    </ion-title>
   </ion-toolbar>
+  <div class="header-sub">
+    <p class="header-desc">
+      {{ isEditMode ? 'Modifica los datos del empleado' : 'Completa los datos
+      del registro' }}
+    </p>
+  </div>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="form-content">
   <form [formGroup]="form" (ngSubmit)="onSubmit()">
-    <!-- NOMBRES -->
-    <ion-item
-      [class.ion-invalid]="hasError('nombres', 'required') || hasError('nombres', 'minlength')"
-      [class.ion-touched]="f['nombres'].touched"
-    >
-      <ion-label position="floating">Nombre y Apellidos *</ion-label>
-      <ion-input
-        formControlName="nombres"
-        type="text"
-        placeholder="Ej: Juan Pérez García"
-      ></ion-input>
-      <ion-note slot="error" *ngIf="hasError('nombres', 'required')"
-        >El nombre es obligatorio</ion-note
-      >
-      <ion-note slot="error" *ngIf="hasError('nombres', 'minlength')"
-        >Mínimo 3 caracteres</ion-note
-      >
-    </ion-item>
+    <div class="form-card">
+      <!-- NOMBRES -->
+      <div class="field-group">
+        <label class="field-label">Nombre y Apellidos</label>
+        <div
+          class="field-wrapper"
+          [class.is-filled]="f['nombres'].value"
+          [class.is-error]="hasError('nombres', 'required') || hasError('nombres', 'minlength')"
+        >
+          <ion-icon name="person-outline" class="field-icon"></ion-icon>
+          <input
+            formControlName="nombres"
+            type="text"
+            class="field-input"
+            placeholder="Ej: Juan Pérez García"
+          />
+        </div>
+        <span class="error-msg" *ngIf="hasError('nombres', 'required')"
+          >El nombre es obligatorio</span
+        >
+        <span class="error-msg" *ngIf="hasError('nombres', 'minlength')"
+          >Mínimo 3 caracteres</span
+        >
+      </div>
 
-    <div class="field-spacer"></div>
+      <!-- DNI -->
+      <div class="field-group">
+        <label class="field-label">DNI</label>
+        <div
+          class="field-wrapper"
+          [class.is-filled]="f['dni'].value"
+          [class.is-error]="hasError('dni', 'required') || hasError('dni', 'pattern')"
+        >
+          <ion-icon name="card-outline" class="field-icon"></ion-icon>
+          <input
+            formControlName="dni"
+            type="text"
+            inputmode="numeric"
+            maxlength="8"
+            class="field-input"
+            placeholder="12345678"
+          />
+        </div>
+        <span class="error-msg" *ngIf="hasError('dni', 'required')"
+          >El DNI es obligatorio</span
+        >
+        <span class="error-msg" *ngIf="hasError('dni', 'pattern')"
+          >Debe tener exactamente 8 dígitos</span
+        >
+      </div>
 
-    <!-- DNI -->
-    <ion-item
-      [class.ion-invalid]="hasError('dni', 'required') || hasError('dni', 'pattern')"
-      [class.ion-touched]="f['dni'].touched"
-    >
-      <ion-label position="floating">DNI *</ion-label>
-      <ion-input
-        formControlName="dni"
-        type="text"
-        inputmode="numeric"
-        maxlength="8"
-        placeholder="12345678"
-      ></ion-input>
-      <ion-note slot="error" *ngIf="hasError('dni', 'required')"
-        >El DNI es obligatorio</ion-note
-      >
-      <ion-note slot="error" *ngIf="hasError('dni', 'pattern')"
-        >El DNI debe tener exactamente 8 dígitos</ion-note
-      >
-    </ion-item>
+      <!-- CARGO -->
+      <div class="field-group">
+        <label class="field-label">Cargo / Puesto</label>
+        <div
+          class="field-wrapper"
+          [class.is-filled]="f['cargo'].value"
+          [class.is-error]="hasError('cargo', 'required')"
+        >
+          <ion-icon name="briefcase-outline" class="field-icon"></ion-icon>
+          <input
+            formControlName="cargo"
+            type="text"
+            class="field-input"
+            placeholder="Ej: Almacenero, Vendedor"
+          />
+        </div>
+        <span class="error-msg" *ngIf="hasError('cargo', 'required')"
+          >El cargo es obligatorio</span
+        >
+      </div>
 
-    <div class="field-spacer"></div>
+      <!-- TELÉFONO -->
+      <div class="field-group">
+        <label class="field-label">Teléfono</label>
+        <div
+          class="field-wrapper"
+          [class.is-filled]="f['telefono'].value"
+          [class.is-error]="hasError('telefono', 'required') || hasError('telefono', 'pattern')"
+        >
+          <ion-icon name="call-outline" class="field-icon"></ion-icon>
+          <input
+            formControlName="telefono"
+            type="tel"
+            inputmode="numeric"
+            maxlength="9"
+            class="field-input"
+            placeholder="987654321"
+          />
+        </div>
+        <span class="error-msg" *ngIf="hasError('telefono', 'required')"
+          >El teléfono es obligatorio</span
+        >
+        <span class="error-msg" *ngIf="hasError('telefono', 'pattern')"
+          >Debe tener 9 dígitos</span
+        >
+      </div>
 
-    <!-- CARGO -->
-    <ion-item
-      [class.ion-invalid]="hasError('cargo', 'required')"
-      [class.ion-touched]="f['cargo'].touched"
-    >
-      <ion-label position="floating">Cargo / Puesto *</ion-label>
-      <ion-input
-        formControlName="cargo"
-        type="text"
-        placeholder="Ej: Almacenero, Vendedor"
-      ></ion-input>
-      <ion-note slot="error" *ngIf="hasError('cargo', 'required')"
-        >El cargo es obligatorio</ion-note
-      >
-    </ion-item>
+      <!-- CORREO -->
+      <div class="field-group">
+        <label class="field-label">Correo Electrónico</label>
+        <div
+          class="field-wrapper"
+          [class.is-filled]="f['correo'].value"
+          [class.is-error]="hasError('correo', 'required') || hasError('correo', 'email')"
+        >
+          <ion-icon name="mail-outline" class="field-icon"></ion-icon>
+          <input
+            formControlName="correo"
+            type="email"
+            inputmode="email"
+            class="field-input"
+            placeholder="correo@empresa.com"
+          />
+        </div>
+        <span class="error-msg" *ngIf="hasError('correo', 'required')"
+          >El correo es obligatorio</span
+        >
+        <span class="error-msg" *ngIf="hasError('correo', 'email')"
+          >Ingresa un correo válido</span
+        >
+      </div>
 
-    <div class="field-spacer"></div>
+      <p class="required-note">* Todos los campos son obligatorios</p>
+    </div>
 
-    <!-- TELÉFONO -->
-    <ion-item
-      [class.ion-invalid]="hasError('telefono', 'required') || hasError('telefono', 'pattern')"
-      [class.ion-touched]="f['telefono'].touched"
-    >
-      <ion-label position="floating">Teléfono *</ion-label>
-      <ion-input
-        formControlName="telefono"
-        type="tel"
-        inputmode="numeric"
-        maxlength="9"
-        placeholder="987654321"
-      ></ion-input>
-      <ion-note slot="error" *ngIf="hasError('telefono', 'required')"
-        >El teléfono es obligatorio</ion-note
-      >
-      <ion-note slot="error" *ngIf="hasError('telefono', 'pattern')"
-        >El teléfono debe tener 9 dígitos</ion-note
-      >
-    </ion-item>
-
-    <div class="field-spacer"></div>
-
-    <!-- CORREO -->
-    <ion-item
-      [class.ion-invalid]="hasError('correo', 'required') || hasError('correo', 'email')"
-      [class.ion-touched]="f['correo'].touched"
-    >
-      <ion-label position="floating">Correo Electrónico *</ion-label>
-      <ion-input
-        formControlName="correo"
-        type="email"
-        inputmode="email"
-        placeholder="correo@empresa.com"
-      ></ion-input>
-      <ion-note slot="error" *ngIf="hasError('correo', 'required')"
-        >El correo es obligatorio</ion-note
-      >
-      <ion-note slot="error" *ngIf="hasError('correo', 'email')"
-        >Ingresa un correo válido</ion-note
-      >
-    </ion-item>
-
-    <div class="field-spacer"></div>
-
-    <ion-button
-      type="submit"
-      expand="block"
-      color="primary"
-      class="submit-btn"
-      [disabled]="isSubmitting"
-    >
-      {{ isEditMode ? 'Guardar Cambios' : 'Registrar Empleado' }}
-    </ion-button>
-
-    <p class="required-note">* Campos obligatorios</p>
+    <div class="btn-container">
+      <button type="submit" class="btn-submit" [disabled]="isSubmitting">
+        <ion-spinner
+          *ngIf="isSubmitting"
+          name="crescent"
+          class="btn-spinner"
+        ></ion-spinner>
+        <ion-icon
+          *ngIf="!isSubmitting"
+          [name]="isEditMode ? 'save-outline' : 'person-add-outline'"
+          class="btn-icon"
+        >
+        </ion-icon>
+        <span
+          >{{ isSubmitting ? 'Guardando...' : (isEditMode ? 'Guardar Cambios' :
+          'Registrar Empleado') }}</span
+        >
+      </button>
+    </div>
   </form>
 </ion-content>
-
-<style>
-  .field-spacer {
-    height: 8px;
-  }
-  .submit-btn {
-    margin-top: 24px;
-  }
-  .required-note {
-    text-align: center;
-    font-size: 12px;
-    color: var(--ion-color-medium);
-    margin-top: 8px;
-  }
-  ion-item.ion-invalid.ion-touched {
-    --border-color: var(--ion-color-danger);
-  }
-</style>

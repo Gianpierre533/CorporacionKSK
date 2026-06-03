@@ -1,107 +1,74 @@
-// ============================================================
-//  SPLASH PAGE - SCSS
-//  Variables de color definidas aquí para consistencia.
-//  En SCSS podemos usar $variables en vez de repetir valores.
-// ============================================================
+$verde:  #2E9E65;
+$blanco: #FFFFFF;
 
-// --- Variables de color del proyecto ---
-$color-verde-primario: #2E9E65;
-$color-verde-oscuro:   #1E7A4A;
-$color-blanco:         #FFFFFF;
-$color-empresa:        #2E9E65;
-
-// --- Quitar padding por defecto del ion-content ---
 ion-content.splash-content {
-  --background: #{$color-verde-primario};
+  --background: #{$verde};
   --padding-top: 0;
   --padding-bottom: 0;
 }
 
-// --- Contenedor superior verde ---
+// ── Mitad superior verde ──────────────────────────────────
 .splash-top {
-  height: 55vh;              // 55% de la altura de pantalla
-  background: $color-verde-primario;
+  height: 55vh;
+  background: $verde;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeInDown 0.8s ease-out;
+}
+
+// Contenedor del logo: fondo blanco redondeado
+// para que el logo verde resalte sobre el fondo verde
+.logo-wrapper {
+  width: 180px;
+  height: 120px;
+  background: $blanco;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; // respeta proporciones del logo
+}
+
+// ── Mitad inferior blanca ─────────────────────────────────
+.splash-bottom {
+  height: 45vh;
+  background: $blanco;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 20px;
-
-  // Animación de entrada al cargar la pantalla
-  animation: fadeInDown 0.8s ease-out;
-}
-
-// --- Círculo del logo ---
-.logo-circle {
-  width: 90px;
-  height: 90px;
-  border-radius: 50%;
-  background: rgba($color-blanco, 0.25);  // SCSS permite rgba con variables
-  border: 3px solid rgba($color-blanco, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-
-  svg {
-    width: 70px;
-    height: 70px;
-  }
-}
-
-// --- Texto "Welcome" ---
-.splash-welcome {
-  color: $color-blanco;
-  font-size: 28px;
-  font-weight: 700;
-  margin: 0;
-  letter-spacing: 1px;
-}
-
-// --- Contenedor inferior blanco ---
-.splash-bottom {
-  height: 45vh;
-  background: $color-blanco;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  // Animación de entrada desde abajo
+  gap: 6px;
   animation: fadeInUp 0.8s ease-out;
 }
 
-// --- Nombre de la empresa ---
 .company-name {
-  color: $color-empresa;
+  color: $verde;
   font-size: 22px;
   font-weight: 700;
   margin: 0;
-  letter-spacing: 0.5px;
 }
 
-// ============================================================
-//  ANIMACIONES con @keyframes
-//  fadeInDown: entra desde arriba
-//  fadeInUp:   entra desde abajo
-// ============================================================
+.company-sub {
+  color: rgba($verde, 0.6);
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0;
+  letter-spacing: 0.3px;
+}
+
 @keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
 }

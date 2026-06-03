@@ -1,38 +1,14 @@
-<!-- ============================================================
-  PANTALLA 1: SPLASH / HOME
-  Pantalla de carga inicial. Se muestra 2.5 segundos y luego
-  navega automáticamente a la pantalla de bienvenida.
-
-  Diseño: mitad superior verde con logo, mitad inferior blanca
-  con el nombre de la empresa.
-============================================================ -->
-
 <ion-content [fullscreen]="true" class="splash-content">
-  <!-- Mitad superior: fondo verde con logo -->
+  <!-- Mitad superior verde con logo real -->
   <div class="splash-top">
-    <div class="logo-circle">
-      <!-- SVG del logo con la letra K de KSK -->
-      <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="30" cy="30" r="28" fill="white" fill-opacity="0.2" />
-        <text
-          x="50%"
-          y="55%"
-          dominant-baseline="middle"
-          text-anchor="middle"
-          fill="white"
-          font-size="28"
-          font-weight="700"
-          font-family="sans-serif"
-        >
-          K
-        </text>
-      </svg>
+    <div class="logo-wrapper">
+      <img src="assets/KSKLogo.png" alt="Corporación KSK" class="logo-img" />
     </div>
-    <h1 class="splash-welcome">Bienvenido</h1>
   </div>
 
-  <!-- Mitad inferior: fondo blanco con nombre de empresa -->
+  <!-- Mitad inferior blanca con nombre empresa -->
   <div class="splash-bottom">
-    <p class="company-name">Corporación KSK</p>
+    <p class="company-name">Corporación KSK S.A.C.</p>
+    <p class="company-sub">Comercio e Importaciones</p>
   </div>
 </ion-content>

@@ -1,152 +1,221 @@
 // ============================================================
-//  MENÚ PRINCIPAL - SCSS
+//  MENÚ PRINCIPAL - ESTILOS
+//  Página de inicio después del login con acceso a todos
+//  los módulos principales de la aplicación
 // ============================================================
 
-$color-verde:       #2E9E65;
-$color-verde-card:  #1E7A4A;
-$color-blanco:      #FFFFFF;
-$color-texto:       #1a1a1a;
-$color-gris:        #6B7280;
-$color-fondo:       #F4F6F8;
-$color-borde:       #E5E7EB;
+// ── Variables de color ──────────────────────────────────
+$verde:  #2e9e65;
+$blanco: #FFFFFF;
+$fondo:  #FFFFFF;
+$texto:  #1a1a1a;
+$gris:   #6B7280;
 
-// --- Fondo general gris muy claro ---
-ion-content.menu-content {
-  --background: #{$color-fondo};
+// ── Header personalizado ────────────────────────────────
+ion-header.header-custom {
+  --background: #{$verde} !important;
+  --color: #{$blanco} !important;
+  background: #{$verde} !important;
+  &::after { display: none; }
 }
 
-// El toolbar se vuelve verde para integrarse con la sección de saludo.
-.toolbar-transparent {
-  --background: #{$color-verde};
-  --border-width: 0;
-  background: #{$color-verde};
-  box-shadow: none;
-}
-
-.toolbar-transparent ion-title,
-.toolbar-transparent ion-icon,
-.toolbar-transparent ion-button {
-  color: $color-blanco;
-}
-
-// ============================================================
-//  SECCIÓN DE SALUDO
-//  Fondo verde con texto blanco, como cabecera visual
-// ============================================================
-.saludo-section {
-  background: $color-verde;
-  padding: 24px 24px 40px;
-  // margin-bottom negativo para que las tarjetas "suban" sobre el verde
-  margin-bottom: -20px;
-  animation: fadeInDown 0.5s ease-out;
-}
-
-.saludo-titulo {
-  color: $color-blanco;
-  font-size: 24px;
-  font-weight: 700;
-  margin: 0 0 6px;
-}
-
-.saludo-subtitulo {
-  color: rgba($color-blanco, 0.8);
-  font-size: 14px;
-  margin: 0;
-}
-
-// ============================================================
-//  GRID DE TARJETAS
-// ============================================================
-.menu-grid {
-  padding: 28px 16px 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  animation: slideUp 0.5s ease-out;
-}
-
-// ============================================================
-//  TARJETA INDIVIDUAL
-//  Diseño: ícono a la izquierda | texto al centro | flecha derecha
-// ============================================================
-.menu-card {
-  background: $color-blanco;
-  border-radius: 14px;
-  padding: 16px;
+// Toolbar personalizado
+.toolbar-custom {
+  --background: #{$verde} !important;
+  --border-color: transparent !important;
+  background: #{$verde} !important;
+  padding: 12px 16px;
   display: flex;
   align-items: center;
-  gap: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-  cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-
-  // Efecto al presionar (en móvil se siente el tap)
-  &:active {
-    transform: scale(0.98);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-  }
-
-  // Variante peligro (cerrar sesión): borde rojo sutil
-  &--danger {
-    border: 1px solid rgba(239, 68, 68, 0.15);
-  }
+  gap: 12px;
 }
 
-// Cuadrado redondeado que contiene el ícono
-.card-icon-wrapper {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+// Botones del header (menú y notificaciones)
+.menu-btn,
+.notif-btn {
+  width: 40px;
+  height: 40px;
+  background: rgba($blanco, 0.18);
+  border: none;
+  border-radius: 10px;
+  color: $blanco;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0;  // no se encoge si el texto es largo
+  cursor: pointer;
+  position: relative;
+  transition: background 0.2s;
 
-  ion-icon {
-    font-size: 24px;
+  &:active { background: rgba($blanco, 0.25); }
+  ion-icon { font-size: 20px; }
+}
+
+// Título del toolbar
+.toolbar-title {
+  color: $blanco;
+  font-size: 18px;
+  font-weight: 600;
+  flex: 1;
+}
+
+// Badge rojo de notificaciones
+.notif-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #EF4444;
+  color: $blanco;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 5px;
+  border-radius: 10px;
+  min-width: 18px;
+  text-align: center;
+}
+
+// ── Contenido principal ─────────────────────────────────
+.menu-content { --background: #{$fondo}; }
+
+// ── Sección de saludo ───────────────────────────────────
+.saludo-box {
+  background: $verde;
+  padding: 28px 22px 40px;
+  animation: fadeInDown 0.5s ease-out;
+}
+
+// Subtítulo del saludo
+.saludo-sub {
+  color: rgba($blanco, 0.75);
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0 0 6px;
+  letter-spacing: 0.3px;
+}
+
+// Título principal del saludo
+.saludo-titulo {
+  color: $blanco;
+  font-size: 32px;
+  font-weight: 800;
+  margin: 0 0 8px;
+  letter-spacing: -0.5px;
+}
+
+// Nombre de la empresa
+.saludo-empresa {
+  color: rgba($blanco, 0.75);
+  font-size: 13px;
+  margin: 0;
+}
+
+// ── Contenedor de tarjetas ─────────────────────────────
+.menu-container {
+  padding: 24px 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  animation: slideUp 0.5s ease-out;
+}
+
+// ── Tarjeta individual del menú ────────────────────────
+.menu-card {
+  background: $blanco;
+  border-radius: 18px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+  border: 1px solid rgba(229, 231, 235, 0.9);
+
+  &:active {
+    transform: scale(0.97);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  }
+
+  // Variante para "Cerrar Sesión"
+  &--danger {
+    border: 1px solid rgba(239, 68, 68, 0.2);
   }
 }
 
-// Bloque de texto central
-.card-info {
-  flex: 1;  // ocupa todo el espacio disponible entre ícono y flecha
+// ── Icono de la tarjeta ────────────────────────────────
+.card-icono {
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  ion-icon { font-size: 26px; }
+
+  // Verde para Catálogo y Cotización
+  &--verde {
+    background: rgba(46, 158, 101, 0.12);
+    ion-icon { color: #2e9e65; }
+  }
+
+  // Naranja para Historial
+  &--naranja {
+    background: rgba(230, 152, 30, 0.12);
+    ion-icon { color: #E6981E; }
+  }
+
+  // Azul para Empleados
+  &--azul {
+    background: rgba(99, 102, 241, 0.12);
+    ion-icon { color: #6366F1; }
+  }
+
+  // Rojo para Cerrar Sesión
+  &--rojo {
+    background: rgba(239, 68, 68, 0.12);
+    ion-icon { color: #EF4444; }
+  }
 }
 
+// ── Información de la tarjeta ───────────────────────────
+.card-texto { flex: 1; }
+
+// Título de la opción
 .card-titulo {
   font-size: 15px;
   font-weight: 600;
-  color: $color-texto;
+  color: $texto;
   margin: 0 0 4px;
+
+  &--danger { color: #EF4444; }
 }
 
+// Descripción corta
 .card-desc {
-  font-size: 13px;
-  color: $color-gris;
+  font-size: 12px;
+  color: $gris;
   margin: 0;
   line-height: 1.4;
 }
 
-// Flecha derecha
+// ── Flecha de navegación ────────────────────────────────
 .card-arrow {
-  color: $color-gris;
+  color: #D1D5DB;
   font-size: 18px;
   flex-shrink: 0;
 }
 
-// ============================================================
-//  VERSIÓN AL FONDO
-// ============================================================
+// ── Texto de versión ───────────────────────────────────
 .version-text {
   text-align: center;
   font-size: 12px;
-  color: $color-gris;
-  padding: 16px 0 24px;
+  color: #9CA3AF;
+  padding: 16px 0 28px;
   margin: 0;
 }
 
-// ============================================================
-//  ANIMACIONES
-// ============================================================
+// ── Animaciones ────────────────────────────────────────
 @keyframes fadeInDown {
   from { opacity: 0; transform: translateY(-12px); }
   to   { opacity: 1; transform: translateY(0); }

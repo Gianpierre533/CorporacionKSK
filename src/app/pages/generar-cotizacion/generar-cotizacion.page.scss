@@ -1,0 +1,446 @@
+// ============================================================
+//  GENERAR COTIZACIÓN - ESTILOS
+//  Formulario para crear una nueva cotización con productos
+//  seleccionados del catálogo y datos del cliente
+// ============================================================
+
+// ── Variables de color ──────────────────────────────────
+$verde:       #2e9e65;
+$verde-light: rgba(46, 158, 101, 0.1);
+$blanco:      #FFFFFF;
+$fondo:       #F4F6F8;
+$texto:       #1a1a1a;
+$texto-sub:   #6B7280;
+$borde:       rgba(229, 231, 235, 0.9);
+
+// ── Header personalizado ────────────────────────────────
+ion-header.header-custom {
+  --background: #{$verde} !important;
+  background: #{$verde} !important;
+  &::after { display: none; }
+}
+
+// Toolbar sobre fondo verde
+.toolbar-custom {
+  --background: #{$verde} !important;
+  --border-color: transparent !important;
+  background: #{$verde} !important;
+  padding: 12px 16px;
+}
+
+// Botón de regreso
+.back-custom {
+  --color: #{$blanco};
+  --icon-font-size: 22px;
+}
+
+// Título del toolbar
+.toolbar-title {
+  color: $blanco;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+// ── Contenido principal ─────────────────────────────────
+.cotizacion-content { --background: #{$fondo}; }
+
+// ── Secciones ───────────────────────────────────────────
+// Cada bloque temático (productos, totales, cliente) es una sección
+.section {
+  background: $blanco;
+  border-radius: 18px;
+  padding: 18px 16px;
+  margin: 16px 14px 0;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  border: 1px solid $borde;
+}
+
+// Título de cada sección
+.section-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: $texto-sub;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 0 0 14px;
+}
+
+// ── Estado vacío de productos ───────────────────────────
+// Se muestra cuando aún no se agrega ningún producto
+.empty-productos {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 28px 0 20px;
+  gap: 10px;
+
+  ion-icon {
+    font-size: 42px;
+    color: #D1D5DB;
+  }
+
+  p {
+    font-size: 13px;
+    color: $texto-sub;
+    margin: 0;
+  }
+}
+
+// ── Tarjeta de producto agregado ────────────────────────
+// Muestra nombre, precio unitario, control de cantidad y subtotal
+.item-card {
+  background: #F9FAFB;
+  border-radius: 14px;
+  padding: 14px;
+  margin-bottom: 10px;
+  border: 1px solid $borde;
+}
+
+// Fila superior: icono + info + botón eliminar
+.item-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+// Icono del producto
+.item-icono {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: $verde-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  ion-icon { font-size: 20px; color: $verde; }
+}
+
+// Contenedor de nombre y precio unitario
+.item-info { flex: 1; min-width: 0; }
+
+.item-nombre {
+  font-size: 14px;
+  font-weight: 600;
+  color: $texto;
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.item-precio-unit {
+  font-size: 12px;
+  color: $texto-sub;
+  margin: 0;
+}
+
+// Botón para eliminar el producto de la lista
+.btn-remove {
+  background: rgba(239, 68, 68, 0.1);
+  border: none;
+  border-radius: 8px;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  ion-icon { font-size: 18px; color: #EF4444; }
+  &:active { background: rgba(239, 68, 68, 0.2); }
+}
+
+// Fila inferior: control de cantidad + subtotal
+.item-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// Control +/- de cantidad
+.cantidad-control {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: $blanco;
+  border: 1px solid $borde;
+  border-radius: 10px;
+  padding: 4px 12px;
+}
+
+// Botones de incremento y decremento
+.qty-btn {
+  background: none;
+  border: none;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px;
+  ion-icon { font-size: 18px; color: $verde; }
+  &:active { opacity: 0.7; }
+}
+
+// Número de cantidad actual
+.qty-valor {
+  font-size: 16px;
+  font-weight: 600;
+  color: $texto;
+  min-width: 20px;
+  text-align: center;
+}
+
+// Subtotal del item (cantidad × precio)
+.item-subtotal {
+  font-size: 15px;
+  font-weight: 700;
+  color: $verde;
+}
+
+// ── Botón agregar producto ──────────────────────────────
+// Botón de borde punteado verde para abrir el modal del catálogo
+.btn-agregar {
+  width: 100%;
+  padding: 13px;
+  border: 1.5px dashed rgba($verde, 0.5);
+  border-radius: 14px;
+  background: $verde-light;
+  color: $verde;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: background 0.2s;
+
+  ion-icon { font-size: 20px; }
+  &:active { background: rgba($verde, 0.18); }
+}
+
+// ── Sección de totales ──────────────────────────────────
+// Visible solo cuando hay productos seleccionados
+.totales-section { margin-top: 12px; }
+
+// Fila de total individual
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.total-label {
+  font-size: 13px;
+  color: $texto-sub;
+}
+
+.total-valor {
+  font-size: 13px;
+  color: $texto;
+  font-weight: 500;
+}
+
+// Separador visual antes del total final
+.divider {
+  height: 1px;
+  background: $borde;
+  margin: 10px 0;
+}
+
+// Fila del total final
+.total-row--final {
+  margin-bottom: 0;
+}
+
+.total-label--final {
+  font-size: 15px;
+  font-weight: 600;
+  color: $texto;
+}
+
+.total-valor--final {
+  font-size: 20px;
+  font-weight: 700;
+  color: $verde;
+}
+
+// ── Formulario del cliente ──────────────────────────────
+// Card con campos de nombre y teléfono
+.form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+// Grupo individual de campo
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+// Etiqueta del campo
+.field-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: $texto-sub;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+// Contenedor del campo con ícono
+.field-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #F9FAFB;
+  border: 1.5px solid $borde;
+  border-radius: 12px;
+  padding: 0 14px;
+  min-height: 48px;
+  transition: border-color 0.2s;
+
+  // Estado cuando el campo tiene valor
+  &.is-filled {
+    border-color: rgba($verde, 0.5);
+    background: rgba($verde, 0.03);
+  }
+
+  &:focus-within {
+    border-color: $verde;
+    background: $blanco;
+  }
+}
+
+// Ícono dentro del campo
+.field-icon {
+  font-size: 18px;
+  color: $texto-sub;
+  flex-shrink: 0;
+}
+
+// Input de texto
+.field-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: $texto;
+
+  &::placeholder { color: #C4C9D4; }
+}
+
+// ── Botón generar cotización ────────────────────────────
+.btn-container {
+  padding: 20px 14px 32px;
+}
+
+// Botón principal verde
+.btn-generar {
+  width: 100%;
+  height: 54px;
+  background: $verde;
+  border: none;
+  border-radius: 16px;
+  color: $blanco;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba($verde, 0.35);
+  transition: transform 0.15s, box-shadow 0.2s;
+
+  ion-icon { font-size: 20px; }
+
+  &:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 14px rgba($verde, 0.25);
+  }
+
+  // Estado deshabilitado (sin productos o sin nombre de cliente)
+  &:disabled {
+    background: #9CA3AF;
+    box-shadow: none;
+    cursor: not-allowed;
+  }
+}
+
+// Spinner dentro del botón mientras se genera
+.btn-spinner {
+  width: 20px;
+  height: 20px;
+  --color: #{$blanco};
+}
+
+// ── Modal del catálogo ──────────────────────────────────
+// Sheet modal (bottom) para seleccionar productos
+.modal-content { --background: #{$fondo}; }
+
+// Lista de productos dentro del modal
+.modal-lista {
+  padding: 12px 14px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+// Fila de producto dentro del modal
+.modal-producto {
+  background: $blanco;
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid $borde;
+  cursor: pointer;
+  transition: transform 0.15s;
+
+  &:active { transform: scale(0.97); }
+}
+
+// Icono en el modal
+.modal-icono {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: $verde-light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  ion-icon { font-size: 20px; color: $verde; }
+}
+
+// Info del producto en el modal
+.modal-info { flex: 1; }
+
+.modal-nombre {
+  font-size: 14px;
+  font-weight: 600;
+  color: $texto;
+  margin: 0 0 2px;
+}
+
+.modal-precio {
+  font-size: 13px;
+  font-weight: 600;
+  color: $verde;
+  margin: 0;
+}
+
+// Ícono de agregar en el modal
+.modal-add {
+  ion-icon {
+    font-size: 26px;
+    color: $verde;
+  }
+}

@@ -1,0 +1,191 @@
+<!-- ============================================================
+     GENERAR COTIZACIÓN
+     Pantalla para crear una cotización con productos del
+     catálogo y datos del cliente
+     ============================================================ -->
+
+<!-- ── Header ───────────────────────────────────────────── -->
+<ion-header class="header-custom">
+  <ion-toolbar class="toolbar-custom">
+    <!-- Botón regresar al menú -->
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/menu"
+        text=""
+        class="back-custom"
+      ></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="toolbar-title">Generar Cotización</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<!-- ── Contenido ─────────────────────────────────────────── -->
+<ion-content class="cotizacion-content">
+  <!-- ── Sección: Productos seleccionados ─────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Productos seleccionados</h2>
+
+    <!-- Estado vacío cuando no hay productos -->
+    <div class="empty-productos" *ngIf="itemsSeleccionados.length === 0">
+      <ion-icon name="cube-outline"></ion-icon>
+      <p>Ningún producto agregado aún</p>
+    </div>
+
+    <!-- Lista de productos agregados -->
+    <div class="item-card" *ngFor="let item of itemsSeleccionados">
+      <!-- Fila superior: icono + nombre + botón eliminar -->
+      <div class="item-top">
+        <div class="item-icono">
+          <ion-icon name="cube-outline"></ion-icon>
+        </div>
+        <div class="item-info">
+          <p class="item-nombre">{{ item.nombre }}</p>
+          <p class="item-precio-unit">
+            S/ {{ item.precio | number:'1.2-2' }} c/u
+          </p>
+        </div>
+        <!-- Botón para quitar el producto de la lista -->
+        <button class="btn-remove" (click)="removeItem(item.id)">
+          <ion-icon name="trash-outline"></ion-icon>
+        </button>
+      </div>
+
+      <!-- Fila inferior: control de cantidad + subtotal -->
+      <div class="item-bottom">
+        <div class="cantidad-control">
+          <button class="qty-btn" (click)="decrementar(item)">
+            <ion-icon name="remove-outline"></ion-icon>
+          </button>
+          <span class="qty-valor">{{ item.cantidad }}</span>
+          <button class="qty-btn" (click)="incrementar(item)">
+            <ion-icon name="add-outline"></ion-icon>
+          </button>
+        </div>
+        <span class="item-subtotal"
+          >S/ {{ item.subtotal | number:'1.2-2' }}</span
+        >
+      </div>
+    </div>
+
+    <!-- Botón para abrir el modal del catálogo -->
+    <button class="btn-agregar" (click)="abrirCatalogo()">
+      <ion-icon name="add-circle-outline"></ion-icon>
+      <span>Agregar producto</span>
+    </button>
+  </div>
+
+  <!-- ── Sección: Totales (visible solo con productos) ───── -->
+  <div class="section totales-section" *ngIf="itemsSeleccionados.length > 0">
+    <div class="total-row">
+      <span class="total-label">Subtotal</span>
+      <span class="total-valor">S/ {{ subtotal | number:'1.2-2' }}</span>
+    </div>
+    <div class="total-row">
+      <span class="total-label">IGV (18%)</span>
+      <span class="total-valor">S/ {{ igv | number:'1.2-2' }}</span>
+    </div>
+    <div class="divider"></div>
+    <div class="total-row total-row--final">
+      <span class="total-label--final">Total</span>
+      <span class="total-valor--final">S/ {{ total | number:'1.2-2' }}</span>
+    </div>
+  </div>
+
+  <!-- ── Sección: Datos del cliente ───────────────────────── -->
+  <div class="section">
+    <h2 class="section-title">Datos del Cliente</h2>
+    <div class="form-card">
+      <!-- Campo: Nombre del cliente -->
+      <div class="field-group">
+        <label class="field-label">Nombre del cliente</label>
+        <div class="field-wrapper" [class.is-filled]="clienteNombre">
+          <ion-icon name="person-outline" class="field-icon"></ion-icon>
+          <input
+            type="text"
+            class="field-input"
+            placeholder="Ej: Juan Pérez"
+            [(ngModel)]="clienteNombre"
+          />
+        </div>
+      </div>
+
+      <!-- Campo: Teléfono -->
+      <div class="field-group">
+        <label class="field-label">Teléfono</label>
+        <div class="field-wrapper" [class.is-filled]="clienteTelefono">
+          <ion-icon name="call-outline" class="field-icon"></ion-icon>
+          <input
+            type="tel"
+            inputmode="numeric"
+            maxlength="9"
+            class="field-input"
+            placeholder="Ej: 987 654 321"
+            [(ngModel)]="clienteTelefono"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Botón principal: Generar Cotización ──────────────── -->
+  <!-- Deshabilitado si no hay productos o no hay nombre -->
+  <div class="btn-container">
+    <button
+      class="btn-generar"
+      (click)="generarCotizacion()"
+      [disabled]="itemsSeleccionados.length === 0 || !clienteNombre || isLoading"
+    >
+      <ion-spinner
+        *ngIf="isLoading"
+        name="crescent"
+        class="btn-spinner"
+      ></ion-spinner>
+      <ion-icon *ngIf="!isLoading" name="document-text-outline"></ion-icon>
+      <span>{{ isLoading ? 'Generando...' : 'Generar Cotización' }}</span>
+    </button>
+  </div>
+</ion-content>
+
+<!-- ── Modal: Seleccionar producto del catálogo ─────────── -->
+<!-- Se abre como sheet desde abajo al tocar "Agregar producto" -->
+<ion-modal
+  [isOpen]="modalCatalogoAbierto"
+  (didDismiss)="cerrarCatalogo()"
+  breakpoints="[0, 0.75]"
+  initialBreakpoint="0.75"
+>
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>Seleccionar Producto</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cerrarCatalogo()">Cerrar</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="modal-content">
+      <div class="modal-lista">
+        <!-- Producto dentro del modal -->
+        <div
+          class="modal-producto"
+          *ngFor="let p of catalogoProductos"
+          (click)="agregarProducto(p)"
+        >
+          <div class="modal-icono">
+            <ion-icon name="cube-outline"></ion-icon>
+          </div>
+          <div class="modal-info">
+            <p class="modal-nombre">{{ p.nombre }}</p>
+            <p class="modal-precio">S/ {{ p.precio | number:'1.2-2' }}</p>
+          </div>
+          <!-- Ícono de agregar -->
+          <div class="modal-add">
+            <ion-icon name="add-circle-outline"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

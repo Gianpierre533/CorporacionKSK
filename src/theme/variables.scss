@@ -1,2 +1,28 @@
-// For information on how to create your own theme, please refer to:
-// https://ionicframework.com/docs/theming/
+// ============================================================
+//  TEMA GLOBAL - CORPORACIÓN KSK S.A.C.
+//  Variables de color para toda la aplicación
+// ============================================================
+
+// ── Tema claro (predeterminado) ─────────────────────────
+body {
+  // Fondo gris claro en lugar de negro
+  --ion-background-color: #F4F6F8;
+  --ion-background-color-rgb: 244, 246, 248;
+
+  // Texto oscuro en lugar de blanco
+  --ion-text-color: #1a1a1a;
+  --ion-text-color-rgb: 26, 26, 26;
+
+  // Color primario: verde KSK
+  --ion-color-primary: #2e9e65;
+  --ion-color-primary-rgb: 46, 158, 101;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-shade: #1E7A4A;
+  --ion-color-primary-tint: #44b87a;
+
+  // Tarjetas y superficies en blanco
+  --ion-card-background: #ffffff;
+  --ion-item-background: #ffffff;
+  --ion-toolbar-background: #2e9e65;
+  --ion-toolbar-color: #ffffff;
+}
