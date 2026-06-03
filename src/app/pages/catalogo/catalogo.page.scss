@@ -196,17 +196,22 @@ ion-header.header-custom {
   }
 }
 
-// Icono del producto
-.producto-icono {
-  width: 54px;
-  height: 54px;
-  border-radius: 14px;
-  background: rgba($verde, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+// Imagen del producto — cuadrada con bordes redondeados
+.producto-imagen {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  overflow: hidden;
   flex-shrink: 0;
-  ion-icon { font-size: 26px; color: $verde; }
+  border: 1px solid rgba(229, 231, 235, 0.9);
+  background: #F4F6F8;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
 }
 
 // Contenedor de textos del producto

@@ -34,10 +34,10 @@
 
     <!-- Lista de productos agregados -->
     <div class="item-card" *ngFor="let item of itemsSeleccionados">
-      <!-- Fila superior: icono + nombre + botón eliminar -->
+      <!-- Fila superior: imagen + nombre + botón eliminar -->
       <div class="item-top">
         <div class="item-icono">
-          <ion-icon name="cube-outline"></ion-icon>
+          <img [src]="item.imagen" [alt]="item.nombre" />
         </div>
         <div class="item-info">
           <p class="item-nombre">{{ item.nombre }}</p>
@@ -174,7 +174,7 @@
           (click)="agregarProducto(p)"
         >
           <div class="modal-icono">
-            <ion-icon name="cube-outline"></ion-icon>
+            <img [src]="p.imagen" [alt]="p.nombre" />
           </div>
           <div class="modal-info">
             <p class="modal-nombre">{{ p.nombre }}</p>

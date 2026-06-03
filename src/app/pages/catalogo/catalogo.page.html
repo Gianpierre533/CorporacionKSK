@@ -81,9 +81,9 @@
       *ngFor="let p of productosFiltrados"
       (click)="verDetalle(p)"
     >
-      <!-- Icono del producto -->
-      <div class="producto-icono">
-        <ion-icon [name]="p.icono || 'cube-outline'"></ion-icon>
+      <!-- Imagen del producto -->
+      <div class="producto-imagen">
+        <img [src]="p.imagen" [alt]="p.nombre" />
       </div>
 
       <!-- Información del producto -->

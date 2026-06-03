@@ -16,14 +16,11 @@ import {
 } from 'ionicons/icons';
 
 import { CotizacionService } from '../../services/cotizacion.service';
+import { ProductosService, Producto } from '../../services/productos.service';
 import { ItemCotizacion } from '../../models/cotizacion.model';
 
-// Producto del catálogo (simplificado para la cotización)
-interface ProductoCatalogo {
-  id: string;
-  nombre: string;
-  precio: number;
-}
+// Alias para el modal (solo necesitamos id, nombre y precio)
+type ProductoCatalogo = Pick<Producto, 'id' | 'nombre' | 'precio' | 'imagen'>;
 
 @Component({
   selector: 'app-generar-cotizacion',
@@ -51,20 +48,12 @@ export class GenerarCotizacionPage {
   igv      = 0;
   total    = 0;
 
-  // ── Catálogo de productos disponibles ─────────────────
-  // Cuando tengas una API estos vendrán del backend.
-  // Por ahora son los mismos del catálogo hardcodeado.
-  catalogoProductos: ProductoCatalogo[] = [
-    { id: '1', nombre: 'Bomba de Agua 1HP',          precio: 350.00 },
-    { id: '2', nombre: 'Cable Eléctrico 2.5mm',      precio: 120.00 },
-    { id: '3', nombre: 'Interruptor Termomagnético',  precio:  45.00 },
-    { id: '4', nombre: 'Reflector LED 100W',          precio:  80.00 },
-    { id: '5', nombre: 'Llave Ajustable 12"',         precio:  35.00 },
-    { id: '6', nombre: 'Tubería PVC 4"',              precio:  28.00 },
-  ];
+  // ── Catálogo cargado desde el servicio ────────────────
+  catalogoProductos: ProductoCatalogo[] = [];
 
   constructor(
     private cotizacionService: CotizacionService,
+    private productosService: ProductosService,
     private router: Router,
     private toastCtrl: ToastController
   ) {
@@ -73,6 +62,8 @@ export class GenerarCotizacionPage {
       addCircleOutline, documentTextOutline, personOutline,
       callOutline, arrowBackOutline
     });
+    // Cargamos los productos desde el servicio
+    this.catalogoProductos = this.productosService.getAll();
   }
 
   // ── Modal catálogo ─────────────────────────────────────
@@ -92,7 +83,8 @@ export class GenerarCotizacionPage {
         nombre:   p.nombre,
         precio:   p.precio,
         cantidad: 1,
-        subtotal: p.precio
+        subtotal: p.precio,
+        imagen:   p.imagen
       });
     }
 

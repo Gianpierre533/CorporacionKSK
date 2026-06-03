@@ -10,6 +10,7 @@ export interface ItemCotizacion {
   precio: number;      // precio unitario
   cantidad: number;
   subtotal: number;    // precio * cantidad
+  imagen: string;      // ruta de la imagen del producto
 }
 
 // Datos del cliente al que se le cotiza

@@ -119,8 +119,8 @@ TOTAL: S/ ${c.total.toFixed(2)}
     if (!this.cotizacion) return;
 
     const loading = await this.loadingCtrl.create({
-      message: 'Generando PDF...',
-      duration: 2000
+      message: 'Generando PDF...'
+      // Sin duration para controlarlo manualmente
     });
     await loading.present();
 
@@ -247,7 +247,15 @@ TOTAL: S/ ${c.total.toFixed(2)}
         { align: 'center' }
       );
 
-      pdf.save(`Cotizacion-${c.id}.pdf`);
+      // ── Descargar usando blob (más confiable en Ionic) ───
+      const blob = pdf.output('blob');
+      const url  = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href     = url;
+      link.download = `Cotizacion-${c.id}.pdf`;
+      link.click();
+      // Liberar memoria después de la descarga
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
 
       await loading.dismiss();
 
