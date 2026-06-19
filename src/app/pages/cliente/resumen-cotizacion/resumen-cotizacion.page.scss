@@ -1,0 +1,295 @@
+// Variables de color corporativo
+$verde:   #2ECFB3; 
+$blanco:  #FFFFFF;
+$fondo:   #F4F6F8;
+$texto:   #1a1a1a;
+$gris:    #6B7280;
+$borde:   rgba(229, 231, 235, 0.9);
+
+:host { display: block; }
+
+ion-header.header-custom {
+  --background: #{$verde} !important;
+  background: #{$verde} !important;
+  &::after { display: none; }
+}
+
+.toolbar-custom {
+  --background: #{$verde} !important;
+  --border-color: transparent !important;
+  background: #{$verde} !important;
+  padding: 12px 16px;
+}
+
+.back-custom {
+  --color: #{$blanco};
+  --icon-font-size: 22px;
+}
+
+.header-info { flex: 1; }
+.header-tag {
+  color: rgba($blanco, 0.7);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 0 0 1px;
+}
+.header-title {
+  color: $blanco;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.estado-badge {
+  background: rgba($blanco, 0.2);
+  color: $blanco;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 8px;
+  margin-right: 4px;
+}
+
+.resumen-content { --background: #{$fondo}; }
+
+.cards-container {
+  padding: 16px 14px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.card {
+  background: $blanco;
+  border-radius: 18px;
+  border: 1px solid $borde;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+}
+
+.empresa-row {
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// ── NUEVA CAJA ADAPTATIVA PARA TU LOGOTIPO REAl ──
+.ksk-logo-box {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: #fafafa;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.04);
+  padding: 4px;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; // Impide que la imagen se deforme
+  }
+}
+
+.empresa-nombre {
+  font-size: 14px;
+  font-weight: 600;
+  color: $texto;
+  margin: 0 0 2px;
+}
+.empresa-sub {
+  font-size: 12px;
+  color: $gris;
+  margin: 0;
+}
+.cot-numero {
+  font-size: 15px;
+  font-weight: 700;
+  color: $verde;
+  margin: 0;
+}
+.cot-fecha {
+  font-size: 12px;
+  color: $gris;
+  margin: 3px 0 0;
+}
+
+.cliente-row {
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.cliente-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba($verde, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  ion-icon { font-size: 20px; color: $verde; }
+}
+.cliente-tag {
+  font-size: 10px;
+  color: $gris;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin: 0 0 3px;
+}
+.cliente-nombre {
+  font-size: 15px;
+  font-weight: 600;
+  color: $texto;
+  margin: 0;
+}
+.cliente-tel {
+  font-size: 13px;
+  color: $gris;
+  margin: 3px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  ion-icon { font-size: 13px; }
+}
+
+.productos-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.productos-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: $texto;
+  margin: 0;
+}
+.items-badge {
+  background: rgba($verde, 0.1);
+  color: $verde;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba($verde, 0.2);
+}
+
+.productos-lista { padding: 0 18px; }
+.producto-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 0;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.5);
+  gap: 10px;
+  &--last { border-bottom: none; }
+}
+
+.producto-icono {
+  width: 38px;
+  height: 38px;
+  border-radius: 9px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid rgba(229, 231, 235, 0.9);
+  background: #F4F6F8;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+.producto-info { flex: 1; min-width: 0; }
+.producto-nombre {
+  font-size: 13px;
+  font-weight: 600;
+  color: $texto;
+  margin: 0 0 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.producto-detalle {
+  font-size: 12px;
+  color: $gris;
+  margin: 0;
+}
+.producto-subtotal {
+  font-size: 14px;
+  font-weight: 600;
+  color: $texto;
+  flex-shrink: 0;
+}
+
+.totales-box {
+  background: #F9FAFB;
+  border-top: 1px solid rgba(229, 231, 235, 0.6);
+  padding: 14px 18px;
+}
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.total-label { font-size: 13px; color: $gris; }
+.total-valor { font-size: 13px; color: $texto; font-weight: 500; }
+
+.total-row--final {
+  border-top: 1px solid $borde;
+  padding-top: 12px;
+  margin-top: 4px;
+  margin-bottom: 0;
+}
+.total-label--final {
+  font-size: 15px;
+  font-weight: 600;
+  color: $texto;
+}
+.total-valor--final {
+  font-size: 22px;
+  font-weight: 700;
+  color: $verde;
+}
+
+.botones-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.btn-compartir, .btn-pdf {
+  height: 52px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: transform 0.15s;
+  ion-icon { font-size: 18px; }
+  &:active { transform: scale(0.97); }
+}
+
+.btn-compartir {
+  background: transparent;
+  border: 1.5px solid $verde;
+  color: $verde;
+}
+
+.btn-pdf {
+  background: $verde;
+  border: none;
+  color: $blanco;
+  box-shadow: 0 6px 20px rgba($verde, 0.35);
+}

@@ -1,227 +1,198 @@
 // ============================================================
-//  MENÚ PRINCIPAL - ESTILOS
-//  Página de inicio después del login con acceso a todos
-//  los módulos principales de la aplicación
+//  MENÚ PRINCIPAL - VERSIÓN MODO CLARO PREMIUM (KSK)
 // ============================================================
 
-// ── Variables de color ──────────────────────────────────
-$verde:  #2e9e65;
-$blanco: #FFFFFF;
-$fondo:  #FFFFFF;
-$texto:  #1a1a1a;
-$gris:   #6B7280;
+$cyan:       #2ECFB3;
+$cyan-dark:  #16A38A;
+$fondo:      #FFFFFF;
+$card:       #F8FAFC; 
+$texto:      #0F172A; 
+$gris:       #64748B; 
+$danger:     #EF4444;
 
-// ── Header personalizado ────────────────────────────────
-ion-header.header-custom {
-  --background: #{$verde} !important;
-  --color: #{$blanco} !important;
-  background: #{$verde} !important;
-  &::after { display: none; }
+// ── CABECERA TRANSLÚCIDA PARA INTEGRACIÓN FLUIDA ───────────
+.header-ksk {
+  --background: transparent !important;
+  background: transparent !important;
+  position: absolute; // Permite que el saludo se extienda por debajo del header
+  top: 0; left: 0; width: 100%;
+  z-index: 10;
+  &::after { display: none; } // Remueve la línea de sombra por defecto de Ionic
 }
 
-// Toolbar personalizado
-.toolbar-custom {
-  --background: #{$verde} !important;
-  --border-color: transparent !important;
-  background: #{$verde} !important;
-  padding: 12px 16px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.toolbar-ksk {
+  --background: transparent !important;
+  --color: #FFFFFF;
 }
 
-// Botones del header (menú y notificaciones)
-.menu-btn,
-.notif-btn {
-  width: 40px;
-  height: 40px;
-  background: rgba($blanco, 0.18);
-  border: none;
-  border-radius: 10px;
-  color: $blanco;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  position: relative;
-  transition: background 0.2s;
-
-  &:active { background: rgba($blanco, 0.25); }
-  ion-icon { font-size: 20px; }
-}
-
-// Título del toolbar
-.toolbar-title {
-  color: $blanco;
-  font-size: 18px;
-  font-weight: 600;
-  flex: 1;
-}
-
-// Badge rojo de notificaciones
-.notif-badge {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background: #EF4444;
-  color: $blanco;
-  font-size: 10px;
+.titulo-pagina {
   font-weight: 700;
-  padding: 2px 5px;
-  border-radius: 10px;
-  min-width: 18px;
-  text-align: center;
+  font-size: 19px;
+  letter-spacing: -0.3px;
+  color: #FFFFFF;
 }
 
-// ── Contenido principal ─────────────────────────────────
-.menu-content { --background: #{$fondo}; }
+.header-btn {
+  --color: #FFFFFF;
+  margin-right: 4px;
+  width: 44px; height: 44px;
+  ion-icon { font-size: 24px; }
+}
 
-// ── Sección de saludo ───────────────────────────────────
+// ── Contenido Base ──────────────────────────────────────────
+.menu-content {
+  --background: #{$fondo};
+}
+
+// ── CAJA DE BIENVENIDA SUPERIOR (BLOQUE CYAN UNIFICADO) ─────
 .saludo-box {
-  background: $verde;
-  padding: 28px 22px 40px;
-  animation: fadeInDown 0.5s ease-out;
+  background: #{$cyan};
+  padding: 75px 20px 24px; // Reducido ligeramente para que el "Bienvenido de vuelta" respire mejor bajo el header
+  position: relative;
+  overflow: hidden;
+  
+  // Círculo decorativo sutil en contraste blanco
+  &::after {
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1); 
+    pointer-events: none;
+  }
 }
 
-// Subtítulo del saludo
+// Tag del menú adaptado para el fondo de color
+.seccion-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: #FFFFFF;
+  background: rgba(0, 0, 0, 0.15); // Fondo oscuro traslúcido para legibilidad
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-bottom: 20px; 
+}
+
+// Textos pasados a blanco/claro para contraste premium sobre el fondo cyan
 .saludo-sub {
-  color: rgba($blanco, 0.75);
+  color: rgba(255, 255, 255, 0.8);
   font-size: 13px;
   font-weight: 500;
-  margin: 0 0 6px;
-  letter-spacing: 0.3px;
+  margin: 0 0 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-// Título principal del saludo
 .saludo-titulo {
-  color: $blanco;
-  font-size: 32px;
+  color: #FFFFFF; // Título en blanco puro
+  font-size: 28px;
   font-weight: 800;
-  margin: 0 0 8px;
+  margin: 0 0 4px;
   letter-spacing: -0.5px;
 }
 
-// Nombre de la empresa
 .saludo-empresa {
-  color: rgba($blanco, 0.75);
-  font-size: 13px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+  font-weight: 600;
   margin: 0;
 }
 
-// ── Contenedor de tarjetas ─────────────────────────────
+// ── Contenedor y Tarjetas (VOLUMEN MÁXIMO INTACTO) ──────────
 .menu-container {
-  padding: 24px 16px 12px;
+  padding: 16px 16px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  animation: slideUp 0.5s ease-out;
+  gap: 12px;
 }
 
-// ── Tarjeta individual del menú ────────────────────────
 .menu-card {
-  background: $blanco;
-  border-radius: 18px;
-  padding: 18px 20px;
+  background: #FFFFFF; 
+  border-radius: 18px;  
+  padding: 18px 16px;
   display: flex;
   align-items: center;
   gap: 16px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
   cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.2s;
-  border: 1px solid rgba(229, 231, 235, 0.9);
+  
+  border: 1.5px solid rgba($cyan, 0.25); 
+  
+  box-shadow: 
+    0 10px 25px rgba(15, 23, 42, 0.04),  
+    0 4px 12px rgba($cyan, 0.08);        
+
+  transition: 
+    transform 0.12s cubic-bezier(0.4, 0, 0.2, 1), 
+    background-color 0.2s ease, 
+    box-shadow 0.15s ease, 
+    border-color 0.15s ease;
 
   &:active {
-    transform: scale(0.97);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+    transform: scale(0.96); 
+    background: #F8FAFC;
+    border-color: rgba($cyan, 0.6); 
+    
+    box-shadow: 
+      0 4px 10px rgba(15, 23, 42, 0.02),
+      0 0 20px rgba($cyan, 0.35); 
   }
 
-  // Variante para "Cerrar Sesión"
   &--danger {
-    border: 1px solid rgba(239, 68, 68, 0.2);
+    border-color: rgba($danger, 0.25);
+    box-shadow: 
+      0 10px 25px rgba(15, 23, 42, 0.04), 
+      0 4px 12px rgba($danger, 0.08);
+
+    &:active {
+      border-color: rgba($danger, 0.6);
+      box-shadow: 
+        0 4px 10px rgba(15, 23, 42, 0.02),
+        0 0 20px rgba($danger, 0.35);
+    }
   }
 }
 
-// ── Icono de la tarjeta ────────────────────────────────
+// ── Iconos ──────────────────────────────────────────────────
 .card-icono {
-  width: 56px;
-  height: 56px;
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
+  
+  ion-icon { font-size: 22px; }
 
-  ion-icon { font-size: 26px; }
-
-  // Verde para Catálogo y Cotización
-  &--verde {
-    background: rgba(46, 158, 101, 0.12);
-    ion-icon { color: #2e9e65; }
-  }
-
-  // Naranja para Historial
-  &--naranja {
-    background: rgba(230, 152, 30, 0.12);
-    ion-icon { color: #E6981E; }
-  }
-
-  // Azul para Empleados
-  &--azul {
-    background: rgba(99, 102, 241, 0.12);
-    ion-icon { color: #6366F1; }
-  }
-
-  // Rojo para Cerrar Sesión
-  &--rojo {
-    background: rgba(239, 68, 68, 0.12);
-    ion-icon { color: #EF4444; }
-  }
+  &--verde   { background: rgba(46, 207, 179, 0.12);   ion-icon { color: #16A38A; } }
+  &--naranja { background: rgba(249, 115, 22, 0.12);   ion-icon { color: #EA580C; } }
+  &--azul    { background: rgba(99, 102, 241, 0.12);   ion-icon { color: #4F46E5; } }
+  &--rojo    { background: rgba(239, 68, 68, 0.12);    ion-icon { color: #DC2626; } }
 }
 
-// ── Información de la tarjeta ───────────────────────────
 .card-texto { flex: 1; }
-
-// Título de la opción
 .card-titulo {
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
   color: $texto;
-  margin: 0 0 4px;
-
-  &--danger { color: #EF4444; }
+  margin: 0 0 3px;
+  &--danger { color: #DC2626; }
 }
-
-// Descripción corta
-.card-desc {
-  font-size: 12px;
-  color: $gris;
-  margin: 0;
-  line-height: 1.4;
-}
-
-// ── Flecha de navegación ────────────────────────────────
+.card-desc { font-size: 13px; color: $gris; margin: 0; }
 .card-arrow {
-  color: #D1D5DB;
-  font-size: 18px;
+  color: #94A3B8;
+  font-size: 16px;
   flex-shrink: 0;
+  &--danger { color: rgba(#DC2626, 0.4); }
 }
 
-// ── Texto de versión ───────────────────────────────────
+// ── Pie de versión ──────────────────────────────────────────
 .version-text {
   text-align: center;
   font-size: 12px;
-  color: #9CA3AF;
-  padding: 16px 0 28px;
+  font-weight: 500;
+  color: #94A3B8;
+  padding: 24px 0;
   margin: 0;
-}
-
-// ── Animaciones ────────────────────────────────────────
-@keyframes fadeInDown {
-  from { opacity: 0; transform: translateY(-12px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes slideUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
 }

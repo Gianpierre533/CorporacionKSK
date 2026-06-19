@@ -1,0 +1,72 @@
+<ion-content [fullscreen]="true" class="bienvenida-content">
+  <div class="main-wrapper">
+    <div class="brand-section">
+      <div class="logo-container">
+        <img src="assets/logo-ksk.png" alt="Importadora KSK Logo" />
+      </div>
+      <h1 class="brand-title">Importadora KSK</h1>
+      <p class="brand-subtitle">ARTICULOS PARA EL HOGAR</p>
+    </div>
+
+    <div class="features-section">
+      <h2 class="welcome-heading">¿Qué deseas hacer hoy?</h2>
+
+      <div class="feature-card">
+        <div class="icon-box">
+          <ion-icon name="cube-outline"></ion-icon>
+        </div>
+        <div class="feature-text">
+          <h3>Explorar Catálogo</h3>
+          <p>
+            Revisa nuestra lista de productos de nuestros productos con precios
+            actualizados en tiempo real.
+          </p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon-box">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+        <div class="feature-text">
+          <h3>Cotizaciones Rápidas</h3>
+          <p>
+            Genera pre-ventas personalizadas y exporta documentos en PDF listos
+            para compartir.
+          </p>
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <div class="icon-box">
+          <ion-icon name="shield-checkmark-outline"></ion-icon>
+        </div>
+        <div class="feature-text">
+          <h3>Acceso Corporativo</h3>
+          <p>
+            Ingresa de forma segura con tu cuenta de cliente o credenciales de
+            personal interno.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="actions-section">
+      <button class="btn-login" (click)="irAlLogin()">
+        <span>Ingresar a mi Cuenta</span>
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </button>
+
+      <button class="btn-register" (click)="irAlRegistro()">
+        ¿Eres un cliente nuevo? <strong>Regístrate aquí</strong>
+      </button>
+    </div>
+
+    <div class="footer-section">
+      <p>
+        © {{ anioActual }} Corporación KSK S.A.C. • Todos los derechos
+        reservados
+      </p>
+    </div>
+  </div>
+</ion-content>

@@ -1,0 +1,97 @@
+<ion-content class="registro-content">
+  <div class="glow-bg-1"></div>
+  <div class="glow-bg-2"></div>
+
+  <div class="back-btn-minimal" (click)="goBack()">
+    <ion-icon name="chevron-back-outline"></ion-icon>
+  </div>
+
+  <div class="form-wrapper">
+    <div class="registro-header">
+      <span class="tag-premium">Nuevo Cliente</span>
+      <h1 class="titulo-premium">Crear Cuenta</h1>
+      <p class="subtitulo-premium">Regístrate en KSK Importaciones</p>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onRegister()">
+      <div
+        class="input-group-premium"
+        [class.is-invalid]="isFieldInvalid('nombre')"
+      >
+        <label>Nombre Completo</label>
+        <div class="input-field">
+          <ion-icon name="person-outline"></ion-icon>
+          <input
+            type="text"
+            formControlName="nombre"
+            placeholder="Nombre Usuario"
+          />
+        </div>
+        @if (hasError('nombre', 'required')) {
+        <p class="error-text">El nombre es requerido</p>
+        }
+      </div>
+
+      <div
+        class="input-group-premium"
+        [class.is-invalid]="isFieldInvalid('usuario')"
+      >
+        <label>Correo Electrónico</label>
+        <div class="input-field">
+          <ion-icon name="person-outline"></ion-icon>
+          <input
+            type="text"
+            formControlName="usuario"
+            placeholder="Correo Electrónico"
+          />
+        </div>
+        @if (hasError('usuario', 'required')) {
+        <p class="error-text">El correo es requerido</p>
+        }
+      </div>
+
+      <div
+        class="input-group-premium"
+        [class.is-invalid]="isFieldInvalid('contrasena')"
+      >
+        <label>Contraseña</label>
+        <div class="input-field">
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="contrasena"
+            placeholder="••••••"
+          />
+          <ion-icon
+            [name]="showPassword ? 'eye-off-outline' : 'eye-outline'"
+            class="eye-icon"
+            (click)="togglePassword()"
+          ></ion-icon>
+        </div>
+        @if (hasError('contrasena', 'required')) {
+        <p class="error-text">La contraseña es requerida</p>
+        } @if (hasError('contrasena', 'minlength')) {
+        <p class="error-text">Mínimo deben ser 6 caracteres</p>
+        }
+      </div>
+
+      <button
+        type="submit"
+        (click)="onRegister()"
+        class="btn-premium-submit"
+        [disabled]="isLoading"
+      >
+        @if (isLoading) {
+        <ion-spinner name="crescent"></ion-spinner>
+        } @else { Registrarse ahora }
+      </button>
+
+      <div class="footer-navigation">
+        <p>
+          ¿Ya tienes cuenta?
+          <span (click)="goBack()">Inicia Sesión</span>
+        </p>
+      </div>
+    </form>
+  </div>
+</ion-content>

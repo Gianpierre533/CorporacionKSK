@@ -1,0 +1,332 @@
+// ============================================================
+// DESIGN SYSTEM: Corporación KSK - Login Premium
+// ============================================================
+
+$verde:      #2ECFB3; // Cyan principal KSK
+$verde-dark: #1A9E8A; // Tono ejecutivo para lectura y contrastes
+
+:host {
+  // Paleta de Neutros Premium (Estilo Apple / Tailwind Slate)
+  --color-bg: #FFFFFF;            
+  --color-surface: #F8FAFC;        // Fondo de tarjeta limpio (Slate 50)
+  --color-input-bg: #FFFFFF;       // Inputs blanco puro para máximo contraste
+  
+  --color-accent: #{$verde};
+  --color-accent-dark: #{$verde-dark};
+  --color-accent-glow: rgba(46, 207, 179, 0.14); 
+  
+  --color-text-primary: #0F172A;   // Slate 900 (Ultra oscuro nítido)
+  --color-text-secondary: #475569; // Slate 600 (Texto descriptivo fluido)
+  --color-error: #EF4444;          // Rojo Google/iOS institucional
+  --color-error-glow: rgba(239, 68, 68, 0.08);
+}
+
+.login-content { 
+  --background: var(--color-bg); 
+}
+
+// ── BLOB DE ONDAS SUPERIOR ────────────────────────────────
+.blob-container {
+  position: fixed; 
+  top: 0; 
+  right: 0;
+  width: 100%; 
+  height: 36vh; // Ajustado geométricamente
+  pointer-events: none; 
+  z-index: 0;
+
+  .blob-svg {
+    position: absolute; 
+    top: 0; 
+    right: 0;
+    height: 100%; 
+    width: auto; 
+    min-width: 85%;
+  }
+}
+
+// ── BOTÓN DE REGRESO (Efecto Cristal Moderno) ─────────────
+.back-btn-wrapper {
+  position: fixed;
+  top: max(16px, env(safe-area-inset-top, 16px));
+  left: 16px; 
+  z-index: 100;
+}
+
+.back-btn {
+  background: rgba(15, 23, 42, 0.06); 
+  color: #FFFFFF;                  
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  width: 42px; 
+  height: 42px;
+  backdrop-filter: blur(12px);
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:active {
+    transform: scale(0.92);
+    background: rgba(0, 0, 0, 0.15);
+  }
+  ion-icon { font-size: 20px; }
+}
+
+// ── CONTENEDOR DE PÁGINA (Anti-Scroll Elástico) ───────────
+.page-wrapper {
+  position: relative; 
+  z-index: 10;
+  display: flex; 
+  flex-direction: column;
+  height: 100vh; // Fija el viewport congelado
+  justify-content: flex-end; 
+  box-sizing: border-box;
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  overflow: hidden;
+}
+
+// ── ENCABEZADO: TEXTOS Y JERARQUÍAS ───────────────────────
+.header-text {
+  padding: 0 28px 24px;
+  animation: fadeInDown 0.4s ease-out;
+
+  .access-label {
+    display: inline-block; 
+    font-size: 10px; 
+    font-weight: 700;
+    letter-spacing: 0.2em; // Tracking corporativo
+    color: var(--color-accent-dark); 
+    background: rgba(46, 207, 179, 0.12);
+    padding: 4px 10px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  .title {
+    font-size: 32px; 
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin: 0 0 4px; 
+    letter-spacing: -0.6px;
+  }
+  .subtitle {
+    font-size: 14px; 
+    color: var(--color-text-secondary); 
+    font-weight: 500;
+    margin: 0;
+  }
+}
+
+// ── CARD DEL FORMULARIO EXECUTIVE SHEET ──────────────────
+.form-card {
+  background: var(--color-surface);
+  border-radius: 32px 32px 0 0;
+  padding: 32px 24px 20px;
+  // Sombra suave multicapa estilo iOS para volumen limpio
+  box-shadow: 0 -12px 30px rgba(15, 23, 42, 0.03), 0 -4px 12px rgba(15, 23, 42, 0.01);
+  border-top: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+// ── INPUT GROUPS & LABELS ─────────────────────────────────
+.input-group { 
+  margin-bottom: 16px; 
+  display: flex;
+  flex-direction: column;
+  &.has-error { margin-bottom: 6px; } 
+}
+
+.field-label {
+  display: block;
+  font-size: 11px; 
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-transform: uppercase; 
+  letter-spacing: 0.05em;
+  margin-bottom: 8px;
+  padding-left: 2px;
+}
+
+// ── CONTENEDOR INPUT DE ALTA FIDELIDAD ────────────────────
+.input-wrapper {
+  display: flex; 
+  align-items: center;
+  background: var(--color-input-bg);
+  border: 1.5px solid #E2E8F0; // Líneas finas Slate 200
+  border-radius: 16px; // Esquinas curveadas premium modernas
+  padding: 0 16px; 
+  height: 52px; 
+  gap: 12px;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  // Foco inteligente iluminado en Cyan
+  &.focused {
+    border-color: var(--color-accent-dark); 
+    box-shadow: 0 0 0 4px var(--color-accent-glow);
+  }
+
+  // Estado de error integrado
+  &.error {
+    border-color: var(--color-error);
+    box-shadow: 0 0 0 4px var(--color-error-glow);
+  }
+
+  .input-icon {
+    font-size: 19px; 
+    color: #94A3B8; 
+    flex-shrink: 0;
+    transition: color 0.2s;
+  }
+  &.focused .input-icon { color: var(--color-accent-dark); }
+  &.error .input-icon { color: var(--color-error); }
+
+  .custom-input {
+    flex: 1; 
+    background: transparent; 
+    border: none; 
+    outline: none;
+    color: var(--color-text-primary);
+    font-size: 14.5px; 
+    font-weight: 500;
+    caret-color: var(--color-accent-dark);
+    &::placeholder { color: #94A3B8; opacity: 0.8; }
+  }
+
+  .eye-btn {
+    background: none; 
+    border: none; 
+    padding: 6px; 
+    cursor: pointer;
+    display: flex; 
+    color: #94A3B8;
+    transition: color 0.2s;
+    &:active { color: var(--color-accent-dark); }
+    ion-icon { font-size: 19px; }
+  }
+}
+
+.error-msg {
+  display: block; 
+  font-size: 11.5px; 
+  color: var(--color-error);
+  padding: 6px 4px 4px; 
+  font-weight: 600;
+  animation: fadeIn 0.2s ease;
+}
+
+// ── ENLACE DE RECUPERACIÓN ────────────────────────────────
+.forgot-row {
+  display: flex; 
+  justify-content: flex-end; 
+  margin-bottom: 20px;
+
+  .forgot-link {
+    background: none; 
+    border: none; 
+    cursor: pointer;
+    font-size: 12.5px; 
+    font-weight: 700; 
+    color: var(--color-accent-dark);
+    padding: 4px;
+    transition: opacity 0.15s;
+    &:active { opacity: 0.6; }
+  }
+}
+
+// ── BOTÓN SÓLIDO (Glow volumétrico de color) ──────────────
+.submit-btn {
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  width: 100%; 
+  height: 52px; 
+  border: none; 
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-dark) 100%);
+  color: #FFFFFF; 
+  font-size: 15.5px; 
+  font-weight: 700;
+  cursor: pointer; 
+  margin-bottom: 20px;
+  
+  // Sombra con tono cian para efecto de iluminación tecnológica
+  box-shadow: 0 8px 24px rgba(26, 158, 138, 0.22);
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+    box-shadow: 0 4px 12px rgba(26, 158, 138, 0.15);
+  }
+  &:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; }
+
+  .spinner-wrap { display: flex; align-items: center; justify-content: center; }
+  .btn-spinner { --color: #FFFFFF; width: 22px; height: 22px; }
+}
+
+// ── DIVIDER CONTINUAR CON ─────────────────────────────────
+.divider {
+  display: flex; 
+  align-items: center; 
+  gap: 12px; 
+  margin-bottom: 18px;
+
+  .divider-line { flex: 1; height: 1px; background: #E2E8F0; }
+  .divider-text { 
+    font-size: 11px; 
+    color: #94A3B8; 
+    font-weight: 600; 
+    text-transform: uppercase; 
+    letter-spacing: 0.5px; 
+  }
+}
+
+// ── BOTÓN GOOGLE MINIMALISTA CLEAN ────────────────────────
+.google-btn {
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 10px;
+  width: 100%; 
+  height: 50px; 
+  background: #FFFFFF; 
+  border: 1.5px solid #E2E8F0; 
+  border-radius: 16px;
+  color: var(--color-text-primary);
+  font-size: 14.5px; 
+  font-weight: 700; 
+  cursor: pointer; 
+  margin-bottom: 20px;
+  transition: all 0.15s;
+
+  .google-icon { width: 18px; height: 18px; flex-shrink: 0; }
+  
+  &:active {
+    background: #F1F5F9; 
+    transform: scale(0.98);
+  }
+}
+
+// ── FOOTER DE REGISTRO ────────────────────────────────────
+.footer-text {
+  text-align: center; 
+  font-size: 13.5px;
+  color: var(--color-text-secondary); 
+  margin: 0;
+  font-weight: 500;
+
+  .register-link {
+    background: none; 
+    border: none; 
+    padding: 0 0 0 4px; 
+    cursor: pointer;
+    font-size: 13.5px; 
+    font-weight: 700; 
+    color: var(--color-accent-dark);
+    text-decoration: underline;
+    &:active { opacity: 0.6; }
+  }
+}
+
+// ── KEYFRAMES ANIMACIONES ─────────────────────────────────
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-12px); } to { opacity: 1; transform: translateY(0); } }

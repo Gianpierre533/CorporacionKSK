@@ -1,6 +1,9 @@
-<ion-header class="header-custom">
-  <ion-toolbar class="toolbar-custom">
-    <span class="toolbar-title">Menú Principal</span>
+<ion-header class="header-ksk">
+  <ion-toolbar class="toolbar-ksk">
+    <ion-title class="titulo-pagina">Menú Principal</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="header-btn"> </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -45,6 +48,7 @@
       <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
     </div>
 
+    @if (esAdmin()) {
     <div class="menu-card" (click)="irA('/empleados')">
       <div class="card-icono card-icono--azul">
         <ion-icon name="people-outline"></ion-icon>
@@ -55,6 +59,7 @@
       </div>
       <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
     </div>
+    }
 
     <div class="menu-card menu-card--danger" (click)="cerrarSesion()">
       <div class="card-icono card-icono--rojo">
@@ -64,9 +69,12 @@
         <h2 class="card-titulo card-titulo--danger">Cerrar Sesión</h2>
         <p class="card-desc">Salir de la aplicación</p>
       </div>
-      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+      <ion-icon
+        name="chevron-forward-outline"
+        class="card-arrow card-arrow--danger"
+      ></ion-icon>
     </div>
   </div>
 
-  <p class="version-text">Versión 1.0</p>
-</ion-content>
+  <p class="version-text">Versión 1.0</p></ion-content
+>

@@ -28,21 +28,21 @@ export class ProductosService {
       nombre: 'Bomba de Agua 1HP',
       descripcion: 'Bomba centrífuga de alto rendimiento para uso industrial.',
       precio: 375.00, stock: 15, categoria: 'mecanico',
-      imagen: '/assets/Productos/Bomba de agua.jpg'
+      imagen: '/assets/Productos/bomba-agua.jpg'
     },
     {
       id: '2',
       nombre: 'Cable Eléctrico 2.5mm',
       descripcion: 'Cable eléctrico flexible antillama 2.5mm x 100m.',
       precio: 180.00, stock: 42, categoria: 'electrico',
-      imagen: '/assets/Productos/cable electrico.jpg'
+      imagen: '/assets/Productos/cable-electrico.jpg'
     },
     {
       id: '3',
       nombre: 'Interruptor Termomagnético',
       descripcion: 'Interruptor termomagnético de 2 polos 20A.',
       precio: 40.00, stock: 8, categoria: 'electrico',
-      imagen: '/assets/Productos/Interruptor.jpg'
+      imagen: '/assets/Productos/interruptor.jpg'
     },
     {
       id: '4',
@@ -67,8 +67,14 @@ export class ProductosService {
     },
   ];
 
+  // ── MÉTODOS PROTEGIDOS PARA EVITAR EL ERROR t16.sort ──
+
   getAll(): Producto[] {
-    return this.productos;
+    // Patrón de seguridad: Retornamos una copia ordenada de forma segura
+    if (Array.isArray(this.productos)) {
+      return [...this.productos].sort((a, b) => a.nombre.localeCompare(b.nombre));
+    }
+    return [];
   }
 
   getById(id: string): Producto | undefined {
@@ -76,15 +82,17 @@ export class ProductosService {
   }
 
   getPorCategoria(categoria: string): Producto[] {
-    if (categoria === 'todos') return this.productos;
-    return this.productos.filter(p => p.categoria === categoria);
+    if (categoria === 'todos') return this.getAll();
+    const filtrados = this.productos.filter(p => p.categoria === categoria);
+    return Array.isArray(filtrados) ? filtrados : [];
   }
 
   buscar(query: string): Producto[] {
     const q = query.toLowerCase();
-    return this.productos.filter(p =>
+    const resultados = this.productos.filter(p =>
       p.nombre.toLowerCase().includes(q) ||
       p.descripcion.toLowerCase().includes(q)
     );
+    return Array.isArray(resultados) ? resultados : [];
   }
 }

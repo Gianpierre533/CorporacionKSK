@@ -1,0 +1,135 @@
+<ion-header class="ion-no-border premium-header">
+  <ion-toolbar class="checkout-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/cliente/catalogo"
+        class="checkout-back-btn"
+      ></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="checkout-title">Finalizar Compra</ion-title>
+
+    <ion-buttons slot="end">
+      <div class="secure-badge">
+        <ion-icon name="lock-closed-outline"></ion-icon>
+        <span>Seguro</span>
+      </div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="checkout-content">
+  <div class="checkout-container">
+    <!-- TARJETA DE RESUMEN TIPO FACTURA PREMIUM -->
+    <div class="checkout-card summary-glow">
+      <div class="card-header-vibrant">
+        <div class="icon-circle">
+          <ion-icon name="receipt-outline"></ion-icon>
+        </div>
+        <h3>Resumen de tu Pedido</h3>
+      </div>
+
+      <ion-list lines="none" class="products-list-premium">
+        <ion-item
+          *ngFor="let item of carritoService.items()"
+          class="premium-product-item"
+        >
+          <ion-label>
+            <h2>{{ item.nombre }}</h2>
+            <p>
+              Cantidad: <span class="qty-badge">{{ item.cantidad }}</span> • S/
+              {{ item.precio | number:'1.2-2' }} c/u
+            </p>
+          </ion-label>
+          <!-- CORREGIDO: Tag cerrado correctamente en una sola línea limpia -->
+          <ion-note slot="end" class="item-total-price">
+            S/ {{ item.precio * item.cantidad | number:'1.2-2' }}
+          </ion-note>
+        </ion-item>
+      </ion-list>
+
+      <div class="vibrant-total-row">
+        <div class="total-text-group">
+          <span class="total-label">Monto Neto Total</span>
+          <p class="include-igv">Incluye IGV e impuestos de importación</p>
+        </div>
+        <span class="total-amount"
+          >S/ {{ carritoService.totalPagar() | number:'1.2-2' }}</span
+        >
+      </div>
+    </div>
+
+    <!-- SECTOR DE MÉTODOS DE PAGO ESTILO TILES VIVOS -->
+    <h4 class="section-title-vibrant">Selecciona tu Método de Pago</h4>
+
+    <ion-grid class="ion-no-padding grid-gap">
+      <ion-row>
+        <!-- Tarjeta -->
+        <ion-col size="4">
+          <div
+            class="pay-tile-vibrant"
+            [class.selected]="metodoSeleccionado === 'card'"
+            (click)="seleccionarMetodo('card')"
+          >
+            <div class="active-checkmark" *ngIf="metodoSeleccionado === 'card'">
+              <ion-icon name="checkmark-circle"></ion-icon>
+            </div>
+            <div class="tile-icon-wrapper card-color">
+              <ion-icon name="card-outline"></ion-icon>
+            </div>
+            <span>Tarjeta</span>
+          </div>
+        </ion-col>
+
+        <!-- Yape/Plin -->
+        <ion-col size="4">
+          <div
+            class="pay-tile-vibrant"
+            [class.selected]="metodoSeleccionado === 'yape'"
+            (click)="seleccionarMetodo('yape')"
+          >
+            <div class="active-checkmark" *ngIf="metodoSeleccionado === 'yape'">
+              <ion-icon name="checkmark-circle"></ion-icon>
+            </div>
+            <div class="tile-icon-wrapper yape-color">
+              <ion-icon name="phone-portrait-outline"></ion-icon>
+            </div>
+            <span>Yape / Plin</span>
+          </div>
+        </ion-col>
+
+        <!-- Transferencia -->
+        <ion-col size="4">
+          <div
+            class="pay-tile-vibrant"
+            [class.selected]="metodoSeleccionado === 'transfer'"
+            (click)="seleccionarMetodo('transfer')"
+          >
+            <div
+              class="active-checkmark"
+              *ngIf="metodoSeleccionado === 'transfer'"
+            >
+              <ion-icon name="checkmark-circle"></ion-icon>
+            </div>
+            <div class="tile-icon-wrapper bank-color">
+              <ion-icon name="business-outline"></ion-icon>
+            </div>
+            <span>Banco</span>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <div class="guarantee-note">
+      <ion-icon name="lock-closed-outline"></ion-icon>
+      <p>Tu transacción está protegida con cifrado SSL.</p>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer class="ion-no-border premium-footer">
+  <ion-button expand="block" (click)="confirmarPago()" class="btn-vibrant-ksk">
+    <ion-icon name="lock-closed-outline" class="btn-lock-icon"></ion-icon>
+    CONFIRMAR Y PAGAR AHORA
+  </ion-button>
+</ion-footer>

@@ -1,0 +1,121 @@
+<ion-header class="header-custom ion-no-border">
+  <ion-toolbar class="toolbar-custom">
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/menu"
+        text=""
+        class="back-custom"
+      ></ion-back-button>
+    </ion-buttons>
+
+    <ion-title class="titulo-catalogo">Catálogo de Productos</ion-title>
+
+    <ion-buttons slot="end">
+      <button type="button" class="btn-header-icon" (click)="toggleBusqueda()">
+        <ion-icon
+          [name]="mostrarBusqueda ? 'close-outline' : 'search-outline'"
+        ></ion-icon>
+      </button>
+
+      <button
+        type="button"
+        class="btn-header-icon btn-cart-trigger"
+        (click)="abrirCarrito()"
+      >
+        <ion-icon name="cart-outline"></ion-icon>
+        @if (carritoService.totalProductos() > 0) {
+        <span class="carrito-badge">{{ carritoService.totalProductos() }}</span>
+        }
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <div class="search-container" *ngIf="mostrarBusqueda">
+    <div class="search-box">
+      <ion-icon name="search-outline" class="search-icon"></ion-icon>
+      <input
+        type="text"
+        class="search-input"
+        placeholder="¿Qué producto estás buscando?"
+        [value]="searchQuery"
+        (input)="onSearch($event)"
+        autofocus
+      />
+      <button
+        type="button"
+        class="search-clear"
+        *ngIf="searchQuery"
+        (click)="clearSearch()"
+      >
+        <ion-icon name="close-outline"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="filtros-scroll">
+    <div class="filtros-container">
+      <button
+        type="button"
+        class="chip"
+        [class.chip--active]="categoriaActiva === cat.key"
+        *ngFor="let cat of categorias"
+        (click)="filtrarCategoria(cat.key)"
+      >
+        {{ cat.label }}
+      </button>
+    </div>
+  </div>
+</ion-header>
+
+<ion-content class="catalogo-content">
+  <div class="empty-state" *ngIf="productosFiltrados.length === 0">
+    <div class="empty-icon-box">
+      <ion-icon name="cube-outline"></ion-icon>
+    </div>
+    <h3 class="empty-title">Sin resultados comerciales</h3>
+    <p class="empty-desc">
+      Intenta cambiando el término de búsqueda o selecciona otra categoría.
+    </p>
+  </div>
+
+  <div class="productos-lista" *ngIf="productosFiltrados.length > 0">
+    <div
+      class="producto-card"
+      *ngFor="let p of productosFiltrados"
+      (click)="verDetalle(p)"
+    >
+      <div class="producto-imagen">
+        <img [src]="p.imagen" [alt]="p.nombre" loading="lazy" />
+      </div>
+
+      <div class="producto-info">
+        <p class="producto-nombre">{{ p.nombre }}</p>
+        <p class="producto-desc">{{ p.descripcion }}</p>
+
+        <div class="producto-footer">
+          <p class="producto-precio">S/ {{ p.precio | number:'1.2-2' }}</p>
+          <span
+            class="stock-badge"
+            [class.stock-badge--ok]="p.stock > 10"
+            [class.stock-badge--low]="p.stock <= 10"
+          >
+            Stock: {{ p.stock }}
+          </span>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        class="btn-agregar-carrito"
+        (click)="agregarAlCarrito($event, p)"
+      >
+        <ion-icon name="cart-outline"></ion-icon>
+      </button>
+
+      <ion-icon
+        name="chevron-forward-outline"
+        class="producto-flecha"
+      ></ion-icon>
+    </div>
+  </div>
+</ion-content>

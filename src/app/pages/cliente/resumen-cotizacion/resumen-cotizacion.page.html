@@ -1,0 +1,121 @@
+<ion-header class="header-custom">
+  <ion-toolbar class="toolbar-custom">
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/cotizacion/historial"
+        text=""
+        class="back-custom"
+      ></ion-back-button>
+    </ion-buttons>
+
+    <div class="header-info">
+      <p class="header-tag">Documento</p>
+      <ion-title class="header-title">Resumen de Cotización</ion-title>
+    </div>
+
+    <ion-buttons slot="end">
+      <div class="estado-badge">{{ cotizacion?.estado }}</div>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="resumen-content" *ngIf="cotizacion">
+  <div class="cards-container">
+    <div class="card">
+      <div class="empresa-row">
+        <div style="display: flex; align-items: center; gap: 14px">
+          <div class="ksk-logo-box">
+            <img src="assets/logo-ksk.png" alt="Corporación KSK" />
+          </div>
+          <div>
+            <p class="empresa-nombre">Corporación KSK S.A.C.</p>
+            <p class="empresa-sub">Comercio e Importaciones</p>
+          </div>
+        </div>
+        <div style="text-align: right">
+          <p class="cot-numero">{{ cotizacion.id }}</p>
+          <p class="cot-fecha">{{ formatDate(cotizacion.fecha) }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="cliente-row">
+        <div class="cliente-avatar">
+          <ion-icon name="person-outline"></ion-icon>
+        </div>
+        <div>
+          <p class="cliente-tag">Cliente</p>
+          <p class="cliente-nombre">{{ cotizacion.cliente.nombre }}</p>
+          <p class="cliente-tel">
+            <ion-icon name="call-outline"></ion-icon>
+            {{ cotizacion.cliente.telefono || 'Sin teléfono' }}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card card--productos">
+      <div class="productos-header">
+        <p class="productos-title">Productos</p>
+        <span class="items-badge">{{ cotizacion.items.length }} items</span>
+      </div>
+
+      <div class="productos-lista">
+        <div
+          class="producto-row"
+          *ngFor="let item of cotizacion.items; let last = last"
+          [class.producto-row--last]="last"
+        >
+          <div class="producto-icono">
+            <img [src]="item.imagen" [alt]="item.nombre" />
+          </div>
+
+          <div class="producto-info">
+            <p class="producto-nombre">{{ item.nombre }}</p>
+            <p class="producto-detalle">
+              {{ item.cantidad }} × S/ {{ item.precio | number:'1.2-2' }}
+            </p>
+          </div>
+
+          <span class="producto-subtotal"
+            >S/ {{ item.subtotal | number:'1.2-2' }}</span
+          >
+        </div>
+      </div>
+
+      <div class="totales-box">
+        <div class="total-row">
+          <span class="total-label">Subtotal</span>
+          <span class="total-valor"
+            >S/ {{ cotizacion.subtotal | number:'1.2-2' }}</span
+          >
+        </div>
+        <div class="total-row">
+          <span class="total-label">IGV (18%)</span>
+          <span class="total-valor"
+            >S/ {{ cotizacion.igv | number:'1.2-2' }}</span
+          >
+        </div>
+        <div class="total-row total-row--final">
+          <span class="total-label--final">Total a pagar</span>
+          <span class="total-valor--final"
+            >S/ {{ cotizacion.total | number:'1.2-2' }}</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="botones-grid">
+      <button class="btn-compartir" (click)="compartir()">
+        <ion-icon name="share-social-outline"></ion-icon>
+        Compartir
+      </button>
+
+      <button class="btn-pdf" (click)="guardarPdf()">
+        <ion-icon name="document-text-outline"></ion-icon>
+        Guardar PDF
+      </button>
+    </div>
+  </div>
+</ion-content>

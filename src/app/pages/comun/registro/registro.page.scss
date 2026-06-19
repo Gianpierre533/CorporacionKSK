@@ -1,0 +1,163 @@
+// ============================================================
+// DISEÑO PREMIUM: FIGMA MODERN UI MATCH
+// ============================================================
+$cyan-primary:  #2ECFB3;
+$cyan-dark:     #149B84;
+$bg-glow:       linear-gradient(135deg, #2ECFB3 0%, #16A38A 100%);
+$text-main:     #0F172A;
+$text-muted:    #64748B;
+
+.registro-content {
+  --background: #FFFFFF;
+  position: relative;
+}
+
+// ── CÍRCULOS DE LUZ DIFUMINADOS (FIGMA BLUR EFFECT) ────────
+.glow-bg-1 {
+  position: absolute;
+  top: -60px; right: -40px;
+  width: 200px; height: 200px;
+  background: rgba(46, 207, 180, 0.527);
+  border-radius: 50%;
+  filter: blur(50px);
+  pointer-events: none;
+}
+
+.glow-bg-2 {
+  position: absolute;
+  bottom: 10%; left: -60px;
+  width: 180px; height: 180px;
+  background: rgba(22, 163, 138, 0.1);
+  border-radius: 50%;
+  filter: blur(45px);
+  pointer-events: none;
+}
+
+// ── BOTÓN VOLVER FLOTANTE MINIMAL ─────────────────────────
+.back-btn-minimal {
+  position: absolute;
+  top: 50px; left: 24px;
+  width: 42px; height: 42px;
+  background: #F8FAFC;
+  border: 1px solid #E2E8F0;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  color: $text-main; font-size: 20px; cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 50;
+
+  &:active {
+    transform: scale(0.92);
+    background: #F1F5F9;
+  }
+}
+
+// ── CONTENEDOR PRINCIPAL ──────────────────────────────────
+.form-wrapper {
+  padding: 130px 28px 40px; // Espaciado perfecto para dar aire arriba
+}
+
+.registro-header {
+  margin-bottom: 32px;
+  
+  .tag-premium {
+    color: $cyan-dark; font-size: 11px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 1.5px;
+  }
+  .titulo-premium {
+    font-size: 32px; font-weight: 800; color: $text-main;
+    margin: 6px 0 4px; letter-spacing: -0.5px;
+  }
+  .subtitulo-premium {
+    color: $text-muted; font-size: 15px; margin: 0;
+  }
+}
+
+// ── INPUTS ESTILO FIGMA ───────────────────────────────────
+.input-group-premium {
+  display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px;
+
+  label {
+    font-size: 12px; font-weight: 700; color: $text-main;
+    letter-spacing: 0.2px; margin-left: 2px;
+  }
+
+  .input-field {
+    display: flex; align-items: center; background: #F8FAFC;
+    border: 1px solid #E2E8F0; border-radius: 16px; // Más curvo e integrado
+    padding: 0 16px; height: 54px; transition: all 0.25s ease;
+
+    ion-icon { color: #94A3B8; font-size: 20px; margin-right: 12px; }
+    
+    input {
+      border: none; background: transparent; flex: 1; height: 100%;
+      color: $text-main; font-size: 15px; font-weight: 500; outline: none;
+      
+      &::placeholder { color: #94A3B8; font-weight: 400; }
+    }
+
+    .eye-icon { margin-right: 0; margin-left: 10px; cursor: pointer; color: $text-muted; }
+
+    &:focus-within {
+      border-color: $cyan-primary;
+      background: #FFFFFF;
+      box-shadow: 0 0 0 4px rgba(46, 207, 179, 0.12);
+    }
+  }
+
+  &.is-invalid .input-field {
+    border-color: #EF4444;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.08);
+  }
+}
+
+// ── TEXTO DE ERROR MEJORADO (FIGMA HIGH LEGIBILITY) ───────
+.error-text {
+  color: #EF4444 !important;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 4px 0 0 4px;
+  display: block;
+  text-align: left;
+  animation: fadeInError 0.2s ease-in-out;
+}
+
+@keyframes fadeInError {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+// ── BOTÓN PREMIUM SUBMIT ──────────────────────────────────
+.btn-premium-submit {
+  width: 100%; height: 54px;
+  background: $bg-glow; color: white;
+  border: none; border-radius: 16px;
+  font-size: 16px; font-weight: 700; margin-top: 14px;
+  box-shadow: 0 10px 25px rgba(46, 207, 179, 0.25); // Glow sofisticado de Figma
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s ease;
+
+  &:active {
+    transform: translateY(1px);
+    box-shadow: 0 5px 15px rgba(46, 207, 179, 0.2);
+  }
+
+  &:disabled {
+    background: #E2E8F0; color: #94A3B8;
+    box-shadow: none; cursor: not-allowed;
+  }
+
+  ion-spinner { --color: white; width: 24px; height: 24px; }
+}
+
+// ── ENLACE INFERIOR ───────────────────────────────────────
+.footer-navigation {
+  text-align: center; margin-top: 28px;
+  
+  p { color: $text-muted; font-size: 14px; font-weight: 500; }
+  span {
+    color: $cyan-dark; font-weight: 700; cursor: pointer;
+    margin-left: 4px; transition: color 0.2s;
+    &:hover { color: $cyan-primary; }
+  }
+}

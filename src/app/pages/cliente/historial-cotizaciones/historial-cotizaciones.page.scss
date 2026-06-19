@@ -1,0 +1,321 @@
+// ============================================================
+//  HISTORIAL DE COTIZACIONES - ESTILOS
+//  Lista de cotizaciones generadas con filtros por estado
+//  y barra de búsqueda
+// ============================================================
+
+// ── Variables de color ──────────────────────────────────
+$verde:   #2ECFB3; // Color primario KSK (Cyan)
+$blanco:  #FFFFFF;
+$fondo:   #F4F6F8;
+$texto:   #1a1a1a;
+$gris:    #6B7280;
+$borde:   rgba(229, 231, 235, 0.9);
+
+// ── Header personalizado ────────────────────────────────
+ion-header.header-custom {
+  --background: #{$verde} !important;
+  background: #{$verde} !important;
+  &::after { display: none; }
+}
+
+// Toolbar sobre fondo verde
+.toolbar-custom {
+  --background: #{$verde} !important;
+  --border-color: transparent !important;
+  background: #{$verde} !important;
+  padding: 12px 16px;
+}
+
+// Botón de regreso
+.back-custom {
+  --color: #{$blanco};
+  --icon-font-size: 22px;
+}
+
+// Información del header (subtítulo + título)
+.header-info { flex: 1; }
+
+.header-tag {
+  color: rgba($blanco, 0.7);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin: 0 0 1px;
+}
+
+.header-title {
+  color: $blanco;
+  font-size: 17px;
+  font-weight: 600;
+  margin: 0;
+}
+
+// Badge con el total de cotizaciones
+.badge-total {
+  background: rgba($blanco, 0.2);
+  color: $blanco;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-right: 4px;
+}
+
+// ── Barra de búsqueda ───────────────────────────────────
+// Integrada en el header sobre fondo verde
+.search-container {
+  background: $verde;
+  padding: 0 16px 10px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba($blanco, 0.16);
+  border: 1px solid rgba($blanco, 0.24);
+  border-radius: 14px;
+  padding: 0 16px;
+  min-height: 44px;
+}
+
+.search-icon { color: rgba($blanco, 0.82); font-size: 18px; }
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: $blanco;
+  font-size: 14px;
+  &::placeholder { color: rgba($blanco, 0.65); }
+}
+
+.search-clear {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: rgba($blanco, 0.75);
+  cursor: pointer;
+  ion-icon { font-size: 18px; }
+}
+
+// ── Chips de filtro por estado ──────────────────────────
+// Barra horizontal deslizable: Todos, Pendiente, Enviada...
+.filtros-scroll {
+  background: $verde;
+  padding: 0 0 14px;
+  overflow-x: auto;
+  &::-webkit-scrollbar { display: none; }
+}
+
+.filtros-container {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px;
+  width: max-content;
+}
+
+// Chip de filtro individual
+.chip {
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1.5px solid rgba($blanco, 0.4);
+  background: transparent;
+  color: rgba($blanco, 0.85);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+
+  // Chip activo: blanco con texto verde
+  &--active {
+    background: $blanco;
+    border-color: $blanco;
+    color: $verde;
+    font-weight: 700;
+  }
+}
+
+// ── Contenido / fondo ───────────────────────────────────
+.historial-content { --background: #{$fondo}; }
+
+// ── Estado vacío ────────────────────────────────────────
+// Cuando no hay cotizaciones o no hay resultados de búsqueda
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 32px;
+  text-align: center;
+}
+
+.empty-icon-wrapper {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: $blanco;
+  border: 1px solid $borde;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  ion-icon { font-size: 32px; color: #D1D5DB; }
+}
+
+.empty-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: $texto;
+  margin: 0 0 8px;
+}
+
+.empty-desc {
+  font-size: 13px;
+  color: $gris;
+  margin: 0;
+  line-height: 1.6;
+}
+
+// ── Lista de cotizaciones ───────────────────────────────
+.lista-container {
+  padding: 16px 14px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// ── Tarjeta de cotización ───────────────────────────────
+// Card blanca con número, cliente, estado, productos y total
+.cotizacion-card {
+  background: $blanco;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+  border: 1px solid $borde;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  }
+}
+
+// Franja de color izquierda según estado
+.card-stripe {
+  width: 4px;
+  border-radius: 4px 0 0 4px;
+  flex-shrink: 0;
+}
+
+// Parte superior de la card: número + cliente + fecha + estado
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.6);
+}
+
+.card-left { flex: 1; }
+
+// Número de la cotización (COT-00001)
+.cot-numero {
+  font-size: 15px;
+  font-weight: 700;
+  color: $verde;
+  margin: 0 0 4px;
+}
+
+// Nombre del cliente
+.cot-cliente {
+  font-size: 13px;
+  color: $texto;
+  font-weight: 500;
+  margin: 0;
+}
+
+.card-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+// Fecha de la cotización
+.cot-fecha {
+  font-size: 11px;
+  color: $gris;
+  margin: 0;
+}
+
+// ── Badges de estado ────────────────────────────────────
+// Colores distintos por cada estado de la cotización
+.estado-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 20px;
+
+  // Pendiente → amarillo
+  &.estado-pendiente {
+    background: rgba(251, 191, 36, 0.12);
+    color: #D97706;
+    border: 1px solid rgba(251, 191, 36, 0.3);
+  }
+
+  // Enviada → verde
+  &.estado-enviada {
+    background: rgba(46, 158, 101, 0.12);
+    color: $verde;
+    border: 1px solid rgba(46, 158, 101, 0.3);
+  }
+
+  // Aceptada → azul
+  &.estado-aceptada {
+    background: rgba(99, 102, 241, 0.12);
+    color: #6366F1;
+    border: 1px solid rgba(99, 102, 241, 0.3);
+  }
+
+  // Rechazada → rojo
+  &.estado-rechazada {
+    background: rgba(239, 68, 68, 0.12);
+    color: #EF4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+  }
+}
+
+// ── Pie de la card ──────────────────────────────────────
+// Muestra número de productos y total
+.card-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 18px 14px;
+}
+
+// Info de cantidad de productos
+.items-info {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: $gris;
+  ion-icon { font-size: 14px; }
+}
+
+// Total de la cotización (en verde)
+.cot-total {
+  font-size: 17px;
+  font-weight: 700;
+  color: $verde;
+  margin: 0;
+}

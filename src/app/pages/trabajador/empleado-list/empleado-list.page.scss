@@ -1,0 +1,289 @@
+// ============================================================
+//  GESTIÓN DE EMPLEADOS (LISTA) - ESTILOS
+//  Lista de empleados con búsqueda y botón para registrar
+// ============================================================
+
+// ── Variables de color ──────────────────────────────────
+$verde:   #2ECFB3; // Color primario KSK (Cyan)
+$blanco:  #FFFFFF;
+$fondo:   #F4F6F8;
+$texto:   #1a1a1a;
+$gris:    #6B7280;
+$borde:   rgba(229, 231, 235, 0.9);
+
+// ── Header personalizado ────────────────────────────────
+ion-header.header-custom {
+  --background: #{$verde} !important;
+  background: #{$verde} !important;
+  &::after { display: none; }
+}
+
+// Toolbar sobre fondo verde
+.toolbar-custom {
+  --background: #{$verde} !important;
+  --border-color: transparent !important;
+  background: #{$verde} !important;
+  padding: 12px 16px;
+}
+
+// Botón de regreso manual
+.back-custom {
+  --color: #{$blanco};
+  --background: rgba(255,255,255,0.15);
+  --border-radius: 10px;
+  --padding-start: 8px;
+  --padding-end: 8px;
+}
+
+// Título del toolbar
+.toolbar-title {
+  color: $blanco;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+// Badge con el total de empleados
+.badge-count {
+  --background: rgba(255,255,255,0.2);
+  --color: #{$blanco};
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 20px;
+  margin-right: 4px;
+}
+
+// ── Barra de búsqueda ───────────────────────────────────
+// Integrada en el header sobre fondo verde
+.search-container {
+  background: $verde;
+  padding: 0 16px 14px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba($blanco, 0.16);
+  border: 1px solid rgba($blanco, 0.24);
+  border-radius: 14px;
+  padding: 0 16px;
+  min-height: 44px;
+}
+
+.search-icon { color: rgba($blanco, 0.82); font-size: 18px; }
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: $blanco;
+  font-size: 14px;
+  &::placeholder { color: rgba($blanco, 0.65); }
+}
+
+.search-clear {
+  background: none;
+  border: none;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  color: rgba($blanco, 0.75);
+  cursor: pointer;
+  ion-icon { font-size: 18px; }
+}
+
+// ── Contenido principal ─────────────────────────────────
+.list-content { --background: #{$fondo}; }
+
+// ── Estado vacío ────────────────────────────────────────
+// Cuando no hay empleados registrados
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 32px;
+  text-align: center;
+}
+
+.empty-icon-wrapper {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: $blanco;
+  border: 1px solid $borde;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  ion-icon { font-size: 32px; color: #D1D5DB; }
+}
+
+.empty-title {
+  font-size: 17px;
+  font-weight: 600;
+  color: $texto;
+  margin: 0 0 8px;
+}
+
+.empty-desc {
+  font-size: 13px;
+  color: $gris;
+  margin: 0;
+  line-height: 1.6;
+}
+
+// ── Contenedor de cards ─────────────────────────────────
+.cards-container {
+  padding: 16px 14px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// ── Tarjeta de empleado ─────────────────────────────────
+// Card blanca con avatar, nombre, cargo y acciones
+.empleado-card {
+  background: $blanco;
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.07);
+  border: 1px solid $borde;
+}
+
+// Fila principal: avatar + info + flecha
+.card-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px 12px;
+  cursor: pointer;
+  transition: background 0.15s;
+  &:active { background: rgba($verde, 0.03); }
+}
+
+// Avatar circular con iniciales del empleado
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba($verde, 0.12);
+  color: $verde;
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+// Información del empleado
+.card-info { flex: 1; min-width: 0; }
+
+// Nombre completo
+.card-nombre {
+  font-size: 15px;
+  font-weight: 600;
+  color: $texto;
+  margin: 0 0 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Cargo o puesto
+.card-cargo {
+  font-size: 13px;
+  color: $verde;
+  font-weight: 500;
+  margin: 0 0 5px;
+}
+
+// Fila de DNI y teléfono
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: $gris;
+  ion-icon { font-size: 12px; }
+}
+
+.meta-sep { color: #D1D5DB; font-size: 12px; }
+
+// Flecha derecha de la card
+.card-chevron {
+  color: #D1D5DB;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+// Fila de acciones: fecha + botones editar/eliminar
+.card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px 14px;
+  border-top: 1px solid rgba(229, 231, 235, 0.6);
+}
+
+// Fecha de registro
+.card-fecha {
+  font-size: 11px;
+  color: $gris;
+}
+
+// Contenedor de botones de acción
+.action-btns {
+  display: flex;
+  gap: 8px;
+}
+
+// Botón editar (verde)
+.btn-edit {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: rgba($verde, 0.1);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  ion-icon { font-size: 17px; color: $verde; }
+  &:active { background: rgba($verde, 0.2); }
+}
+
+// Botón eliminar (rojo)
+.btn-delete {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: rgba(239, 68, 68, 0.1);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  ion-icon { font-size: 17px; color: #EF4444; }
+  &:active { background: rgba(239, 68, 68, 0.2); }
+}
+
+// ── FAB: botón flotante para añadir empleado ────────────
+// Esquina inferior derecha, color verde KSK
+.fab-custom {
+  --background: #{$verde};
+  --background-activated: #{darken(#2e9e65, 8%)};
+  --box-shadow: 0 8px 24px rgba(46, 158, 101, 0.4);
+  --color: #{$blanco};
+}

@@ -1,0 +1,86 @@
+<ion-header class="ion-no-border cart-header">
+  <ion-toolbar>
+    <ion-title class="cart-title">Carrito de Compras</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="cerrar()" class="close-btn">
+        <ion-icon name="close-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="cart-content">
+  <ion-list lines="none" class="cart-items-list">
+    <div class="cart-item-card" *ngFor="let item of carritoService.items()">
+      <div class="item-img-container">
+        <img
+          [src]="item.imagen || 'assets/placeholder.png'"
+          [alt]="item.nombre"
+        />
+      </div>
+
+      <div class="item-details">
+        <div class="item-header-row">
+          <h4>{{ item.nombre }}</h4>
+          <ion-button
+            fill="clear"
+            class="delete-btn"
+            (click)="carritoService.eliminarProducto(item.id)"
+          >
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
+
+        <p class="item-unit-price">
+          S/ {{ item.precio | number: "1.2-2" }} c/u
+        </p>
+
+        <div class="item-actions-row">
+          <div class="quantity-selector">
+            <button
+              class="qty-btn"
+              (click)="carritoService.reducirCantidad(item.id)"
+            >
+              <ion-icon name="remove-outline"></ion-icon>
+            </button>
+            <span class="qty-number">{{ item.cantidad }}</span>
+            <button
+              class="qty-btn"
+              (click)="carritoService.agregarProducto(item)"
+            >
+              <ion-icon name="add-outline"></ion-icon>
+            </button>
+          </div>
+          <span class="item-subtotal"
+            >S/ {{ item.precio * item.cantidad | number: "1.2-2" }}</span
+          >
+        </div>
+      </div>
+    </div>
+  </ion-list>
+
+  <div class="empty-cart" *ngIf="carritoService.items().length === 0">
+    <ion-icon name="cart-outline"></ion-icon>
+    <p>Tu carrito está listo para llenarse</p>
+  </div>
+</ion-content>
+
+<ion-footer
+  class="ion-no-border cart-footer"
+  *ngIf="carritoService.items().length > 0"
+>
+  <div class="footer-summary">
+    <span class="total-label">Total a Pagar:</span>
+    <span class="total-value"
+      >S/ {{ carritoService.totalPagar() | number: "1.2-2" }}</span
+    >
+  </div>
+  <ion-button
+    expand="block"
+    class="btn-checkout-ksk"
+    (click)="procesarCompra()"
+  >
+    <ion-icon name="cash-outline" slot="start"></ion-icon>
+    COMPRAR AHORA
+  </ion-button>
+</ion-footer>

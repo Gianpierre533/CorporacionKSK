@@ -1,0 +1,308 @@
+// ============================================================
+// SYSTEM DESIGN: Catálogo Corporativo KSK - Luxury Look
+// ============================================================
+
+$verde:       #2ECFB3; // Cyan Corporativo KSK
+$verde-dark:  #1A9E8A; // Color institucional para contrastes y lectura
+$blanco:      #FFFFFF;
+$fondo:       #F8FAFC; // Fondo gris pizarra extremadamente limpio (Slate 50)
+$texto-dark:  #0F172A; // Slate 900 para máxima nitidez
+$texto-gray:  #475569; // Slate 600
+$rojo-alerta: #EF4444;
+
+// ── HEADER Y TOOLBAR PREMIUM ──────────────────────────────
+ion-header.header-custom {
+  --background: #{$verde-dark} !important;
+  background: #{$verde-dark} !important;
+  box-shadow: 0 4px 20px rgba(26, 158, 138, 0.15);
+  &::after { display: none; }
+}
+
+.toolbar-custom {
+  --background: #{$verde} !important;
+  --border-color: transparent !important;
+  background: #{$verde} !important;
+  padding: 8px 12px;
+}
+
+.back-custom {
+  --color: #{$blanco};
+  --icon-font-size: 24px;
+}
+
+.titulo-catalogo {
+  color: $blanco;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+// Botones superiores estilizados
+.btn-header-icon {
+  width: 42px;
+  height: 42px;
+  background: rgba($blanco, 0.15);
+  border: 1px solid rgba($blanco, 0.1);
+  border-radius: 12px;
+  color: $blanco;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  
+  ion-icon { font-size: 20px; }
+  &:active { background: rgba($blanco, 0.25); transform: scale(0.95); }
+}
+
+.btn-cart-trigger {
+  position: relative;
+  margin-left: 10px;
+}
+
+// Burbuja dinámica de notificación premium
+.carrito-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background: #{$rojo-alerta};
+  color: $blanco;
+  font-size: 10px;
+  font-weight: 800;
+  border-radius: 50%;
+  height: 18px;
+  min-width: 18px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid $verde; // Efecto de recorte flotante limpio
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+  animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+// ── CAJA DE BÚSQUEDA INTERACTIVA ──────────────────────────
+.search-container {
+  background: $verde;
+  padding: 0 16px 14px;
+  animation: slideDown 0.25s ease-out;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba($blanco, 0.2);
+  border: 1.5px solid rgba($blanco, 0.1);
+  border-radius: 14px;
+  padding: 0 14px;
+  height: 46px;
+}
+
+.search-icon { color: rgba($blanco, 0.9); font-size: 20px; }
+
+.search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: $blanco;
+  font-size: 14px;
+  font-weight: 500;
+  &::placeholder { color: rgba($blanco, 0.7); }
+}
+
+.search-clear {
+  background: none;
+  border: none;
+  color: rgba($blanco, 0.8);
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  ion-icon { font-size: 18px; }
+}
+
+// ── PASTILLAS DE CATEGORÍA (CHIPS PREMIUM) ────────────────
+.filtros-scroll {
+  background: $verde;
+  padding: 0 0 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  &::-webkit-scrollbar { display: none; }
+}
+
+.filtros-container {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px;
+  width: max-content;
+}
+
+.chip {
+  padding: 7px 18px;
+  border-radius: 14px; // Esquinas rectangulares redondeadas corporativas
+  border: 1.5px solid rgba($blanco, 0.35);
+  background: transparent;
+  color: rgba($blanco, 0.9);
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &--active {
+    background: $blanco;
+    border-color: $blanco;
+    color: var(--ion-color-primary, $verde-dark);
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  }
+}
+
+// ── FONDO DE CONTENIDO ────────────────────────────────────
+.catalogo-content { --background: #{$fondo}; }
+
+// ── ESTADO VACÍO (EMPTY STATE) ───────────────────────────
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 40px;
+  text-align: center;
+
+  .empty-icon-box {
+    width: 80px; height: 80px;
+    background: #FFFFFF;
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    color: #CBD5E1; font-size: 38px;
+    box-shadow: 0 4px 16px rgba(15, 23, 42, 0.03);
+    margin-bottom: 20px;
+  }
+  .empty-title { font-size: 18px; font-weight: 700; color: $texto-dark; margin: 0 0 6px; }
+  .empty-desc { font-size: 13px; color: $texto-gray; line-height: 1.5; margin: 0; }
+}
+
+// ── LISTADO DE PRODUCTOS CORPORATIVOS ─────────────────────
+.productos-lista {
+  padding: 18px 16px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+// Tarjeta de Producto Premium (Luxury Card)
+.producto-card {
+  background: $blanco;
+  border-radius: 18px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  border: 1px solid #F1F5F9;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.02);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  &:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+    background: #FAFAFA;
+  }
+}
+
+.producto-imagen {
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid #E2E8F0;
+  background: #F8FAFC;
+
+  img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+}
+
+.producto-info { flex: 1; min-width: 0; }
+
+.producto-nombre {
+  font-size: 15px;
+  font-weight: 700;
+  color: $texto-dark;
+  margin: 0 0 3px;
+  letter-spacing: -0.1px;
+}
+
+.producto-desc {
+  font-size: 12px;
+  color: $texto-gray;
+  margin: 0 0 8px;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.producto-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.producto-precio {
+  font-size: 16px;
+  font-weight: 800;
+  color: $verde-dark; // Precio refinado usando el tono de lectura oscuro
+  margin: 0;
+}
+
+.stock-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 10px;
+
+  &--ok {
+    background: rgba($verde, 0.12);
+    color: $verde-dark;
+  }
+  &--low {
+    background: rgba($rojo-alerta, 0.08);
+    color: $rojo-alerta;
+  }
+}
+
+// Botón Añadir al Carrito Integrado
+.btn-agregar-carrito {
+  background: $verde;
+  color: $blanco;
+  border: none;
+  border-radius: 12px;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(46, 207, 179, 0.25);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s ease;
+
+  &:active {
+    transform: scale(0.88);
+    background: $verde-dark;
+    box-shadow: none;
+  }
+}
+
+.producto-flecha {
+  color: #CBD5E1;
+  font-size: 16px;
+  flex-shrink: 0;
+  margin-left: -2px;
+}
+
+// KEYFRAMES ANIMACIONES
+@keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+@keyframes slideDown { from { transform: translateY(-10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
