@@ -1,0 +1,239 @@
+$green-wa:  #25D366;
+$green-dark: #128C7E;
+$cyan:      #2ECFB3;
+$cyan-dark: #1A9E8A;
+$dark:      #0F172A;
+$gray:      #64748B;
+
+.header-contacto {
+  ion-toolbar {
+    --background: #FFFFFF;
+    --color: #{$dark};
+    --border-width: 0;
+    padding: 4px 4px 0;
+  }
+  ion-title {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: $dark;
+  }
+}
+
+.content-contacto { --background: #F8FAFC; }
+
+// ── Brand Hero ──
+.brand-hero {
+  background: linear-gradient(135deg, $cyan 0%, $cyan-dark 100%);
+  padding: 32px 20px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: -30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.06);
+  }
+
+  .brand-logo {
+    width: 72px; height: 72px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 16px;
+    backdrop-filter: blur(8px);
+    border: 2px solid rgba(255,255,255,0.3);
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #FFFFFF;
+    margin: 0 0 4px;
+    letter-spacing: -0.5px;
+  }
+
+  p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    margin: 0;
+    font-weight: 500;
+  }
+}
+
+// ── WhatsApp CTA ──
+.whatsapp-section {
+  padding: 0 16px;
+  margin-top: -20px;
+  position: relative;
+  z-index: 5;
+  margin-bottom: 8px;
+}
+
+.btn-whatsapp {
+  width: 100%;
+  border: none;
+  border-radius: 20px;
+  background: linear-gradient(135deg, $green-wa 0%, $green-dark 100%);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.35);
+  transition: transform 0.12s, box-shadow 0.12s;
+  font-family: inherit;
+
+  &:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.2);
+  }
+
+  .wa-icon-wrap {
+    width: 48px; height: 48px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    ion-icon { font-size: 26px; color: #FFFFFF; }
+  }
+
+  .wa-text {
+    text-align: left;
+    .wa-title {
+      font-size: 15px;
+      font-weight: 800;
+      color: #FFFFFF;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .wa-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,0.8);
+      font-weight: 500;
+    }
+  }
+}
+
+// ── Info Section ──
+.info-section {
+  padding: 20px 16px 8px;
+
+  h2 {
+    font-size: 14px;
+    font-weight: 700;
+    color: $gray;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 0 0 12px;
+  }
+}
+
+.info-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 12px rgba(15,23,42,0.03);
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: transform 0.1s;
+
+  &:active { transform: scale(0.98); background: #F8FAFC; }
+
+  .info-icon-wrap {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    ion-icon { font-size: 20px; }
+
+    &--green  { background: rgba(37, 211, 102, 0.1); ion-icon { color: #16A34A; } }
+    &--blue   { background: rgba(99, 102, 241, 0.1);  ion-icon { color: #4F46E5; } }
+    &--orange { background: rgba(249, 115, 22, 0.1);  ion-icon { color: #EA580C; } }
+    &--cyan   { background: rgba(46, 207, 179, 0.1);  ion-icon { color: $cyan-dark; } }
+  }
+
+  .info-text {
+    flex: 1;
+    .info-main {
+      font-size: 13px;
+      font-weight: 700;
+      color: $dark;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .info-sub {
+      font-size: 12px;
+      color: $gray;
+    }
+  }
+
+  ion-icon.arrow { font-size: 14px; color: #CBD5E1; }
+}
+
+// ── Commitments ──
+.commitments {
+  padding: 20px 16px 32px;
+
+  h2 {
+    font-size: 14px;
+    font-weight: 700;
+    color: $gray;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin: 0 0 14px;
+  }
+
+  .badges-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .commit-badge {
+    background: #FFFFFF;
+    border-radius: 12px;
+    border: 1px solid rgba(46, 207, 179, 0.2);
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .check { font-size: 18px; color: $cyan-dark; font-weight: 800; }
+    span { font-size: 14px; font-weight: 600; color: $dark; }
+  }
+}

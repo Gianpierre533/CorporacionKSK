@@ -1,0 +1,112 @@
+<ion-header class="header-contacto ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/menu"
+        text=""
+        class="back-btn"
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title>Contacto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-contacto">
+  <!-- Brand Hero -->
+  <div class="brand-hero">
+    <div class="brand-logo">
+      <img src="assets/logo-ksk.png" alt="KSK Logo" />
+    </div>
+    <h1>KSK Importaciones</h1>
+    <p>Articulos para el hogar</p>
+  </div>
+
+  <!-- WhatsApp Button -->
+  <div class="whatsapp-section">
+    <button class="btn-whatsapp" (click)="abrirWhatsApp()">
+      <div class="wa-icon-wrap">
+        <ion-icon name="logo-whatsapp"></ion-icon>
+      </div>
+      <div class="wa-text">
+        <span class="wa-title">Chatear por WhatsApp</span>
+        <span class="wa-sub">Respuesta en menos de 1 hora</span>
+      </div>
+    </button>
+  </div>
+
+  <!-- Info Cards Section -->
+  <div class="info-section">
+    <h2>Información de Contacto</h2>
+
+    <div class="info-cards">
+      <!-- Phone -->
+      <div class="info-card" (click)="llamar()">
+        <div class="info-icon-wrap info-icon-wrap--green">
+          <ion-icon name="call-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-main">906-623-145</span>
+          <span class="info-sub">Llámanos directo</span>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
+      </div>
+
+      <!-- Address -->
+      <div class="info-card" (click)="abrirMapa()">
+        <div class="info-icon-wrap info-icon-wrap--blue">
+          <ion-icon name="location-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-main"
+            >Prol. Los Angeles N°368 - URB. SANTA LUZMILA</span
+          >
+          <span class="info-sub">Lun-Sáb 8am-6pm</span>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
+      </div>
+
+      <!-- Email -->
+      <div class="info-card">
+        <div class="info-icon-wrap info-icon-wrap--orange">
+          <ion-icon name="mail-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-main">ventas&#64;kskimportaciones.com</span>
+          <span class="info-sub">Cotizaciones por correo</span>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
+      </div>
+
+      <!-- Hours -->
+      <div class="info-card">
+        <div class="info-icon-wrap info-icon-wrap--cyan">
+          <ion-icon name="time-outline"></ion-icon>
+        </div>
+        <div class="info-text">
+          <span class="info-main">Lun-Vie: 8am-6pm / Sáb: 8am-1pm</span>
+          <span class="info-sub">Horario de atención</span>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
+      </div>
+    </div>
+  </div>
+
+  <!-- Commitments -->
+  <div class="commitments">
+    <h2>Nuestro Compromiso</h2>
+    <div class="badges-wrap">
+      <div class="commit-badge">
+        <span class="check">✓</span>
+        <span>Productos importados de calidad</span>
+      </div>
+      <div class="commit-badge">
+        <span class="check">✓</span>
+        <span>Garantía directa del fabricante</span>
+      </div>
+      <div class="commit-badge">
+        <span class="check">✓</span>
+        <span>Envíos a todo el Perú</span>
+      </div>
+    </div>
+  </div>
+</ion-content>

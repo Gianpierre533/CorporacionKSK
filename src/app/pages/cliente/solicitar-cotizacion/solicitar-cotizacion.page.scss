@@ -1,0 +1,258 @@
+$cyan:      #2ECFB3;
+$cyan-dark: #1A9E8A;
+$dark:      #0F172A;
+$gray:      #64748B;
+
+.header-solicitud {
+  ion-toolbar {
+    --background: #FFFFFF;
+    --color: #{$dark};
+    --border-width: 0;
+    padding: 4px 4px 0;
+  }
+  ion-title {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: $dark;
+  }
+}
+
+.content-solicitud { --background: #F8FAFC; }
+
+// ── Hero Banner ──
+.hero-banner {
+  background: linear-gradient(135deg, $cyan 0%, $cyan-dark 100%);
+  padding: 28px 20px 36px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .hero-icon-wrap {
+    width: 64px; height: 64px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 14px;
+    backdrop-filter: blur(6px);
+    ion-icon { font-size: 30px; color: #FFFFFF; }
+  }
+
+  h1 {
+    font-size: 22px;
+    font-weight: 900;
+    color: #FFFFFF;
+    margin: 0 0 6px;
+    letter-spacing: -0.5px;
+  }
+
+  p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+// ── Form ──
+.form-container {
+  padding: 20px 16px 32px;
+}
+
+.input-group {
+  margin-bottom: 18px;
+}
+
+.input-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: $dark;
+  margin-bottom: 8px;
+  ion-icon { font-size: 16px; color: $cyan-dark; }
+}
+
+.ksk-input, .ksk-textarea {
+  width: 100%;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 14px;
+  color: $dark;
+  background: #FFFFFF;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+
+  &::placeholder { color: #94A3B8; }
+
+  &:focus {
+    border-color: $cyan;
+    box-shadow: 0 0 0 3px rgba(46, 207, 179, 0.12);
+  }
+}
+
+.ksk-textarea {
+  resize: none;
+  line-height: 1.5;
+}
+
+.char-count {
+  display: block;
+  text-align: right;
+  font-size: 11px;
+  color: #94A3B8;
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+// ── Tips ──
+.tips-box {
+  background: rgba(46, 207, 179, 0.06);
+  border: 1px solid rgba(46, 207, 179, 0.2);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 24px;
+
+  .tip-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: $dark;
+    margin: 0 0 8px;
+  }
+
+  ul {
+    margin: 0;
+    padding-left: 18px;
+    li {
+      font-size: 12px;
+      color: $gray;
+      line-height: 1.7;
+    }
+  }
+}
+
+// ── Send Button ──
+.btn-enviar {
+  width: 100%;
+  border: none;
+  border-radius: 16px;
+  background: linear-gradient(135deg, $cyan 0%, $cyan-dark 100%);
+  color: #FFFFFF;
+  padding: 16px;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0.3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(26, 158, 138, 0.3);
+  transition: transform 0.12s, box-shadow 0.12s, opacity 0.2s;
+
+  ion-icon { font-size: 18px; }
+
+  &:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 12px rgba(26, 158, 138, 0.2);
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+
+  &--loading {
+    opacity: 0.7;
+    cursor: wait;
+  }
+}
+
+.loading-text {
+  animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+// ── Success State ──
+.success-state {
+  text-align: center;
+  padding: 48px 24px;
+
+  .success-icon {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: rgba(46, 207, 179, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    ion-icon { font-size: 40px; color: $cyan-dark; }
+  }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 900;
+    color: $dark;
+    margin: 0 0 10px;
+  }
+
+  p {
+    font-size: 14px;
+    color: $gray;
+    line-height: 1.5;
+    margin: 0 0 28px;
+  }
+
+  .success-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-nueva {
+    width: 100%;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, $cyan 0%, $cyan-dark 100%);
+    color: #FFFFFF;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(26, 158, 138, 0.25);
+    &:active { transform: scale(0.97); }
+  }
+
+  .btn-menu {
+    width: 100%;
+    border: 1.5px solid #E2E8F0;
+    border-radius: 14px;
+    background: #FFFFFF;
+    color: $gray;
+    padding: 14px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    &:active { background: #F8FAFC; }
+  }
+}

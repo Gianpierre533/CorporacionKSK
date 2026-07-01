@@ -1,13 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { 
-  IonHeader, IonToolbar, IonTitle, IonButtons, IonContent, IonFooter, 
+  IonHeader, IonToolbar, IonTitle, IonButtons, IonContent,
   IonIcon, IonButton, IonList, ModalController 
 } from '@ionic/angular/standalone';
+import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { closeOutline, trashOutline, addOutline, removeOutline, cartOutline, cashOutline } from 'ionicons/icons';
 import { Carrito } from '../../../../../services/carrito';
-import { CheckoutPage } from '../../../checkout/checkout.page';
 
 @Component({
   selector: 'app-carrito-modal',
@@ -16,12 +16,13 @@ import { CheckoutPage } from '../../../checkout/checkout.page';
   standalone: true,
   imports: [
     CommonModule, DecimalPipe, IonHeader, IonToolbar, IonTitle, 
-    IonButtons, IonContent, IonFooter, IonIcon, IonButton, IonList
+    IonButtons, IonContent, IonIcon, IonButton, IonList
   ]
 })
 export class CarritoComponent {
   public carritoService = inject(Carrito);
   private modalCtrl     = inject(ModalController);
+  private router        = inject(Router);
 
   constructor() {
     addIcons({ closeOutline, cartOutline, removeOutline, addOutline, trashOutline, cashOutline });
@@ -32,15 +33,7 @@ export class CarritoComponent {
   }
 
   async procesarCompra() {
-    this.modalCtrl.dismiss(); // Cierra el carrito
-    
-    // Abre directamente la flamante página de checkout que diseñamos antes
-    const modal = await this.modalCtrl.create({
-      component: CheckoutPage,
-      cssClass: 'full-screen-modal',
-      backdropDismiss: false
-    });
-    
-    return await modal.present();
+    this.modalCtrl.dismiss(); // Cierra el modal del carrito
+    this.router.navigate(['/checkout']); // Navega a la ruta plana del checkout
   }
 }

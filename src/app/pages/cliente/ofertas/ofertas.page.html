@@ -1,0 +1,59 @@
+<ion-header class="header-ofertas ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu" text="" class="back-btn"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ofertas del Mes</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-ofertas">
+
+  <!-- Hero Banner -->
+  <div class="hero-ofertas">
+    <div class="hero-badge">
+      <ion-icon name="flame-outline"></ion-icon>
+      <span>OFERTAS JULIO 2026</span>
+    </div>
+    <h1>Descuentos especiales</h1>
+    <p>Productos importados con precios exclusivos por tiempo limitado.</p>
+  </div>
+
+  <!-- Productos Grid -->
+  <div class="ofertas-grid">
+    <div class="oferta-card" *ngFor="let o of ofertas">
+
+      <!-- Badge de oferta -->
+      <span class="oferta-badge">{{ o.badge }}</span>
+
+      <!-- Descuento circle -->
+      <div class="discount-tag">-{{ o.descuento }}%</div>
+
+      <!-- Imagen -->
+      <div class="oferta-img-wrap">
+        <img [src]="o.imagen" [alt]="o.nombre" />
+      </div>
+
+      <!-- Info -->
+      <div class="oferta-info">
+        <h3>{{ o.nombre }}</h3>
+        <p class="oferta-desc">{{ o.descripcion }}</p>
+        <div class="oferta-prices">
+          <span class="price-old">S/ {{ o.precioOriginal | number:'1.2-2' }}</span>
+          <span class="price-new">S/ {{ o.precio | number:'1.2-2' }}</span>
+        </div>
+        <div class="oferta-stock">
+          <span class="stock-dot" [class.stock-low]="o.stock < 10"></span>
+          {{ o.stock }} en stock
+        </div>
+      </div>
+
+      <!-- Add to cart -->
+      <button class="btn-add" (click)="agregarAlCarrito(o)">
+        <ion-icon name="cart-outline"></ion-icon>
+        Agregar
+      </button>
+    </div>
+  </div>
+
+</ion-content>

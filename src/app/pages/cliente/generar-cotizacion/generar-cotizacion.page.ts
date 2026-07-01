@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'; 
+import { Component, OnInit, inject } from '@angular/core'; 
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -34,6 +34,12 @@ type ProductoCatalogo = Pick<Producto, 'id' | 'nombre' | 'precio' | 'imagen'>;
   ]
 })
 export class GenerarCotizacionPage implements OnInit {
+  private cotizacionService = inject(CotizacionService);
+  private productosService = inject(ProductosService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private toastCtrl = inject(ToastController);
+
 
   // ── Control de Rol ──────────────────────────────────────
   esEmpleado = false; 
@@ -53,13 +59,7 @@ export class GenerarCotizacionPage implements OnInit {
   // ── Catálogo cargado desde el servicio ────────────────
   catalogoProductos: ProductoCatalogo[] = [];
 
-  constructor(
-    private cotizacionService: CotizacionService,
-    private productosService: ProductosService,
-    private router: Router,
-    private route: ActivatedRoute, 
-    private toastCtrl: ToastController
-  ) {
+  constructor() {
     addIcons({
       cubeOutline, trashOutline, addOutline, removeOutline,
       addCircleOutline, documentTextOutline, personOutline,
@@ -74,14 +74,14 @@ export class GenerarCotizacionPage implements OnInit {
     // ── CORRECCIÓN DE DETECCIÓN DE ROL ──
     const rolActual = localStorage.getItem('ksk_rol');
     
-    // Si eres admin o empleado, eres parte del personal interno de la empresa
-    this.esEmpleado = (rolActual === 'admin' || rolActual === 'empleado');
+    // Si eres empleado, eres parte del personal interno de la empresa
+    this.esEmpleado = (rolActual === 'empleado');
 
     if (!this.esEmpleado) {
       // Si realmente es un cliente externo, bloqueamos con sus datos fijos
       this.cargarDatosClienteLogueado();
     } else {
-      // Si eres administrador, dejamos los campos vacíos y limpios para que escribas el cliente que quieras
+      // Si eres empleado, dejamos los campos vacíos y limpios para que escribas el cliente que quieras
       this.clienteNombre = '';
       this.clienteTelefono = '';
     }

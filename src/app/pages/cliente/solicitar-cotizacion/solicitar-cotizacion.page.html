@@ -1,0 +1,105 @@
+<ion-header class="header-solicitud ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu" text="" class="back-btn"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Solicitar Cotización</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-solicitud">
+
+  <!-- Hero Banner -->
+  <div class="hero-banner">
+    <div class="hero-icon-wrap">
+      <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+    </div>
+    <h1>¿Qué necesitas?</h1>
+    <p>Cuéntanos y un asesor KSK te envía la cotización a tu teléfono.</p>
+  </div>
+
+  <!-- SUCCESS STATE -->
+  <div class="success-state" *ngIf="enviado">
+    <div class="success-icon">
+      <ion-icon name="checkmark-circle-outline"></ion-icon>
+    </div>
+    <h2>¡Solicitud enviada!</h2>
+    <p>Un asesor de KSK Importaciones revisará tu pedido y se pondrá en contacto contigo pronto.</p>
+    <div class="success-actions">
+      <button class="btn-nueva" (click)="nuevaSolicitud()">Hacer otra solicitud</button>
+      <button class="btn-menu" (click)="volverAlMenu()">Volver al menú</button>
+    </div>
+  </div>
+
+  <!-- FORM STATE -->
+  <div class="form-container" *ngIf="!enviado">
+
+    <div class="input-group">
+      <label class="input-label">
+        <ion-icon name="person-outline"></ion-icon>
+        Tu nombre completo
+      </label>
+      <input
+        class="ksk-input"
+        type="text"
+        placeholder="Ej. Juan Pérez García"
+        [(ngModel)]="nombre"
+        maxlength="80"
+      />
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">
+        <ion-icon name="call-outline"></ion-icon>
+        Número de WhatsApp
+      </label>
+      <input
+        class="ksk-input"
+        type="tel"
+        placeholder="Ej. 987 654 321"
+        [(ngModel)]="telefono"
+        maxlength="15"
+      />
+    </div>
+
+    <div class="input-group">
+      <label class="input-label">
+        <ion-icon name="create-outline"></ion-icon>
+        ¿Qué productos necesitas?
+      </label>
+      <textarea
+        class="ksk-textarea"
+        rows="5"
+        placeholder="Ej. Necesito 3 reflectores LED 100W, 50 metros de cable 2.5mm y 2 interruptores termomagnéticos."
+        [(ngModel)]="descripcion"
+        maxlength="500"
+      ></textarea>
+      <span class="char-count">{{ descripcion.length }} / 500</span>
+    </div>
+
+    <div class="tips-box">
+      <p class="tip-title">💡 Tips para una mejor cotización</p>
+      <ul>
+        <li>Incluye cantidades exactas</li>
+        <li>Menciona el uso o tipo de instalación</li>
+        <li>Indica si necesitas instalación</li>
+      </ul>
+    </div>
+
+    <button
+      class="btn-enviar"
+      [class.btn-enviar--disabled]="!formularioValido()"
+      [class.btn-enviar--loading]="enviando"
+      (click)="enviarSolicitud()"
+      [disabled]="!formularioValido() || enviando"
+    >
+      <span *ngIf="!enviando">
+        <ion-icon name="send-outline"></ion-icon>
+        Enviar Solicitud
+      </span>
+      <span *ngIf="enviando" class="loading-text">Enviando...</span>
+    </button>
+
+  </div>
+
+</ion-content>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { 
   ReactiveFormsModule, FormBuilder, FormGroup, Validators,
@@ -21,6 +21,10 @@ import {
   imports: [CommonModule, ReactiveFormsModule, FormsModule, IonContent, IonIcon, IonSpinner] 
 })
 export class RegistroPage implements OnInit {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private toastCtrl = inject(ToastController);
+
 
   form!: FormGroup;
   showPassword = false;
@@ -29,11 +33,7 @@ export class RegistroPage implements OnInit {
 
   get f() { return this.form.controls; }
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private toastCtrl: ToastController
-  ) {
+  constructor() {
     addIcons({ chevronBackOutline, personOutline, lockClosedOutline, eyeOutline, eyeOffOutline });
   }
 

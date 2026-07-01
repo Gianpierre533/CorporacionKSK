@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import {
   IonContent, IonHeader, IonToolbar,
@@ -26,6 +26,9 @@ import { Cotizacion, EstadoCotizacion } from '../../../models/cotizacion.model';
   ]
 })
 export class HistorialCotizacionesPage {
+  private cotizacionService = inject(CotizacionService);
+  private router = inject(Router);
+
 
   cotizaciones: Cotizacion[] = [];
   searchQuery  = '';
@@ -39,10 +42,7 @@ export class HistorialCotizacionesPage {
     { key: 'Rechazada', label: 'Rechazada' },
   ];
 
-  constructor(
-    private cotizacionService: CotizacionService,
-    private router: Router
-  ) {
+  constructor() {
     addIcons({
       searchOutline, closeOutline, cubeOutline,
       documentTextOutline, arrowBackOutline
@@ -93,7 +93,7 @@ export class HistorialCotizacionesPage {
   }
 
   verResumen(id: string) {
-    this.router.navigate(['/cotizacion/resumen', id]);
+    this.router.navigate(['/resumen-cotizacion', id]);
   }
 
   formatDate(iso: string): string {

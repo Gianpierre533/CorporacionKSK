@@ -1,0 +1,192 @@
+<ion-header class="header-custom ion-no-border">
+  <ion-toolbar class="toolbar-custom">
+    <ion-buttons slot="start">
+      <ion-back-button
+        defaultHref="/menu"
+        text=""
+        class="back-custom"
+      ></ion-back-button>
+    </ion-buttons>
+    <div class="header-info">
+      <p class="header-tag">Corporación KSK</p>
+      <ion-title class="header-title">Dashboard de Ventas</ion-title>
+    </div>
+    <ion-buttons slot="end">
+      <button class="btn-refresh" (click)="cargarDatos()">
+        <ion-icon name="sync-outline"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="dashboard-content">
+  <!-- Tarjeta de Bienvenida del Empleado -->
+  <div class="saludo-card">
+    <div class="saludo-icon">
+      <ion-icon name="analytics-outline"></ion-icon>
+    </div>
+    <div class="saludo-text">
+      <h3>Panel Administrativo</h3>
+      <p>Supervisa cotizaciones generadas en la app y gestiona sus estados.</p>
+    </div>
+  </div>
+
+  <!-- Contenedor de Métricas -->
+  <div class="metricas-grid">
+    <!-- Card: Total Cotizaciones -->
+    <div class="metrica-card metrica-card--total">
+      <div class="card-glow"></div>
+      <div class="card-header-row">
+        <span class="card-tag">Documentos</span>
+        <ion-icon name="document-text-outline" class="card-icon"></ion-icon>
+      </div>
+      <p class="card-value">{{ totalCotizaciones }}</p>
+      <p class="card-title">Cotizaciones Totales</p>
+    </div>
+
+    <!-- Card: Ventas Aceptadas -->
+    <div class="metrica-card metrica-card--aceptado">
+      <div class="card-glow"></div>
+      <div class="card-header-row">
+        <span class="card-tag">Ingresos</span>
+        <ion-icon name="cash-outline" class="card-icon"></ion-icon>
+      </div>
+      <p class="card-value">S/ {{ montoAceptado | number:'1.2-2' }}</p>
+      <p class="card-title">Ventas Aceptadas</p>
+    </div>
+
+    <!-- Card: Ventas Pendientes -->
+    <div class="metrica-card metrica-card--pendiente">
+      <div class="card-glow"></div>
+      <div class="card-header-row">
+        <span class="card-tag">En espera</span>
+        <ion-icon name="time-outline" class="card-icon"></ion-icon>
+      </div>
+      <p class="card-value">S/ {{ montoPendiente | number:'1.2-2' }}</p>
+      <p class="card-title">Monto Pendiente</p>
+    </div>
+  </div>
+
+  <!-- Sección de Listado de Cotizaciones -->
+  <div class="section-container">
+    <h2 class="section-title">Control de Cotizaciones</h2>
+
+    <!-- Lista vacía -->
+    <div class="empty-state" *ngIf="cotizaciones.length === 0">
+      <div class="empty-icon-box">
+        <ion-icon name="document-text-outline"></ion-icon>
+      </div>
+      <h3>No hay cotizaciones registradas</h3>
+      <p>Las cotizaciones que creen los clientes aparecerán listadas aquí.</p>
+    </div>
+
+    <!-- Lista de tarjetas -->
+    <div class="cotizaciones-lista" *ngIf="cotizaciones.length > 0">
+      <div class="cotizacion-item" *ngFor="let cot of cotizaciones">
+        <div class="cot-header">
+          <div>
+            <span class="cot-id" (click)="verResumen(cot.id)">{{ cot.id }}</span>
+            <span class="cot-fecha">{{ formatDate(cot.fecha) }}</span>
+          </div>
+          <div class="status-selector-wrapper">
+            <span class="status-indicator" [ngClass]="getEstadoClass(cot.estado)"></span>
+            <select class="status-select" [value]="cot.estado" (change)="cambiarEstadoCotizacion(cot.id, $event)">
+              <option value="Pendiente">Pendiente</option>
+              <option value="Enviada">Enviada</option>
+              <option value="Aceptada">Aceptada</option>
+              <option value="Rechazada">Rechazada</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="cot-body">
+          <div class="info-row">
+            <span class="info-label">Cliente:</span>
+            <span class="info-value">{{ cot.cliente.nombre }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Teléfono:</span>
+            <span class="info-value">{{ cot.cliente.telefono || 'Sin teléfono' }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">Detalle:</span>
+            <span class="info-value">{{ cot.items.length }} {{ cot.items.length === 1 ? 'producto' : 'productos' }}</span>
+          </div>
+        </div>
+
+        <div class="cot-footer">
+          <span class="total-text">Monto Total:</span>
+          <span class="total-price">S/ {{ cot.total | number:'1.2-2' }}</span>
+          <button class="btn-detail" (click)="verResumen(cot.id)">
+            <span>Detalles</span>
+            <ion-icon name="arrow-back-outline" style="transform: rotate(180deg);"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--          SOLICITUDES DE CLIENTES (NUEVO)               -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-container">
+    <div class="section-title-row">
+      <h2 class="section-title">Solicitudes de Clientes</h2>
+      <span class="solicitudes-badge" *ngIf="solicitudesNuevas > 0">
+        {{ solicitudesNuevas }} {{ solicitudesNuevas === 1 ? 'nueva' : 'nuevas' }}
+      </span>
+    </div>
+
+    <!-- Lista vacía -->
+    <div class="empty-state" *ngIf="solicitudes.length === 0">
+      <div class="empty-icon-box">
+        <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+      </div>
+      <h3>Sin solicitudes pendientes</h3>
+      <p>Las solicitudes de cotización enviadas por clientes aparecerán aquí.</p>
+    </div>
+
+    <!-- Lista de solicitudes -->
+    <div class="cotizaciones-lista" *ngIf="solicitudes.length > 0">
+      <div class="cotizacion-item solicitud-item" *ngFor="let sol of solicitudes">
+        <div class="cot-header">
+          <div>
+            <span class="cot-id cot-id--sol">{{ sol.id }}</span>
+            <span class="cot-fecha">{{ formatDate(sol.fecha) }}</span>
+          </div>
+          <div class="status-selector-wrapper">
+            <span class="status-indicator" [ngClass]="getEstadoSolicitudClass(sol.estado)"></span>
+            <select class="status-select" [value]="sol.estado" (change)="cambiarEstadoSolicitud(sol.id, $event)">
+              <option value="Nueva">Nueva</option>
+              <option value="En revisión">En revisión</option>
+              <option value="Respondida">Respondida</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="cot-body">
+          <div class="info-row">
+            <span class="info-label">
+              <ion-icon name="person-outline" style="font-size:13px;vertical-align:middle;margin-right:4px;"></ion-icon>
+              Cliente:
+            </span>
+            <span class="info-value">{{ sol.clienteNombre }}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">
+              <ion-icon name="call-outline" style="font-size:13px;vertical-align:middle;margin-right:4px;"></ion-icon>
+              Teléfono:
+            </span>
+            <span class="info-value">{{ sol.clienteTelefono }}</span>
+          </div>
+          <div class="info-row sol-description">
+            <span class="info-label">Solicita:</span>
+            <span class="info-value info-value--desc">{{ sol.descripcion }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
+

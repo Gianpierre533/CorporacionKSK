@@ -1,0 +1,77 @@
+<ion-header class="header-compras ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menu" text="" class="back-btn"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Mis Compras</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content-compras">
+
+  <!-- Hero Summary -->
+  <div class="hero-summary">
+    <div class="stat-block">
+      <span class="stat-value">{{ totalPedidos }}</span>
+      <span class="stat-label">Pedidos</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-block">
+      <span class="stat-value">S/ {{ totalGastado | number:'1.2-2' }}</span>
+      <span class="stat-label">Total Invertido</span>
+    </div>
+  </div>
+
+  <!-- Empty State -->
+  <div class="empty-state" *ngIf="pedidos.length === 0">
+    <div class="empty-icon-wrap">
+      <ion-icon name="cart-outline"></ion-icon>
+    </div>
+    <h3>Sin compras aún</h3>
+    <p>Tus pedidos confirmados aparecerán aquí para que puedas revisarlos cuando quieras.</p>
+  </div>
+
+  <!-- Section Header -->
+  <div class="section-header" *ngIf="pedidos.length > 0">
+    <h2>Mis Pedidos</h2>
+    <span class="count-badge">{{ totalPedidos }}</span>
+  </div>
+
+  <!-- Pedidos List -->
+  <div class="pedidos-list" *ngIf="pedidos.length > 0">
+    <div class="pedido-card" *ngFor="let p of pedidos">
+      <div class="card-top">
+        <div class="card-row-1">
+          <span class="order-id">{{ p.id }}</span>
+          <span class="order-date">
+            <ion-icon name="calendar-outline"></ion-icon>
+            {{ formatDate(p.fecha) }} · {{ formatTime(p.fecha) }}
+          </span>
+        </div>
+        <div class="card-row-2">
+          <span class="order-total">S/ {{ p.total | number:'1.2-2' }}</span>
+          <div class="order-meta">
+            <span class="items-count">{{ p.items.length }} {{ p.items.length === 1 ? 'producto' : 'productos' }}</span>
+            <span [class]="getMetodoBadge(p.metodoPago)">{{ p.metodoPago }}</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toggle Detail -->
+      <button class="toggle-detail" (click)="toggleExpand(p.id)">
+        <span>{{ isExpanded(p.id) ? 'Ocultar detalle' : 'Ver detalle' }}</span>
+        <ion-icon [name]="isExpanded(p.id) ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+      </button>
+
+      <!-- Expandable Detail -->
+      <div class="detail-panel" *ngIf="isExpanded(p.id)">
+        <div class="detail-item" *ngFor="let item of p.items">
+          <span class="item-name">{{ item.nombre }}</span>
+          <span class="item-qty">x{{ item.cantidad }}</span>
+          <span class="item-subtotal">S/ {{ item.subtotal | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>

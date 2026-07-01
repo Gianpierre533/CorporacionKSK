@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { IonContent } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 
@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
   imports: [IonContent]
 })
 export class HomePage implements OnInit {
+  private router = inject(Router);
 
-  constructor(private router: Router) {}
 
   ngOnInit() {
     // El temporizador del Splash dura 2.5 segundos

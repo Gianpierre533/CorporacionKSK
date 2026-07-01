@@ -1,35 +1,64 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   IonContent, IonHeader, IonToolbar, IonTitle,
-  IonIcon, AlertController, ToastController, IonButtons, IonButton } from '@ionic/angular/standalone';
+  IonIcon, AlertController, ToastController, IonButtons, IonButton,
+  IonBadge, IonModal } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import {
   cubeOutline, documentTextOutline, timeOutline,
-  peopleOutline, logOutOutline, chevronForwardOutline, personCircleOutline } from 'ionicons/icons';
+  logOutOutline, chevronForwardOutline, personCircleOutline,
+  analyticsOutline, bagCheckOutline, chatboxEllipsesOutline,
+  callOutline, pricetagsOutline, flameOutline,
+  notificationsOutline, checkmarkDoneOutline, trashOutline, closeOutline
+} from 'ionicons/icons';
+import { NotificacionService } from '../../services/notificacion.service';
+import { Notificacion } from '../../models/notificacion.model';
 
 @Component({
   selector: 'app-menu-principal',
   templateUrl: './menu-principal.page.html',
   styleUrls: ['./menu-principal.page.scss'],
   standalone: true,
-  imports: [IonButton, IonButtons,  
+  imports: [IonButton, IonButtons, IonBadge, IonModal,
     CommonModule,
     IonContent, IonHeader, IonToolbar, IonTitle, IonIcon
   ]
 })
 export class MenuPrincipalPage {
+  private router = inject(Router);
+  private alertCtrl = inject(AlertController);
+  private toastCtrl = inject(ToastController);
+  private notifService = inject(NotificacionService);
 
   nombreUsuario: string = 'Usuario';
   rolUsuario: string = '';
 
-  constructor(
-    private router: Router,
-    private alertCtrl: AlertController,
-    private toastCtrl: ToastController
-  ) {
-    addIcons({personCircleOutline,cubeOutline,chevronForwardOutline,documentTextOutline,timeOutline,peopleOutline,logOutOutline});
+  // Notificaciones
+  notificaciones: Notificacion[] = [];
+  noLeidasCount = 0;
+  mostrarNotificaciones = false;
+
+  constructor() {
+    addIcons({
+      personCircleOutline,
+      cubeOutline,
+      chevronForwardOutline,
+      documentTextOutline,
+      timeOutline,
+      logOutOutline,
+      analyticsOutline,
+      bagCheckOutline,
+      chatboxEllipsesOutline,
+      callOutline,
+      pricetagsOutline,
+      flameOutline,
+      notificationsOutline,
+      checkmarkDoneOutline,
+      trashOutline,
+      closeOutline
+    });
   }
 
   ionViewWillEnter() {
@@ -44,14 +73,78 @@ export class MenuPrincipalPage {
 
     this.nombreUsuario = usuario;
     this.rolUsuario = rol;
+
+    this.cargarNotificaciones();
   }
 
-  esAdmin(): boolean {
-    return this.rolUsuario === 'admin';
+  cargarNotificaciones() {
+    if (this.rolUsuario) {
+      this.notificaciones = this.notifService.getPorRol(this.rolUsuario as any);
+      this.noLeidasCount = this.notifService.contarNoLeidas(this.rolUsuario as any);
+    }
+  }
+
+  abrirNotificaciones() {
+    this.mostrarNotificaciones = true;
+    this.cargarNotificaciones();
+  }
+
+  cerrarNotificaciones() {
+    this.mostrarNotificaciones = false;
+  }
+
+  marcarComoLeida(notif: Notificacion) {
+    this.notifService.marcarComoLeida(notif.id);
+    this.cargarNotificaciones();
+  }
+
+  marcarTodasComoLeidas() {
+    this.notifService.marcarTodasComoLeidas(this.rolUsuario as any);
+    this.cargarNotificaciones();
+  }
+
+  eliminarNotificacion(id: string) {
+    this.notifService.eliminar(id);
+    this.cargarNotificaciones();
+  }
+
+  async limpiarTodas() {
+    const alert = await this.alertCtrl.create({
+      header: 'Limpiar notificaciones',
+      message: '¿Deseas eliminar todas las notificaciones?',
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: () => {
+            this.notifService.eliminarTodas(this.rolUsuario as any);
+            this.cargarNotificaciones();
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  handleNotifClick(notif: Notificacion) {
+    this.marcarComoLeida(notif);
+    this.mostrarNotificaciones = false;
+
+    if (notif.destinatarioRol === 'empleado' && notif.tipo === 'solicitud') {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+
+  esEmpleado(): boolean {
+    return this.rolUsuario === 'empleado';
+  }
+
+  esCliente(): boolean {
+    return this.rolUsuario === 'cliente';
   }
 
   // ── REDIRECCIÓN HACIA LAS RUTAS PLANAS ──
-  // Nota: Ya no usamos /trabajador/ o /cliente/ en las rutas
   irA(ruta: string) {
     this.router.navigate([ruta]);
   }
@@ -66,7 +159,11 @@ export class MenuPrincipalPage {
           text: 'Salir',
           role: 'destructive',
           handler: () => {
-            localStorage.clear(); // Limpiamos todo el almacenamiento
+            // Limpieza selectiva: se borra la sesión y el carrito pero NO la base de datos de cotizaciones
+            localStorage.removeItem('ksk_usuario');
+            localStorage.removeItem('ksk_rol');
+            localStorage.removeItem('ksk_carrito');
+            
             this.router.navigate(['/login'], { replaceUrl: true });
           }
         }

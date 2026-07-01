@@ -2,6 +2,13 @@
   <ion-toolbar class="toolbar-ksk">
     <ion-title class="titulo-pagina">Menú Principal</ion-title>
     <ion-buttons slot="end">
+      <!-- Campana de Notificaciones -->
+      <button class="bell-btn" (click)="abrirNotificaciones()">
+        <ion-icon name="notifications-outline"></ion-icon>
+        <ion-badge class="bell-badge" *ngIf="noLeidasCount > 0"
+          >{{ noLeidasCount }}</ion-badge
+        >
+      </button>
       <ion-button class="header-btn"> </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -15,52 +22,127 @@
   </div>
 
   <div class="menu-container">
-    <div class="menu-card" (click)="irA('/catalogo')">
-      <div class="card-icono card-icono--verde">
-        <ion-icon name="cube-outline"></ion-icon>
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!--         OPCIONES EXCLUSIVAS DEL CLIENTE            -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <ng-container *ngIf="esCliente()">
+      <!-- Catálogo -->
+      <div class="menu-card" (click)="irA('/catalogo')">
+        <div class="card-icono card-icono--verde">
+          <ion-icon name="cube-outline"></ion-icon>
+        </div>
+        <div class="card-texto">
+          <h2 class="card-titulo">Catálogo de Productos</h2>
+          <p class="card-desc">Explora nuestro catálogo importado</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
       </div>
-      <div class="card-texto">
-        <h2 class="card-titulo">Catálogo de Productos</h2>
-        <p class="card-desc">Explora nuestro catálogo importado</p>
-      </div>
-      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
-    </div>
 
-    <div class="menu-card" (click)="irA('/cotizacion/nueva')">
-      <div class="card-icono card-icono--verde">
-        <ion-icon name="document-text-outline"></ion-icon>
+      <!-- Ofertas del Mes -->
+      <div class="menu-card" (click)="irA('/ofertas')">
+        <div class="card-icono card-icono--naranja">
+          <ion-icon name="flame-outline"></ion-icon>
+        </div>
+        <div class="card-texto">
+          <h2 class="card-titulo">Ofertas del Mes</h2>
+          <p class="card-desc">Descuentos exclusivos por tiempo limitado</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
       </div>
-      <div class="card-texto">
-        <h2 class="card-titulo">Generar Cotización</h2>
-        <p class="card-desc">Crea cotizaciones para tus clientes</p>
-      </div>
-      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
-    </div>
 
-    <div class="menu-card" (click)="irA('/cotizacion/historial')">
-      <div class="card-icono card-icono--naranja">
-        <ion-icon name="time-outline"></ion-icon>
+      <!-- Mis Compras -->
+      <div class="menu-card" (click)="irA('/mis-compras')">
+        <div class="card-icono card-icono--azul">
+          <ion-icon name="bag-check-outline"></ion-icon>
+        </div>
+        <div class="card-texto">
+          <h2 class="card-titulo">Mis Compras</h2>
+          <p class="card-desc">Historial de pedidos confirmados</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
       </div>
-      <div class="card-texto">
-        <h2 class="card-titulo">Historial de Cotizaciones</h2>
-        <p class="card-desc">Revisa tus cotizaciones generadas</p>
-      </div>
-      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
-    </div>
 
-    @if (esAdmin()) {
-    <div class="menu-card" (click)="irA('/empleados')">
-      <div class="card-icono card-icono--azul">
-        <ion-icon name="people-outline"></ion-icon>
+      <!-- Solicitar Cotización -->
+      <div class="menu-card" (click)="irA('/solicitar-cotizacion')">
+        <div class="card-icono card-icono--verde">
+          <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+        </div>
+        <div class="card-texto">
+          <h2 class="card-titulo">Solicitar Cotización</h2>
+          <p class="card-desc">Pídenos lo que necesitas y te cotizamos</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
       </div>
-      <div class="card-texto">
-        <h2 class="card-titulo">Gestión de Empleados</h2>
-        <p class="card-desc">Administra el registro interno</p>
-      </div>
-      <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
-    </div>
-    }
 
+      <!-- Contactar a KSK -->
+      <div class="menu-card" (click)="irA('/contacto')">
+        <div class="card-icono card-icono--naranja">
+          <ion-icon name="call-outline"></ion-icon>
+        </div>
+        <div class="card-texto">
+          <h2 class="card-titulo">Contactar a KSK</h2>
+          <p class="card-desc">WhatsApp, teléfono y ubicación</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+      </div>
+    </ng-container>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!--        OPCIONES EXCLUSIVAS DEL EMPLEADO            -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <ng-container *ngIf="esEmpleado()">
+      <!-- Catálogo (empleado también lo ve) -->
+      <div class="menu-card" (click)="irA('/catalogo')">
+        <div class="card-icono card-icono--verde">
+          <ion-icon name="cube-outline"></ion-icon>
+        </div>
+        <div class="card-texto">
+          <h2 class="card-titulo">Catálogo de Productos</h2>
+          <p class="card-desc">Gestiona el catálogo importado</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+      </div>
+
+      <!-- Dashboard de Ventas -->
+      <div class="menu-card" (click)="irA('/dashboard')">
+        <div class="card-icono card-icono--azul">
+          <ion-icon name="analytics-outline"></ion-icon>
+        </div>
+        <div class="card-texto">
+          <h2 class="card-titulo">Dashboard de Ventas</h2>
+          <p class="card-desc">Métricas, cotizaciones y solicitudes</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+      </div>
+
+      <!-- Generar Cotización -->
+      <div class="menu-card" (click)="irA('/cotizacion/nueva')">
+        <div class="card-icono card-icono--verde">
+          <ion-icon name="document-text-outline"></ion-icon>
+        </div>
+        <div class="card-texto">
+          <h2 class="card-titulo">Generar Cotización</h2>
+          <p class="card-desc">Crea cotizaciones para tus clientes</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+      </div>
+
+      <!-- Historial de Cotizaciones -->
+      <div class="menu-card" (click)="irA('/cotizacion/historial')">
+        <div class="card-icono card-icono--naranja">
+          <ion-icon name="time-outline"></ion-icon>
+        </div>
+        <div class="card-texto">
+          <h2 class="card-titulo">Historial de Cotizaciones</h2>
+          <p class="card-desc">Revisa cotizaciones generadas</p>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="card-arrow"></ion-icon>
+      </div>
+    </ng-container>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!--            CERRAR SESIÓN (AMBOS ROLES)             -->
+    <!-- ═══════════════════════════════════════════════════ -->
     <div class="menu-card menu-card--danger" (click)="cerrarSesion()">
       <div class="card-icono card-icono--rojo">
         <ion-icon name="log-out-outline"></ion-icon>
@@ -76,5 +158,78 @@
     </div>
   </div>
 
-  <p class="version-text">Versión 1.0</p></ion-content
+  <p class="version-text">Versión 1.0</p>
+</ion-content>
+
+<!-- Modal de Notificaciones -->
+<ion-modal
+  [isOpen]="mostrarNotificaciones"
+  (didDismiss)="cerrarNotificaciones()"
+  class="modal-notificaciones"
 >
+  <ng-template>
+    <ion-header class="ion-no-border header-notif">
+      <ion-toolbar class="toolbar-notif">
+        <ion-title>Notificaciones</ion-title>
+        <ion-buttons slot="end">
+          <button
+            class="btn-action-header"
+            (click)="marcarTodasComoLeidas()"
+            *ngIf="noLeidasCount > 0"
+            title="Marcar todo como leído"
+          >
+            <ion-icon name="checkmark-done-outline"></ion-icon>
+          </button>
+          <button
+            class="btn-action-header"
+            (click)="limpiarTodas()"
+            *ngIf="notificaciones.length > 0"
+            title="Eliminar todas"
+          >
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+          <button
+            class="btn-action-header btn-close-modal"
+            (click)="cerrarNotificaciones()"
+          >
+            <ion-icon name="close-outline"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="content-notif">
+      <!-- Estado vacío -->
+      <div class="empty-notif" *ngIf="notificaciones.length === 0">
+        <div class="empty-icon-box">
+          <ion-icon name="notifications-outline"></ion-icon>
+        </div>
+        <h3>No tienes notificaciones</h3>
+        <p>Te avisaremos aquí cuando tengas novedades o nuevas solicitudes.</p>
+      </div>
+
+      <!-- Listado de Notificaciones -->
+      <div class="notif-list" *ngIf="notificaciones.length > 0">
+        <div
+          class="notif-card"
+          *ngFor="let n of notificaciones"
+          [class.notif-unread]="!n.leido"
+          (click)="handleNotifClick(n)"
+        >
+          <div class="notif-indicator" *ngIf="!n.leido"></div>
+          <div class="notif-body">
+            <h4 class="notif-title">{{ n.titulo }}</h4>
+            <p class="notif-msg">{{ n.mensaje }}</p>
+          </div>
+          <button
+            class="btn-delete-single"
+            (click)="eliminarNotificacion(n.id); $event.stopPropagation()"
+            title="Eliminar"
+          >
+            <ion-icon name="trash-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>

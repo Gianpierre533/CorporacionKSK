@@ -4,7 +4,7 @@
 //  Optimizado para mejor UX y manejo de errores.
 // ============================================================
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   ReactiveFormsModule, FormBuilder, FormGroup, Validators
@@ -16,7 +16,8 @@ import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import {
   chevronBackOutline, personOutline,
-  lockClosedOutline, eyeOutline, eyeOffOutline
+  lockClosedOutline, eyeOutline, eyeOffOutline,
+  briefcaseOutline
 } from 'ionicons/icons';
 
 @Component({
@@ -27,6 +28,10 @@ import {
   imports: [CommonModule, ReactiveFormsModule, IonContent, IonIcon, IonSpinner]
 })
 export class LoginPage implements OnInit {
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private toastCtrl = inject(ToastController);
+
 
   form!: FormGroup;
   showPassword    = false;
@@ -34,19 +39,17 @@ export class LoginPage implements OnInit {
   submitted       = false;
   usernameFocused = false;
   passwordFocused = false;
+  rolSeleccionado: 'cliente' | 'empleado' = 'cliente';
 
   get f() {
     return this.form.controls;
   }
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private toastCtrl: ToastController
-  ) {
+  constructor() {
     addIcons({
       chevronBackOutline, personOutline,
-      lockClosedOutline, eyeOutline, eyeOffOutline
+      lockClosedOutline, eyeOutline, eyeOffOutline,
+      briefcaseOutline
     });
   }
 
@@ -57,9 +60,12 @@ export class LoginPage implements OnInit {
   private initForm() {
     this.form = this.fb.group({
       usuario:    ['', [Validators.required]],
-      // CORREGIDO: Se elimina Validators.minLength(6) para dejarlo a criterio del usuario
       contrasena: ['', [Validators.required]] 
     });
+  }
+
+  setRol(rol: 'cliente' | 'empleado') {
+    this.rolSeleccionado = rol;
   }
 
   togglePassword() {
@@ -89,17 +95,21 @@ export class LoginPage implements OnInit {
 
       const valorUsuario = this.form.value.usuario.toLowerCase().trim();
       let nombreParaMostrar = this.form.value.usuario;
-      let rolAsignado: 'admin' | 'empleado' | 'cliente' = 'cliente';
+      const rolAsignado = this.rolSeleccionado;
 
-      if (valorUsuario.includes('admin') || valorUsuario === 'ana') {
-        nombreParaMostrar = 'Ana (Gerente)';
-        rolAsignado = 'admin';
-      } else if (valorUsuario.includes('empleado') || valorUsuario === 'carlos') {
-        nombreParaMostrar = 'Carlos (Vendedor)';
-        rolAsignado = 'empleado';
+      if (rolAsignado === 'empleado') {
+        if (valorUsuario === 'carlos' || valorUsuario.includes('empleado')) {
+          nombreParaMostrar = 'Carlos (Vendedor)';
+        } else {
+          // Capitalizar primer letra para estética
+          nombreParaMostrar = this.form.value.usuario.charAt(0).toUpperCase() + this.form.value.usuario.slice(1) + ' (Vendedor)';
+        }
       } else {
-        nombreParaMostrar = this.form.value.usuario;
-        rolAsignado = 'cliente';
+        if (valorUsuario === 'juan' || valorUsuario.includes('cliente')) {
+          nombreParaMostrar = 'Juan Pérez (Cliente)';
+        } else {
+          nombreParaMostrar = this.form.value.usuario.charAt(0).toUpperCase() + this.form.value.usuario.slice(1);
+        }
       }
 
       localStorage.setItem('ksk_usuario', nombreParaMostrar);

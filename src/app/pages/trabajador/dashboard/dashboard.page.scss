@@ -1,0 +1,474 @@
+// ============================================================
+// STYLES: Dashboard de Ventas Corporativo - KSK Premium
+// ============================================================
+
+$cyan:      #2ECFB3;
+$cyan-dark: #1A9E8A;
+$slate-900: #0F172A;
+$slate-600: #475569;
+$slate-200: #E2E8F0;
+$slate-50:  #F8FAFC;
+
+:host {
+  --color-accent: #{$cyan};
+  --color-accent-dark: #{$cyan-dark};
+  --color-accent-glow: rgba(46, 207, 179, 0.12);
+  --color-surface: #FFFFFF;
+}
+
+.header-custom {
+  background: var(--color-surface);
+  border-bottom: 1px solid #E2E8F0;
+}
+
+.toolbar-custom {
+  --background: var(--color-surface);
+  --color: #{$slate-900};
+  padding: 8px 6px;
+}
+
+.back-custom {
+  --color: #{$slate-900};
+}
+
+.header-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 8px;
+}
+
+.header-tag {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--color-accent-dark);
+  margin: 0;
+}
+
+.header-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: #{$slate-900};
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.btn-refresh {
+  background: transparent;
+  border: none;
+  color: #{$slate-600};
+  font-size: 22px;
+  padding: 8px;
+  display: flex;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s;
+  
+  &:active {
+    background: rgba(15, 23, 42, 0.05);
+    transform: rotate(45deg);
+  }
+}
+
+.dashboard-content {
+  --background: #{$slate-50};
+}
+
+// ── SALUDO CARD ──
+.saludo-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #FFFFFF;
+  margin: 20px 16px 16px;
+  padding: 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.02);
+
+  .saludo-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-accent-glow);
+    color: var(--color-accent-dark);
+    font-size: 24px;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+  }
+
+  .saludo-text {
+    h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #{$slate-900};
+      margin: 0 0 2px;
+    }
+    p {
+      font-size: 12.5px;
+      color: #{$slate-600};
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+}
+
+// ── GRID DE MÉTRICAS ──
+.metricas-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  padding: 0 16px;
+  margin-bottom: 20px;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.metrica-card {
+  position: relative;
+  background: #FFFFFF;
+  border-radius: 24px;
+  padding: 20px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.03);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  .card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, var(--color-accent-glow) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    z-index: 1;
+  }
+
+  .card-tag {
+    font-size: 9.5px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #{$slate-600};
+    background: #F1F5F9;
+    padding: 3px 8px;
+    border-radius: 6px;
+  }
+
+  .card-icon {
+    font-size: 20px;
+    color: #94A3B8;
+  }
+
+  .card-value {
+    font-size: 22px;
+    font-weight: 800;
+    color: #{$slate-900};
+    margin: 0 0 2px;
+    z-index: 1;
+    letter-spacing: -0.5px;
+  }
+
+  .card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #{$slate-600};
+    margin: 0;
+    z-index: 1;
+  }
+
+  // Variantes temáticas
+  &--total {
+    --color-accent-glow: rgba(71, 85, 105, 0.06);
+    border-left: 4px solid #94A3B8;
+  }
+
+  &--aceptado {
+    --color-accent-glow: rgba(46, 207, 179, 0.12);
+    border-left: 4px solid #{$cyan};
+    .card-value {
+      color: #{$cyan-dark};
+    }
+  }
+
+  &--pendiente {
+    --color-accent-glow: rgba(245, 158, 11, 0.12);
+    border-left: 4px solid #F59E0B;
+    .card-value {
+      color: #D97706;
+    }
+  }
+}
+
+// ── SECCIÓN CONTAINER ──
+.section-container {
+  padding: 0 16px 30px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: #{$slate-900};
+  margin: 12px 0 16px;
+  letter-spacing: -0.3px;
+}
+
+// ── ESTADO VACÍO ──
+.empty-state {
+  text-align: center;
+  background: #FFFFFF;
+  padding: 40px 24px;
+  border-radius: 24px;
+  border: 1px dashed #CBD5E1;
+  margin-top: 10px;
+
+  .empty-icon-box {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #F1F5F9;
+    color: #94A3B8;
+    font-size: 32px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    margin-bottom: 16px;
+  }
+
+  h3 {
+    font-size: 16px;
+    font-weight: 700;
+    color: #{$slate-900};
+    margin: 0 0 6px;
+  }
+
+  p {
+    font-size: 13px;
+    color: #{$slate-600};
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+// ── LISTADO DE COTIZACIONES ──
+.cotizaciones-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cotizacion-item {
+  background: #FFFFFF;
+  border-radius: 20px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.02);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.cot-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #F1F5F9;
+  padding-bottom: 10px;
+
+  .cot-id {
+    font-size: 14.5px;
+    font-weight: 800;
+    color: var(--color-accent-dark);
+    margin-right: 8px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+
+  .cot-fecha {
+    font-size: 11px;
+    font-weight: 600;
+    color: #94A3B8;
+  }
+}
+
+// Selector de Estado Premium
+.status-selector-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #F1F5F9;
+  border: 1px solid #E2E8F0;
+  padding: 4px 10px;
+  border-radius: 10px;
+
+  .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+
+    &.estado-pendiente { background: #F59E0B; }
+    &.estado-enviada { background: #3B82F6; }
+    &.estado-aceptada { background: #10B981; }
+    &.estado-rechazada { background: #EF4444; }
+  }
+
+  .status-select {
+    border: none;
+    background: transparent;
+    font-size: 12px;
+    font-weight: 700;
+    color: #{$slate-900};
+    outline: none;
+    cursor: pointer;
+    padding-right: 4px;
+    font-family: inherit;
+  }
+}
+
+.cot-body {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .info-label {
+    color: #94A3B8;
+    font-weight: 600;
+  }
+
+  .info-value {
+    color: #{$slate-900};
+    font-weight: 700;
+    text-align: right;
+  }
+}
+
+.cot-footer {
+  display: flex;
+  align-items: center;
+  border-top: 1px dashed #E2E8F0;
+  padding-top: 10px;
+
+  .total-text {
+    font-size: 12px;
+    font-weight: 700;
+    color: #{$slate-600};
+    margin-right: 6px;
+  }
+
+  .total-price {
+    font-size: 16px;
+    font-weight: 800;
+    color: #{$slate-900};
+  }
+
+  .btn-detail {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #F1F5F9;
+    color: #{$slate-900};
+    border: none;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:active {
+      background: #E2E8F0;
+      transform: translateX(2px);
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════
+//  SOLICITUDES DE CLIENTES (nuevos estilos)
+// ═══════════════════════════════════════════════════════
+
+.section-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+
+  .section-title { margin-bottom: 0; }
+}
+
+.solicitudes-badge {
+  background: linear-gradient(135deg, #F97316 0%, #EA580C 100%);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.3px;
+}
+
+// Tarjeta de solicitud: borde lateral naranja para distinguirla de cotizaciones
+.solicitud-item {
+  border-left: 3px solid #F97316 !important;
+}
+
+.cot-id--sol {
+  background: rgba(249, 115, 22, 0.1) !important;
+  color: #EA580C !important;
+}
+
+.info-value--desc {
+  font-style: italic;
+  color: $slate-600;
+  line-height: 1.4;
+}
+
+.sol-description {
+  flex-direction: column;
+  align-items: flex-start !important;
+  gap: 4px;
+}
+
+// Estados de solicitud
+.estado-nueva {
+  background: #F97316 !important;
+  box-shadow: 0 0 6px rgba(249, 115, 22, 0.4) !important;
+}
+
+.estado-revision {
+  background: #6366F1 !important;
+  box-shadow: 0 0 6px rgba(99, 102, 241, 0.4) !important;
+}
+
+.estado-respondida {
+  background: #22C55E !important;
+  box-shadow: 0 0 6px rgba(34, 197, 94, 0.4) !important;
+}

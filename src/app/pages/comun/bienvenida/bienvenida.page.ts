@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonContent, IonIcon } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
@@ -18,11 +18,13 @@ import {
   imports: [CommonModule, IonContent, IonIcon]
 })
 export class BienvenidaPage {
+  private router = inject(Router);
+
 
   // Almacena dinámicamente el año actual para el pie de página
   anioActual: number = new Date().getFullYear();
 
-  constructor(private router: Router) {
+  constructor() {
     // Registramos los iconos vectoriales específicos de la sección
     addIcons({ 
       cubeOutline, 

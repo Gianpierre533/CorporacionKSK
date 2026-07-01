@@ -2,7 +2,7 @@
   <ion-toolbar class="checkout-toolbar">
     <ion-buttons slot="start">
       <ion-back-button
-        defaultHref="/cliente/catalogo"
+        defaultHref="/catalogo"
         class="checkout-back-btn"
       ></ion-back-button>
     </ion-buttons>
@@ -51,7 +51,7 @@
       <div class="vibrant-total-row">
         <div class="total-text-group">
           <span class="total-label">Monto Neto Total</span>
-          <p class="include-igv">Incluye IGV e impuestos de importación</p>
+          <p class="include-igv">Incluye IGV e impuestos</p>
         </div>
         <span class="total-amount"
           >S/ {{ carritoService.totalPagar() | number:'1.2-2' }}</span
@@ -120,16 +120,194 @@
       </ion-row>
     </ion-grid>
 
+    <!-- SECCIONES DINÁMICAS DE DETALLES DE PAGO -->
+    <div class="checkout-card payment-details-panel">
+      <!-- 💳 FORMULARIO DE TARJETA -->
+      <div *ngIf="metodoSeleccionado === 'card'" class="payment-form">
+        <h5 class="form-panel-title">Detalles de Tarjeta</h5>
+
+        <div class="form-field">
+          <label class="field-label-ksk">Nombre del Titular</label>
+          <input
+            type="text"
+            [(ngModel)]="cardNombre"
+            placeholder="Juan Pérez"
+            class="ksk-pay-input"
+          />
+        </div>
+
+        <div class="form-field">
+          <label class="field-label-ksk">Número de Tarjeta</label>
+          <input
+            type="text"
+            [value]="cardNumber"
+            (input)="formatCardNumber($event)"
+            placeholder="0000 0000 0000 0000"
+            class="ksk-pay-input"
+            maxlength="19"
+          />
+        </div>
+
+        <div class="form-row-2">
+          <div class="form-field">
+            <label class="field-label-ksk">Expiración (MM/YY)</label>
+            <input
+              type="text"
+              [value]="cardExpiry"
+              (input)="formatCardExpiry($event)"
+              placeholder="MM/YY"
+              class="ksk-pay-input"
+              maxlength="5"
+            />
+          </div>
+          <div class="form-field">
+            <label class="field-label-ksk">CVV (Código)</label>
+            <input
+              type="password"
+              [value]="cardCvv"
+              (input)="formatCVV($event)"
+              placeholder="123"
+              class="ksk-pay-input"
+              maxlength="3"
+            />
+          </div>
+        </div>
+
+        <button
+          (click)="confirmarPago()"
+          [disabled]="!isFormValido()"
+          class="btn-checkout-internal card-btn"
+        >
+          <ion-icon name="lock-closed-outline"></ion-icon>
+          PAGAR CON TARJETA (S/ {{ carritoService.totalPagar() | number:'1.2-2'
+          }})
+        </button>
+      </div>
+
+      <!-- 📱 FORMULARIO DE YAPE / PLIN -->
+      <div *ngIf="metodoSeleccionado === 'yape'" class="payment-form">
+        <h5 class="form-panel-title">Pago por Yape / Plin</h5>
+
+        <div class="yape-instructions">
+          <p class="yape-num-label">Yapea o Plinea al número:</p>
+          <div class="number-copy-box">
+            <span class="yape-phone">999 999 999</span>
+            <button
+              class="btn-copy"
+              (click)="copiarTexto('999999999', 'Número de Yape')"
+            >
+              <ion-icon name="copy-outline"></ion-icon>
+            </button>
+          </div>
+          <p class="beneficiary-name">Corporación KSK S.A.C.</p>
+
+          <!-- Simulación de QR -->
+          <div class="qr-container-sim">
+            <div class="qr-box">
+              <div class="qr-border-corner top-left"></div>
+              <div class="qr-border-corner top-right"></div>
+              <div class="qr-border-corner bottom-left"></div>
+              <div class="qr-border-corner bottom-right"></div>
+              <svg viewBox="0 0 100 100" class="svg-qr">
+                <rect x="10" y="10" width="25" height="25" fill="#0F172A" />
+                <rect x="15" y="15" width="15" height="15" fill="#FFFFFF" />
+                <rect x="18" y="18" width="9" height="9" fill="#0F172A" />
+
+                <rect x="65" y="10" width="25" height="25" fill="#0F172A" />
+                <rect x="70" y="15" width="15" height="15" fill="#FFFFFF" />
+                <rect x="73" y="18" width="9" height="9" fill="#0F172A" />
+
+                <rect x="10" y="65" width="25" height="25" fill="#0F172A" />
+                <rect x="15" y="70" width="15" height="15" fill="#FFFFFF" />
+                <rect x="18" y="73" width="9" height="9" fill="#0F172A" />
+
+                <rect x="42" y="15" width="10" height="20" fill="#0F172A" />
+                <rect x="15" y="42" width="20" height="10" fill="#0F172A" />
+                <rect x="45" y="45" width="25" height="25" fill="#0F172A" />
+                <rect x="75" y="45" width="10" height="10" fill="#0F172A" />
+                <rect x="45" y="75" width="10" height="10" fill="#0F172A" />
+              </svg>
+              <div class="qr-center-logo">KSK</div>
+            </div>
+            <span>Escanea para pagar</span>
+          </div>
+        </div>
+
+        <div class="yape-footer-note">
+          <p>
+            Realiza tu pago desde tu app y presiona el botón "YA YAPEÉ / PLINEÉ"
+            para procesar tu pedido.
+          </p>
+        </div>
+
+        <button
+          (click)="confirmarPago()"
+          class="btn-checkout-internal yape-btn"
+        >
+          <ion-icon name="checkmark-circle"></ion-icon>
+          YA YAPEÉ / YA PLINEÉ (PAGADO)
+        </button>
+      </div>
+
+      <!-- 🏢 FORMULARIO DE TRANSFERENCIA -->
+      <div *ngIf="metodoSeleccionado === 'transfer'" class="payment-form">
+        <h5 class="form-panel-title">Transferencia Bancaria</h5>
+
+        <div class="bank-details-box">
+          <div class="bank-row">
+            <span class="bank-label">Banco:</span>
+            <span class="bank-val">BCP (Soles)</span>
+          </div>
+          <div class="bank-row">
+            <span class="bank-label">Número de Cuenta:</span>
+            <div class="bank-val-copy">
+              <span class="bank-val font-mono">193-99887766-0-12</span>
+              <button
+                class="btn-copy-mini"
+                (click)="copiarTexto('19399887766012', 'Nro. de Cuenta BCP')"
+              >
+                <ion-icon name="copy-outline"></ion-icon>
+              </button>
+            </div>
+          </div>
+          <div class="bank-row">
+            <span class="bank-label">Cuenta Interbancaria (CCI):</span>
+            <div class="bank-val-copy">
+              <span class="bank-val font-mono">002-193009988776601214</span>
+              <button
+                class="btn-copy-mini"
+                (click)="copiarTexto('002193009988776601214', 'CCI BCP')"
+              >
+                <ion-icon name="copy-outline"></ion-icon>
+              </button>
+            </div>
+          </div>
+          <div class="bank-row">
+            <span class="bank-label">Titular:</span>
+            <span class="bank-val">Corporación KSK S.A.C.</span>
+          </div>
+        </div>
+
+        <div class="yape-footer-note">
+          <p>
+            Transfiere el total neto, guarda tu comprobante y presiona el botón
+            inferior para procesar tu pedido.
+          </p>
+        </div>
+
+        <button
+          (click)="confirmarPago()"
+          class="btn-checkout-internal bank-btn"
+        >
+          <ion-icon name="checkmark-circle"></ion-icon>
+          CONFIRMAR TRANSFERENCIA
+        </button>
+      </div>
+    </div>
+
     <div class="guarantee-note">
       <ion-icon name="lock-closed-outline"></ion-icon>
-      <p>Tu transacción está protegida con cifrado SSL.</p>
+      <p>Tu transacción está protegida</p>
     </div>
   </div>
 </ion-content>
-
-<ion-footer class="ion-no-border premium-footer">
-  <ion-button expand="block" (click)="confirmarPago()" class="btn-vibrant-ksk">
-    <ion-icon name="lock-closed-outline" class="btn-lock-icon"></ion-icon>
-    CONFIRMAR Y PAGAR AHORA
-  </ion-button>
-</ion-footer>

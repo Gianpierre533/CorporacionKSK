@@ -23,9 +23,9 @@
         (click)="abrirCarrito()"
       >
         <ion-icon name="cart-outline"></ion-icon>
-        @if (carritoService.totalProductos() > 0) {
-        <span class="carrito-badge">{{ carritoService.totalProductos() }}</span>
-        }
+        <span *ngIf="carritoService.totalProductos() > 0" class="carrito-badge"
+          >{{ carritoService.totalProductos() }}</span
+        >
       </button>
     </ion-buttons>
   </ion-toolbar>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import {
   IonContent, IonHeader, IonToolbar, IonTitle,
@@ -32,16 +32,16 @@ import { Cotizacion } from '../../../models/cotizacion.model';
   ]
 })
 export class ResumenCotizacionPage implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private cotizacionService = inject(CotizacionService);
+  private toastCtrl = inject(ToastController);
+  private loadingCtrl = inject(LoadingController);
+
 
   cotizacion: Cotizacion | undefined;
 
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private cotizacionService: CotizacionService,
-    private toastCtrl: ToastController,
-    private loadingCtrl: LoadingController
-  ) {
+  constructor() {
     addIcons({
       personOutline, callOutline, cubeOutline,
       shareSocialOutline, documentTextOutline, arrowBackOutline

@@ -196,3 +196,210 @@ $danger:     #EF4444;
   padding: 24px 0;
   margin: 0;
 }
+
+// ── SISTEMA DE NOTIFICACIONES ────────────────────────────────
+.bell-btn {
+  background: transparent;
+  color: #FFFFFF;
+  border: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  margin-right: 8px;
+
+  &:active {
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  ion-icon {
+    font-size: 24px;
+  }
+}
+
+.bell-badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: #EF4444;
+  color: #FFFFFF;
+  font-size: 9px;
+  font-weight: 800;
+  min-width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: 1.5px solid #{$cyan};
+  box-shadow: 0 2px 6px rgba(239, 68, 68, 0.4);
+}
+
+// Modal styles
+.modal-notificaciones {
+  --height: 85%;
+  --border-radius: 24px 24px 0 0;
+  --align-items: flex-end;
+  
+  &::part(content) {
+    box-shadow: 0 -8px 32px rgba(15, 23, 42, 0.15);
+  }
+}
+
+.header-notif {
+  .toolbar-notif {
+    --background: #FFFFFF;
+    --color: #{$texto};
+    --border-width: 0;
+    padding: 8px 6px 0;
+
+    ion-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: $texto;
+      letter-spacing: -0.3px;
+    }
+  }
+}
+
+.btn-action-header {
+  background: transparent;
+  border: none;
+  color: $gris;
+  font-size: 20px;
+  padding: 8px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 4px;
+
+  &:active {
+    background: #F1F5F9;
+  }
+
+  &.btn-close-modal {
+    color: $texto;
+    background: #F1F5F9;
+  }
+}
+
+.content-notif {
+  --background: #F8FAFC;
+}
+
+// Empty state
+.empty-notif {
+  text-align: center;
+  padding: 80px 24px;
+
+  .empty-icon-box {
+    width: 80px;
+    height: 80px;
+    background: rgba(46, 207, 179, 0.1);
+    color: $cyan;
+    font-size: 36px;
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+
+  h3 {
+    font-size: 17px;
+    font-weight: 800;
+    color: $texto;
+    margin: 0 0 6px;
+  }
+
+  p {
+    font-size: 13px;
+    color: $gris;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+
+// Notification list & cards
+.notif-list {
+  padding: 16px 12px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.notif-card {
+  background: #FFFFFF;
+  border-radius: 16px;
+  border: 1px solid #E2E8F0;
+  padding: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.02);
+
+  &:active {
+    transform: scale(0.98);
+    background: #F8FAFC;
+  }
+
+  &.notif-unread {
+    border-color: rgba($cyan, 0.3);
+    background: rgba($cyan, 0.02);
+    box-shadow: 0 4px 12px rgba(46, 207, 179, 0.04);
+  }
+}
+
+.notif-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $cyan;
+  flex-shrink: 0;
+  margin-top: 5px;
+}
+
+.notif-body {
+  flex: 1;
+
+  .notif-title {
+    font-size: 14px;
+    font-weight: 750;
+    color: $texto;
+    margin: 0 0 4px;
+  }
+
+  .notif-msg {
+    font-size: 12px;
+    color: $gris;
+    line-height: 1.4;
+    margin: 0;
+  }
+}
+
+.btn-delete-single {
+  background: transparent;
+  border: none;
+  color: #94A3B8;
+  font-size: 16px;
+  padding: 6px;
+  cursor: pointer;
+  border-radius: 50%;
+  align-self: center;
+
+  &:active {
+    background: rgba(239, 68, 68, 0.1);
+    color: #EF4444;
+  }
+}

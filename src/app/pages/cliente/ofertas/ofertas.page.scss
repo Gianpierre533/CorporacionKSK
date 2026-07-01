@@ -1,0 +1,236 @@
+$cyan:      #2ECFB3;
+$cyan-dark: #1A9E8A;
+$dark:      #0F172A;
+$gray:      #64748B;
+$light-bg:  #F8FAFC;
+
+.header-ofertas {
+  ion-toolbar {
+    --background: #FFFFFF;
+    --color: #{$dark};
+    --border-width: 0;
+    padding: 4px 4px 0;
+  }
+  ion-title {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    color: $dark;
+  }
+}
+
+.content-ofertas { --background: #{$light-bg}; }
+
+// ── Hero Banner ──
+.hero-ofertas {
+  background: linear-gradient(135deg, #FF6B35 0%, #F7418F 50%, #FC5C7D 100%);
+  padding: 28px 20px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 5px 14px;
+    margin-bottom: 14px;
+    backdrop-filter: blur(6px);
+
+    ion-icon { font-size: 16px; color: #FFFFFF; }
+    span {
+      font-size: 11px;
+      font-weight: 800;
+      color: #FFFFFF;
+      letter-spacing: 0.8px;
+    }
+  }
+
+  h1 {
+    font-size: 24px;
+    font-weight: 900;
+    color: #FFFFFF;
+    margin: 0 0 6px;
+    letter-spacing: -0.5px;
+  }
+
+  p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.85);
+    margin: 0;
+    line-height: 1.4;
+  }
+}
+
+// ── Grid de ofertas ──
+.ofertas-grid {
+  padding: 16px 12px 32px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.oferta-card {
+  background: #FFFFFF;
+  border-radius: 18px;
+  border: 1px solid #E2E8F0;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  // Badge
+  .oferta-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    font-size: 9px;
+    font-weight: 800;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(8px);
+    color: $dark;
+    padding: 4px 8px;
+    border-radius: 8px;
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(226, 232, 240, 0.8);
+    letter-spacing: 0.2px;
+  }
+
+  // Discount
+  .discount-tag {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    color: #FFFFFF;
+    font-size: 10px;
+    font-weight: 900;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    box-shadow: 0 4px 10px rgba(239, 68, 68, 0.35);
+    border: 1.5px solid #FFFFFF;
+  }
+
+  // Image
+  .oferta-img-wrap {
+    width: 100%;
+    height: 135px;
+    background: $light-bg;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 34px 12px 10px; // Espaciado superior para empujar la imagen por debajo de las etiquetas
+    box-sizing: border-box;
+
+    img {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+    }
+  }
+
+  // Info
+  .oferta-info {
+    padding: 10px 12px 8px;
+    flex: 1;
+
+    h3 {
+      font-size: 13px;
+      font-weight: 700;
+      color: $dark;
+      margin: 0 0 4px;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .oferta-desc {
+      font-size: 11px;
+      color: $gray;
+      margin: 0 0 8px;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+
+  .oferta-prices {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+
+    .price-old {
+      font-size: 12px;
+      color: #94A3B8;
+      text-decoration: line-through;
+      font-weight: 500;
+    }
+
+    .price-new {
+      font-size: 16px;
+      font-weight: 900;
+      color: $cyan-dark;
+      letter-spacing: -0.5px;
+    }
+  }
+
+  .oferta-stock {
+    font-size: 11px;
+    color: $gray;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+    .stock-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: #22C55E;
+      &.stock-low { background: #EF4444; }
+    }
+  }
+
+  // Add to cart
+  .btn-add {
+    margin: 6px 10px 10px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, $cyan 0%, $cyan-dark 100%);
+    color: #FFFFFF;
+    padding: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(26, 158, 138, 0.25);
+    transition: transform 0.1s;
+    font-family: inherit;
+
+    &:active { transform: scale(0.95); }
+    ion-icon { font-size: 16px; }
+  }
+}

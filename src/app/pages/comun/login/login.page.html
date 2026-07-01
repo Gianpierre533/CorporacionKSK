@@ -1,4 +1,4 @@
-<ion-content [fullscreen]="true" class="login-content" scroll-y="false">
+<ion-content class="login-content" [scrollY]="false">
   <div class="blob-container">
     <svg
       class="blob-svg"
@@ -33,28 +33,56 @@
     </div>
 
     <div class="form-card">
+      <!-- Selector de Rol Premium -->
+      <div class="role-selector-container">
+        <button
+          type="button"
+          class="role-tab"
+          [class.active]="rolSeleccionado === 'cliente'"
+          (click)="setRol('cliente')"
+        >
+          <ion-icon name="person-outline"></ion-icon>
+          <span>Soy Cliente</span>
+        </button>
+        <button
+          type="button"
+          class="role-tab"
+          [class.active]="rolSeleccionado === 'empleado'"
+          (click)="setRol('empleado')"
+        >
+          <ion-icon name="briefcase-outline"></ion-icon>
+          <span>Soy Empleado</span>
+        </button>
+      </div>
+
       <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
         <div class="input-group" [class.has-error]="isFieldInvalid('usuario')">
-          <label class="field-label">Usuario</label>
+          <label class="field-label">
+            {{ rolSeleccionado === 'cliente' ? 'Usuario' : 'Usuario de Empleado'
+            }}
+          </label>
           <div
             class="input-wrapper"
             [class.focused]="usernameFocused"
             [class.error]="isFieldInvalid('usuario')"
           >
-            <ion-icon name="person-outline" class="input-icon"></ion-icon>
+            <ion-icon
+              [name]="rolSeleccionado === 'cliente' ? 'person-outline' : 'briefcase-outline'"
+              class="input-icon"
+            ></ion-icon>
             <input
               formControlName="usuario"
               type="text"
-              placeholder="Tu nombre de usuario"
+              [placeholder]="rolSeleccionado === 'cliente' ? 'Tu nombre de usuario (ej: Juan)' : 'Tu usuario corporativo (ej: Carlos)'"
               class="custom-input"
               autocomplete="username"
               (focus)="usernameFocused = true"
               (blur)="usernameFocused = false"
             />
           </div>
-          <span class="error-msg" *ngIf="isFieldInvalid('usuario')">
-            El usuario es requerido
-          </span>
+          <ng-container *ngIf="isFieldInvalid('usuario')">
+            <span class="error-msg">El usuario es requerido</span>
+          </ng-container>
         </div>
 
         <div
@@ -83,9 +111,9 @@
               ></ion-icon>
             </button>
           </div>
-          <span class="error-msg" *ngIf="isFieldInvalid('contrasena')">
-            La contraseña es requerida
-          </span>
+          <ng-container *ngIf="isFieldInvalid('contrasena')">
+            <span class="error-msg">La contraseña es requerida</span>
+          </ng-container>
         </div>
 
         <div class="forgot-row">
@@ -100,10 +128,14 @@
           [class.loading]="isLoading"
           [disabled]="isLoading"
         >
-          <span *ngIf="!isLoading">Iniciar Sesión</span>
-          <span *ngIf="isLoading" class="spinner-wrap">
-            <ion-spinner name="crescent" class="btn-spinner"></ion-spinner>
-          </span>
+          <ng-container *ngIf="!isLoading; else loadingSpinner">
+            <span>Iniciar Sesión</span>
+          </ng-container>
+          <ng-template #loadingSpinner>
+            <span class="spinner-wrap">
+              <ion-spinner name="crescent" class="btn-spinner"></ion-spinner>
+            </span>
+          </ng-template>
         </button>
 
         <div class="divider">

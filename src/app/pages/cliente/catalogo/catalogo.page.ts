@@ -43,10 +43,10 @@ export class CatalogoPage implements OnInit {
 
   categorias: Categoria[] = [
     { key: 'todos',        label: 'Todos'        },
-    { key: 'electrico',    label: 'Eléctrico'    },
-    { key: 'mecanico',     label: 'Mecánico'     },
-    { key: 'herramientas', label: 'Herramientas' },
-    { key: 'iluminacion',  label: 'Iluminación'  },
+    { key: 'cocina',       label: 'Cocina'       },
+    { key: 'hogar',        label: 'Hogar'        },
+    { key: 'belleza',      label: 'Belleza'      },
+    { key: 'accesorios',   label: 'Accesorios'   },
   ];
 
   productosFiltrados: Producto[] = [];
