@@ -12,16 +12,16 @@ $danger:     #EF4444;
 
 // ── CABECERA TRANSLÚCIDA PARA INTEGRACIÓN FLUIDA ───────────
 .header-ksk {
-  --background: transparent !important;
-  background: transparent !important;
-  position: absolute; // Permite que el saludo se extienda por debajo del header
+  --background: #{$cyan} !important;
+  background: #{$cyan} !important;
   top: 0; left: 0; width: 100%;
+  padding-top: env(safe-area-inset-top, 0px); // Margen del notch del celular
   z-index: 10;
   &::after { display: none; } // Remueve la línea de sombra por defecto de Ionic
 }
 
 .toolbar-ksk {
-  --background: transparent !important;
+  --background: #{$cyan} !important;
   --color: #FFFFFF;
 }
 
@@ -47,7 +47,7 @@ $danger:     #EF4444;
 // ── CAJA DE BIENVENIDA SUPERIOR (BLOQUE CYAN UNIFICADO) ─────
 .saludo-box {
   background: #{$cyan};
-  padding: 75px 20px 24px; // Reducido ligeramente para que el "Bienvenido de vuelta" respire mejor bajo el header
+  padding: 10px 20px 28px; // Padding normal ya que la cabecera no se encabalga
   position: relative;
   overflow: hidden;
   
