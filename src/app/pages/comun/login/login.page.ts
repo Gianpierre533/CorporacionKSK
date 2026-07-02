@@ -91,32 +91,49 @@ export class LoginPage implements OnInit {
     this.isLoading = true;
 
     setTimeout(async () => {
-      this.isLoading = false;
-
       const valorUsuario = this.form.value.usuario.toLowerCase().trim();
-      let nombreParaMostrar = this.form.value.usuario;
+      const contrasenaIngresada = this.form.value.contrasena;
       const rolAsignado = this.rolSeleccionado;
 
       if (rolAsignado === 'empleado') {
+        this.isLoading = false;
+        let nombreParaMostrar = this.form.value.usuario;
         if (valorUsuario === 'carlos' || valorUsuario.includes('empleado')) {
           nombreParaMostrar = 'Carlos (Vendedor)';
         } else {
-          // Capitalizar primer letra para estética
           nombreParaMostrar = this.form.value.usuario.charAt(0).toUpperCase() + this.form.value.usuario.slice(1) + ' (Vendedor)';
         }
+        localStorage.setItem('ksk_usuario', nombreParaMostrar);
+        localStorage.setItem('ksk_rol', rolAsignado);
+        this.router.navigate(['/menu'], { replaceUrl: true });
       } else {
-        if (valorUsuario === 'juan' || valorUsuario.includes('cliente')) {
-          nombreParaMostrar = 'Juan Pérez (Cliente)';
-        } else {
-          nombreParaMostrar = this.form.value.usuario.charAt(0).toUpperCase() + this.form.value.usuario.slice(1);
+        // Validación del Cliente contra base de datos local
+        try {
+          const raw = localStorage.getItem('ksk_clientes_registrados');
+          const clientes: any[] = raw ? JSON.parse(raw) : [];
+
+          const match = clientes.find(c => c.usuario === valorUsuario && c.contrasena === contrasenaIngresada);
+
+          this.isLoading = false;
+
+          if (match) {
+            localStorage.setItem('ksk_usuario', match.nombre);
+            localStorage.setItem('ksk_rol', 'cliente');
+            this.router.navigate(['/menu'], { replaceUrl: true });
+          } else {
+            const toast = await this.toastCtrl.create({
+              message: '❌ Usuario o contraseña incorrectos. Por favor regístrate si eres nuevo.',
+              duration: 3000,
+              color: 'danger',
+              position: 'bottom'
+            });
+            await toast.present();
+          }
+        } catch (e) {
+          this.isLoading = false;
+          console.error('Error al iniciar sesión', e);
         }
       }
-
-      localStorage.setItem('ksk_usuario', nombreParaMostrar);
-      localStorage.setItem('ksk_rol', rolAsignado);
-
-      this.router.navigate(['/menu'], { replaceUrl: true });
-      
     }, 1200);
   }
 

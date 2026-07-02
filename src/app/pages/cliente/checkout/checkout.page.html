@@ -128,12 +128,7 @@
 
         <div class="form-field">
           <label class="field-label-ksk">Nombre del Titular</label>
-          <input
-            type="text"
-            [(ngModel)]="cardNombre"
-            placeholder="Juan Pérez"
-            class="ksk-pay-input"
-          />
+          <input type="text" [(ngModel)]="cardNombre" class="ksk-pay-input" />
         </div>
 
         <div class="form-field">
@@ -191,43 +186,24 @@
         <div class="yape-instructions">
           <p class="yape-num-label">Yapea o Plinea al número:</p>
           <div class="number-copy-box">
-            <span class="yape-phone">999 999 999</span>
+            <span class="yape-phone">906 623 145</span>
             <button
               class="btn-copy"
-              (click)="copiarTexto('999999999', 'Número de Yape')"
+              (click)="copiarTexto('906 623 145', 'Número de Yape')"
             >
               <ion-icon name="copy-outline"></ion-icon>
             </button>
           </div>
           <p class="beneficiary-name">Corporación KSK S.A.C.</p>
 
-          <!-- Simulación de QR -->
+          <!-- Código QR Real -->
           <div class="qr-container-sim">
             <div class="qr-box">
               <div class="qr-border-corner top-left"></div>
               <div class="qr-border-corner top-right"></div>
               <div class="qr-border-corner bottom-left"></div>
               <div class="qr-border-corner bottom-right"></div>
-              <svg viewBox="0 0 100 100" class="svg-qr">
-                <rect x="10" y="10" width="25" height="25" fill="#0F172A" />
-                <rect x="15" y="15" width="15" height="15" fill="#FFFFFF" />
-                <rect x="18" y="18" width="9" height="9" fill="#0F172A" />
-
-                <rect x="65" y="10" width="25" height="25" fill="#0F172A" />
-                <rect x="70" y="15" width="15" height="15" fill="#FFFFFF" />
-                <rect x="73" y="18" width="9" height="9" fill="#0F172A" />
-
-                <rect x="10" y="65" width="25" height="25" fill="#0F172A" />
-                <rect x="15" y="70" width="15" height="15" fill="#FFFFFF" />
-                <rect x="18" y="73" width="9" height="9" fill="#0F172A" />
-
-                <rect x="42" y="15" width="10" height="20" fill="#0F172A" />
-                <rect x="15" y="42" width="20" height="10" fill="#0F172A" />
-                <rect x="45" y="45" width="25" height="25" fill="#0F172A" />
-                <rect x="75" y="45" width="10" height="10" fill="#0F172A" />
-                <rect x="45" y="75" width="10" height="10" fill="#0F172A" />
-              </svg>
-              <div class="qr-center-logo">KSK</div>
+              <img src="assets/yape.jpg" alt="Yape QR" class="img-qr-yape" />
             </div>
             <span>Escanea para pagar</span>
           </div>

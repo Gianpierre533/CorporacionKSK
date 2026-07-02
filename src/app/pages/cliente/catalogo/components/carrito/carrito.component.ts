@@ -2,7 +2,7 @@ import { Component, inject } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { 
   IonHeader, IonToolbar, IonTitle, IonButtons, IonContent,
-  IonIcon, IonButton, IonList, ModalController 
+  IonIcon, IonButton, IonList, ModalController, IonFooter 
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
@@ -16,7 +16,7 @@ import { Carrito } from '../../../../../services/carrito';
   standalone: true,
   imports: [
     CommonModule, DecimalPipe, IonHeader, IonToolbar, IonTitle, 
-    IonButtons, IonContent, IonIcon, IonButton, IonList
+    IonButtons, IonContent, IonIcon, IonButton, IonList, IonFooter
   ]
 })
 export class CarritoComponent {

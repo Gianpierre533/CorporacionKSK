@@ -67,11 +67,11 @@
     <p>Tu carrito está listo para llenarse</p>
   </div>
 
-  <!-- Footer pegado al contenido (no a la pantalla) -->
-  <div
-    class="cart-footer-sticky"
-    *ngIf="carritoService.items().length > 0"
-  >
+</ion-content>
+
+<!-- Footer fijo abajo en pantalla (no se desplaza) -->
+<ion-footer class="ion-no-border" *ngIf="carritoService.items().length > 0">
+  <div class="cart-footer-sticky">
     <div class="footer-summary">
       <span class="total-label">Total a Pagar:</span>
       <span class="total-value"
@@ -87,5 +87,5 @@
       COMPRAR AHORA
     </ion-button>
   </div>
+</ion-footer>
 
-</ion-content>

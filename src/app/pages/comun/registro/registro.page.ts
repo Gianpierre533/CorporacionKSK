@@ -25,7 +25,6 @@ export class RegistroPage implements OnInit {
   private router = inject(Router);
   private toastCtrl = inject(ToastController);
 
-
   form!: FormGroup;
   showPassword = false;
   isLoading = false;
@@ -41,7 +40,7 @@ export class RegistroPage implements OnInit {
     this.form = this.fb.group({
       nombre: ['', [Validators.required]],
       usuario: ['', [Validators.required]],
-      contrasena: ['', [Validators.required, Validators.minLength(6)]]
+      contrasena: ['', [Validators.required]]
     });
   }
 
@@ -49,13 +48,13 @@ export class RegistroPage implements OnInit {
     this.showPassword = !this.showPassword;
   }
 
-  // 🛠️ FUNCIÓN MEJORADA: Controla que los mensajes de error no salgan al inicio
+  // Controla que los mensajes de error no salgan al inicio
   hasError(field: string, error: string): boolean {
     const control = this.form.get(field);
     return !!(control?.hasError(error) && (control?.touched || this.submitted));
   }
 
-  // 🛠️ FUNCIÓN MEJORADA: Evita que los bordes se pongan rojos prematuramente
+  // Evita que los bordes se pongan rojos prematuramente
   isFieldInvalid(field: string): boolean {
     const control = this.form.get(field);
     return !!(control && control.invalid && (control.touched || this.submitted));
@@ -69,18 +68,59 @@ export class RegistroPage implements OnInit {
 
     this.isLoading = true;
 
-    // Simulación de guardado rápido
-    setTimeout(() => {
-      this.isLoading = false;
+    setTimeout(async () => {
+      const usernameInput = this.form.value.usuario.toLowerCase().trim();
+      const contrasenaInput = this.form.value.contrasena;
+      const nombreInput = this.form.value.nombre;
 
-      const nombreCompleto = this.form.value.nombre;
-      
-      // Guardamos datos clave en el almacenamiento local
-      localStorage.setItem('ksk_usuario', nombreCompleto);
-      localStorage.setItem('ksk_rol', 'cliente'); 
+      try {
+        const raw = localStorage.getItem('ksk_clientes_registrados');
+        const clientes: any[] = raw ? JSON.parse(raw) : [];
 
-      // Redirección directa y limpia al catálogo del cliente (Sin mensajitos molestos)
-      this.router.navigate(['/cliente/catalogo'], { replaceUrl: true });
+        // Validar si ya existe el usuario
+        const existe = clientes.some(c => c.usuario === usernameInput);
+        if (existe) {
+          this.isLoading = false;
+          const toast = await this.toastCtrl.create({
+            message: '⚠️ El nombre de usuario ya existe. Intenta con otro.',
+            duration: 2500,
+            color: 'warning',
+            position: 'bottom'
+          });
+          await toast.present();
+          return;
+        }
+
+        // Registrar cliente
+        const nuevoCliente = {
+          nombre: nombreInput,
+          usuario: usernameInput,
+          contrasena: contrasenaInput
+        };
+
+        clientes.push(nuevoCliente);
+        localStorage.setItem('ksk_clientes_registrados', JSON.stringify(clientes));
+
+        // Auto-login (guarda nombre completo y rol)
+        localStorage.setItem('ksk_usuario', nuevoCliente.nombre);
+        localStorage.setItem('ksk_rol', 'cliente');
+
+        this.isLoading = false;
+
+        const toast = await this.toastCtrl.create({
+          message: '🎉 ¡Registro completado y sesión iniciada!',
+          duration: 2000,
+          color: 'success',
+          position: 'bottom'
+        });
+        await toast.present();
+
+        // Redirección directa al menú principal
+        this.router.navigate(['/menu'], { replaceUrl: true });
+      } catch (e) {
+        this.isLoading = false;
+        console.error('Error al registrar usuario', e);
+      }
     }, 1000); 
   }
 

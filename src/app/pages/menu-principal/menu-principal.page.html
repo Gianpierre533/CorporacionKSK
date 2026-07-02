@@ -18,7 +18,7 @@
   <div class="saludo-box">
     <p class="saludo-sub">Bienvenido de vuelta</p>
     <h1 class="saludo-titulo">¡Hola, {{ nombreUsuario }}!</h1>
-    <p class="saludo-empresa">Corporación KSK S.A.C.</p>
+    <p class="saludo-empresa">Importaciones KSK S.A.C.</p>
   </div>
 
   <div class="menu-container">
@@ -165,6 +165,7 @@
 <ion-modal
   [isOpen]="mostrarNotificaciones"
   (didDismiss)="cerrarNotificaciones()"
+  [animated]="false"
   class="modal-notificaciones"
 >
   <ng-template>

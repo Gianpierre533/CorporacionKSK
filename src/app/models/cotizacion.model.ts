@@ -30,6 +30,8 @@ export interface Cotizacion {
   cliente: ClienteCotizacion;
   items: ItemCotizacion[];
   subtotal: number;                // Suma de todos los subtotales
+  descuentoPorcentaje?: number;    // Porcentaje opcional de descuento (0-99%)
+  descuentoMonto?: number;         // Monto opcional de descuento en Soles
   igv: number;                     // 18% del subtotal
   total: number;                   // subtotal + igv
   estado: EstadoCotizacion;

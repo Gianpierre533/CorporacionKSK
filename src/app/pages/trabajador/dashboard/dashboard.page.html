@@ -48,11 +48,22 @@
     <div class="metrica-card metrica-card--aceptado">
       <div class="card-glow"></div>
       <div class="card-header-row">
-        <span class="card-tag">Ingresos</span>
+        <span class="card-tag">Cotizaciones</span>
         <ion-icon name="cash-outline" class="card-icon"></ion-icon>
       </div>
       <p class="card-value">S/ {{ montoAceptado | number:'1.2-2' }}</p>
-      <p class="card-title">Ventas Aceptadas</p>
+      <p class="card-title">Monto Aceptado</p>
+    </div>
+
+    <!-- Card: Ventas Directas (Carrito) -->
+    <div class="metrica-card metrica-card--directo">
+      <div class="card-glow"></div>
+      <div class="card-header-row">
+        <span class="card-tag">Carrito</span>
+        <ion-icon name="bag-check-outline" class="card-icon"></ion-icon>
+      </div>
+      <p class="card-value">S/ {{ totalVentasDirectas | number:'1.2-2' }}</p>
+      <p class="card-title">Ventas Directas ({{ pedidos.length }})</p>
     </div>
 
     <!-- Card: Ventas Pendientes -->
@@ -183,6 +194,53 @@
             <span class="info-label">Solicita:</span>
             <span class="info-value info-value--desc">{{ sol.descripcion }}</span>
           </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!--          VENTAS DIRECTAS (CARRITO) (NUEVO)            -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <div class="section-container">
+    <div class="section-title-row">
+      <h2 class="section-title">Ventas Directas (Carrito)</h2>
+    </div>
+
+    <!-- Lista vacía -->
+    <div class="empty-state" *ngIf="pedidos.length === 0">
+      <div class="empty-icon-box">
+        <ion-icon name="bag-check-outline"></ion-icon>
+      </div>
+      <h3>Sin ventas directas aún</h3>
+      <p>Las compras de carrito realizadas por los clientes aparecerán aquí.</p>
+    </div>
+
+    <!-- Lista de ventas directas -->
+    <div class="cotizaciones-lista" *ngIf="pedidos.length > 0">
+      <div class="cotizacion-item" *ngFor="let ped of pedidos">
+        <div class="cot-header">
+          <div>
+            <span class="cot-id" style="background: rgba(99, 102, 241, 0.1); color: #4F46E5;">{{ ped.id }}</span>
+            <span class="cot-fecha">{{ formatDate(ped.fecha) }}</span>
+          </div>
+          <div>
+            <span class="badge-metodo-pag" [class.badge-metodo-pag--card]="ped.metodoPago === 'Tarjeta de Crédito/Débito'" [class.badge-metodo-pag--yape]="ped.metodoPago === 'Yape / Plin'">
+              {{ ped.metodoPago }}
+            </span>
+          </div>
+        </div>
+
+        <div class="cot-body" style="padding-bottom: 8px;">
+          <div class="info-row" *ngFor="let item of ped.items" style="border-bottom: 1px dashed #E2E8F0; padding: 4px 0;">
+            <span class="info-label" style="font-weight: 500; color: #1E293B;">{{ item.nombre }}</span>
+            <span class="info-value" style="font-weight: 600;">x{{ item.cantidad }} — S/ {{ item.subtotal | number:'1.2-2' }}</span>
+          </div>
+        </div>
+
+        <div class="cot-footer">
+          <span class="total-text">Monto Cobrado:</span>
+          <span class="total-price" style="color: #4F46E5;">S/ {{ ped.total | number:'1.2-2' }}</span>
         </div>
       </div>
     </div>

@@ -35,10 +35,13 @@ export class CotizacionService {
   // automáticamente y genera el número correlativo.
   create(
     items: ItemCotizacion[],
-    cliente: ClienteCotizacion
+    cliente: ClienteCotizacion,
+    descuentoPorcentaje: number = 0
   ): Cotizacion {
     const numero = this.siguienteNumero();
-    const subtotal = items.reduce((acc, i) => acc + i.subtotal, 0);
+    const subtotalBase = items.reduce((acc, i) => acc + i.subtotal, 0);
+    const descuentoMonto = Math.round(subtotalBase * (descuentoPorcentaje / 100) * 100) / 100;
+    const subtotal = Math.round((subtotalBase - descuentoMonto) * 100) / 100;
     const igv      = Math.round(subtotal * 0.18 * 100) / 100;
     const total    = Math.round((subtotal + igv) * 100) / 100;
 
@@ -49,6 +52,8 @@ export class CotizacionService {
       cliente,
       items,
       subtotal,
+      descuentoPorcentaje,
+      descuentoMonto,
       igv,
       total,
       estado:   'Pendiente'

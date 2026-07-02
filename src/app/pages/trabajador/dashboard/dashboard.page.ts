@@ -11,13 +11,15 @@ import {
   arrowBackOutline, analyticsOutline, documentTextOutline,
   checkmarkCircleOutline, timeOutline, alertCircleOutline,
   closeCircleOutline, cashOutline, syncOutline,
-  chatboxEllipsesOutline, personOutline, callOutline
+  chatboxEllipsesOutline, personOutline, callOutline,
+  bagCheckOutline, receiptOutline
 } from 'ionicons/icons';
 
 import { CotizacionService } from '../../../services/cotizacion.service';
 import { Cotizacion, EstadoCotizacion } from '../../../models/cotizacion.model';
 import { SolicitudService } from '../../../services/solicitud.service';
 import { Solicitud, EstadoSolicitud } from '../../../models/solicitud.model';
+import { Pedido } from '../../../models/pedido.model';
 
 @Component({
   selector: 'app-dashboard',
@@ -41,20 +43,23 @@ export class DashboardPage implements OnInit {
   // Estado
   cotizaciones: Cotizacion[] = [];
   solicitudes: Solicitud[]   = [];
+  pedidos: Pedido[]         = [];
   
   // Métricas
-  totalCotizaciones = 0;
-  montoAceptado     = 0;
-  montoPendiente    = 0;
-  totalSolicitudes  = 0;
-  solicitudesNuevas = 0;
+  totalCotizaciones   = 0;
+  montoAceptado       = 0;
+  montoPendiente      = 0;
+  totalSolicitudes    = 0;
+  solicitudesNuevas   = 0;
+  totalVentasDirectas = 0;
 
   constructor() {
     addIcons({
       arrowBackOutline, analyticsOutline, documentTextOutline,
       checkmarkCircleOutline, timeOutline, alertCircleOutline,
       closeCircleOutline, cashOutline, syncOutline,
-      chatboxEllipsesOutline, personOutline, callOutline
+      chatboxEllipsesOutline, personOutline, callOutline,
+      bagCheckOutline, receiptOutline
     });
   }
 
@@ -76,6 +81,15 @@ export class DashboardPage implements OnInit {
     const raw = this.cotizacionService.getAll();
     this.cotizaciones = Array.isArray(raw) ? raw : [];
     this.solicitudes = this.solicitudService.getAll();
+    
+    // Cargar Pedidos directos del carrito
+    try {
+      const rawPed = localStorage.getItem('ksk_pedidos');
+      this.pedidos = rawPed ? JSON.parse(rawPed) : [];
+    } catch {
+      this.pedidos = [];
+    }
+
     this.calcularMetricas();
   }
 
@@ -92,6 +106,9 @@ export class DashboardPage implements OnInit {
 
     this.totalSolicitudes = this.solicitudes.length;
     this.solicitudesNuevas = this.solicitudes.filter(s => s.estado === 'Nueva').length;
+
+    // Métricas de ventas directas
+    this.totalVentasDirectas = this.pedidos.reduce((acc, p) => acc + p.total, 0);
   }
 
   async cambiarEstadoCotizacion(id: string, event: Event) {

@@ -60,8 +60,22 @@
   </div>
 
   <div class="section totales-section" *ngIf="itemsSeleccionados.length > 0">
+    <div class="total-row" *ngIf="descuentoPorcentaje > 0">
+      <span class="total-label">Subtotal Base</span>
+      <span class="total-valor">S/ {{ subtotalBase | number:'1.2-2' }}</span>
+    </div>
+    <div
+      class="total-row"
+      *ngIf="descuentoPorcentaje > 0"
+      style="color: #ef4444"
+    >
+      <span class="total-label">Descuento ({{ descuentoPorcentaje }}%)</span>
+      <span class="total-valor">-S/ {{ descuentoMonto | number:'1.2-2' }}</span>
+    </div>
     <div class="total-row">
-      <span class="total-label">Subtotal</span>
+      <span class="total-label"
+        >{{ descuentoPorcentaje > 0 ? 'Subtotal Neto' : 'Subtotal' }}</span
+      >
       <span class="total-valor">S/ {{ subtotal | number:'1.2-2' }}</span>
     </div>
     <div class="total-row">
@@ -88,6 +102,22 @@
             placeholder="Ej: Juan Pérez"
             [(ngModel)]="clienteNombre"
             [readonly]="!esEmpleado"
+          />
+        </div>
+      </div>
+
+      <div class="field-group" *ngIf="esEmpleado">
+        <label class="field-label">Descuento Especial (%)</label>
+        <div class="field-wrapper" [class.is-filled]="descuentoPorcentaje > 0">
+          <ion-icon name="pricetag-outline" class="field-icon"></ion-icon>
+          <input
+            type="number"
+            min="0"
+            max="99"
+            class="field-input"
+            placeholder="Ej: 10 (opcional)"
+            [(ngModel)]="descuentoPorcentaje"
+            (ngModelChange)="calcularTotales()"
           />
         </div>
       </div>
@@ -127,12 +157,7 @@
   </div>
 </ion-content>
 
-<ion-modal
-  [isOpen]="modalCatalogoAbierto"
-  (didDismiss)="cerrarCatalogo()"
-  breakpoints="[0, 0.75]"
-  initialBreakpoint="0.75"
->
+<ion-modal [isOpen]="modalCatalogoAbierto" (didDismiss)="cerrarCatalogo()">
   <ng-template>
     <ion-header>
       <ion-toolbar>

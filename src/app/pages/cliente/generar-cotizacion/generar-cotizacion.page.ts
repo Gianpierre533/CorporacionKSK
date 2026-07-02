@@ -12,7 +12,7 @@ import { addIcons } from 'ionicons';
 import {
   cubeOutline, trashOutline, addOutline, removeOutline,
   addCircleOutline, documentTextOutline, personOutline,
-  callOutline, arrowBackOutline
+  callOutline, arrowBackOutline, pricetagOutline
 } from 'ionicons/icons';
 
 import { CotizacionService } from '../../../services/cotizacion.service';
@@ -40,30 +40,32 @@ export class GenerarCotizacionPage implements OnInit {
   private route = inject(ActivatedRoute);
   private toastCtrl = inject(ToastController);
 
-
-  // ── Control de Rol ──────────────────────────────────────
+  // Control de Rol
   esEmpleado = false; 
 
-  // ── Estado del formulario ──────────────────────────────
+  // Estado del formulario
   itemsSeleccionados: ItemCotizacion[] = [];
   clienteNombre   = '';
-  clienteTelefono = ''; // 👈 Unificado en español para hacer match con el HTML
+  clienteTelefono = '';
   isLoading       = false;
   modalCatalogoAbierto = false;
 
-  // ── Totales calculados ─────────────────────────────────
+  // Totales calculados
+  subtotalBase = 0;
+  descuentoPorcentaje = 0;
+  descuentoMonto = 0;
   subtotal = 0;
   igv      = 0;
   total    = 0;
 
-  // ── Catálogo cargado desde el servicio ────────────────
+  // Catálogo cargado desde el servicio
   catalogoProductos: ProductoCatalogo[] = [];
 
   constructor() {
     addIcons({
       cubeOutline, trashOutline, addOutline, removeOutline,
       addCircleOutline, documentTextOutline, personOutline,
-      callOutline, arrowBackOutline
+      callOutline, arrowBackOutline, pricetagOutline
     });
 
     const productosRaw = this.productosService.getAll();
@@ -71,33 +73,27 @@ export class GenerarCotizacionPage implements OnInit {
   }
 
   ngOnInit() {
-    // ── CORRECCIÓN DE DETECCIÓN DE ROL ──
     const rolActual = localStorage.getItem('ksk_rol');
-    
-    // Si eres empleado, eres parte del personal interno de la empresa
     this.esEmpleado = (rolActual === 'empleado');
 
     if (!this.esEmpleado) {
-      // Si realmente es un cliente externo, bloqueamos con sus datos fijos
       this.cargarDatosClienteLogueado();
     } else {
-      // Si eres empleado, dejamos los campos vacíos y limpios para que escribas el cliente que quieras
       this.clienteNombre = '';
       this.clienteTelefono = '';
     }
   }
 
-  // ── Cargar Perfil Automático (Solo para Clientes) ───────
   cargarDatosClienteLogueado() {
     this.clienteNombre = 'Juan Pérez (Cliente)';
     this.clienteTelefono = '987654321';
   }
 
-  // ── Modal catálogo ─────────────────────────────────────
+  // Modal catálogo
   abrirCatalogo()  { this.modalCatalogoAbierto = true;  }
   cerrarCatalogo() { this.modalCatalogoAbierto = false; }
 
-  // ── Agregar producto desde el modal ───────────────────
+  // Agregar producto desde el modal
   agregarProducto(p: ProductoCatalogo) {
     const existe = this.itemsSeleccionados.find(i => i.id === p.id);
 
@@ -118,7 +114,7 @@ export class GenerarCotizacionPage implements OnInit {
     this.cerrarCatalogo();
   }
 
-  // ── Controles de cantidad ──────────────────────────────
+  // Controles de cantidad
   incrementar(item: ItemCotizacion) {
     item.cantidad++;
     item.subtotal = Math.round(item.precio * item.cantidad * 100) / 100;
@@ -140,18 +136,23 @@ export class GenerarCotizacionPage implements OnInit {
     this.calcularTotales();
   }
 
-  // ── Calcular subtotal, IGV y total ────────────────────
-  private calcularTotales() {
-    this.subtotal = Math.round(
+  // Calcular subtotal, descuento, IGV y total
+  calcularTotales() {
+    this.subtotalBase = Math.round(
       this.itemsSeleccionados.reduce((acc, i) => acc + i.subtotal, 0) * 100
     ) / 100;
+
+    // Rango seguro de descuento (0 a 99%)
+    if (this.descuentoPorcentaje < 0) this.descuentoPorcentaje = 0;
+    if (this.descuentoPorcentaje > 99) this.descuentoPorcentaje = 99;
+
+    this.descuentoMonto = Math.round(this.subtotalBase * (this.descuentoPorcentaje / 100) * 100) / 100;
+    this.subtotal = Math.round((this.subtotalBase - this.descuentoMonto) * 100) / 100;
     this.igv   = Math.round(this.subtotal * 0.18 * 100) / 100;
     this.total = Math.round((this.subtotal + this.igv) * 100) / 100;
   }
 
-  // ── Generar cotización ─────────────────────────────────
   async generarCotizacion() {
-    // Si no hay productos o el nombre del cliente está vacío, detenemos la ejecución
     if (this.itemsSeleccionados.length === 0 || !this.clienteNombre.trim()) return;
 
     this.isLoading = true;
@@ -162,12 +163,11 @@ export class GenerarCotizacionPage implements OnInit {
         {
           nombre:   this.clienteNombre.trim(),
           telefono: this.clienteTelefono.trim()
-        }
+        },
+        this.descuentoPorcentaje
       );
 
       this.isLoading = false;
-
-      // ── REDIRECCIÓN COMPLETA AL RESUMEN UNIFICADO ──
       this.router.navigate(['/resumen-cotizacion', cotizacion.id]);
     }, 1000);
   }

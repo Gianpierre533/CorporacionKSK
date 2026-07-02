@@ -70,11 +70,7 @@ export class CatalogoPage implements OnInit {
     const { CarritoComponent } = await import('./components/carrito/carrito.component');
     
     const modal = await this.modalCtrl.create({
-      component: CarritoComponent,
-      initialBreakpoint: 0.85,
-      breakpoints: [0, 0.5, 0.85],
-      handle: true,
-      handleBehavior: 'cycle'
+      component: CarritoComponent
     });
     return await modal.present();
   }

@@ -85,8 +85,20 @@
       </div>
 
       <div class="totales-box">
+        <div class="total-row" *ngIf="cotizacion.descuentoPorcentaje">
+          <span class="total-label">Subtotal Base</span>
+          <span class="total-valor"
+            >S/ {{ (cotizacion.subtotal + (cotizacion.descuentoMonto || 0)) | number:'1.2-2' }}</span
+          >
+        </div>
+        <div class="total-row" *ngIf="cotizacion.descuentoPorcentaje" style="color: #EF4444;">
+          <span class="total-label">Descuento ({{ cotizacion.descuentoPorcentaje }}%)</span>
+          <span class="total-valor"
+            >-S/ {{ cotizacion.descuentoMonto | number:'1.2-2' }}</span
+          >
+        </div>
         <div class="total-row">
-          <span class="total-label">Subtotal</span>
+          <span class="total-label">{{ cotizacion.descuentoPorcentaje ? 'Subtotal Neto' : 'Subtotal' }}</span>
           <span class="total-valor"
             >S/ {{ cotizacion.subtotal | number:'1.2-2' }}</span
           >

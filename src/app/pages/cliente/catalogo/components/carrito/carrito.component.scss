@@ -161,9 +161,6 @@ $bezier:      cubic-bezier(0.16, 1, 0.3, 1);
   padding: 14px 16px calc(14px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid #F1F5F9;
   box-shadow: 0 -10px 30px rgba(15, 23, 42, 0.06);
-  margin: 0 -16px; // Sangría negativa para cubrir el padding del ion-content
-  padding-left: 16px;
-  padding-right: 16px;
   z-index: 10;
 
   .footer-summary {

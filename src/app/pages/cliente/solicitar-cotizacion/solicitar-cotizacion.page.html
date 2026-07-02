@@ -1,14 +1,17 @@
 <ion-header class="header-solicitud ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/menu" text="" class="back-btn"></ion-back-button>
+      <ion-back-button
+        defaultHref="/menu"
+        text=""
+        class="back-btn"
+      ></ion-back-button>
     </ion-buttons>
     <ion-title>Solicitar Cotización</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="content-solicitud">
-
   <!-- Hero Banner -->
   <div class="hero-banner">
     <div class="hero-icon-wrap">
@@ -24,16 +27,20 @@
       <ion-icon name="checkmark-circle-outline"></ion-icon>
     </div>
     <h2>¡Solicitud enviada!</h2>
-    <p>Un asesor de KSK Importaciones revisará tu pedido y se pondrá en contacto contigo pronto.</p>
+    <p>
+      Un asesor de KSK Importaciones revisará tu pedido y se pondrá en contacto
+      contigo pronto.
+    </p>
     <div class="success-actions">
-      <button class="btn-nueva" (click)="nuevaSolicitud()">Hacer otra solicitud</button>
+      <button class="btn-nueva" (click)="nuevaSolicitud()">
+        Hacer otra solicitud
+      </button>
       <button class="btn-menu" (click)="volverAlMenu()">Volver al menú</button>
     </div>
   </div>
 
   <!-- FORM STATE -->
   <div class="form-container" *ngIf="!enviado">
-
     <div class="input-group">
       <label class="input-label">
         <ion-icon name="person-outline"></ion-icon>
@@ -42,7 +49,6 @@
       <input
         class="ksk-input"
         type="text"
-        placeholder="Ej. Juan Pérez García"
         [(ngModel)]="nombre"
         maxlength="80"
       />
@@ -56,7 +62,6 @@
       <input
         class="ksk-input"
         type="tel"
-        placeholder="Ej. 987 654 321"
         [(ngModel)]="telefono"
         maxlength="15"
       />
@@ -70,7 +75,6 @@
       <textarea
         class="ksk-textarea"
         rows="5"
-        placeholder="Ej. Necesito 3 reflectores LED 100W, 50 metros de cable 2.5mm y 2 interruptores termomagnéticos."
         [(ngModel)]="descripcion"
         maxlength="500"
       ></textarea>
@@ -99,7 +103,5 @@
       </span>
       <span *ngIf="enviando" class="loading-text">Enviando...</span>
     </button>
-
   </div>
-
 </ion-content>

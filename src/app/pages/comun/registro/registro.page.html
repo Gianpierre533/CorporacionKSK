@@ -8,9 +8,6 @@
 
   <div class="form-wrapper">
     <div class="registro-header">
-      <div class="logo-registro">
-        <img src="assets/logo-ksk.png" alt="KSK Logo" />
-      </div>
       <span class="tag-premium">Nuevo Cliente</span>
       <h1 class="titulo-premium">Crear Cuenta</h1>
       <p class="subtitulo-premium">Regístrate en KSK Importaciones</p>
@@ -27,7 +24,7 @@
           <input
             type="text"
             formControlName="nombre"
-            placeholder="Nombre Usuario"
+            placeholder="Nombre completo"
           />
         </div>
         <p class="error-text" *ngIf="hasError('nombre', 'required')">
@@ -39,17 +36,17 @@
         class="input-group-premium"
         [class.is-invalid]="isFieldInvalid('usuario')"
       >
-        <label>Correo Electrónico</label>
+        <label>Usuario</label>
         <div class="input-field">
           <ion-icon name="person-outline"></ion-icon>
           <input
             type="text"
             formControlName="usuario"
-            placeholder="Correo Electrónico"
+            placeholder="Tu usuario"
           />
         </div>
         <p class="error-text" *ngIf="hasError('usuario', 'required')">
-          El correo es requerido
+          El usuario es requerido
         </p>
       </div>
 
@@ -73,9 +70,6 @@
         </div>
         <p class="error-text" *ngIf="hasError('contrasena', 'required')">
           La contraseña es requerida
-        </p>
-        <p class="error-text" *ngIf="hasError('contrasena', 'minlength')">
-          Mínimo deben ser 6 caracteres
         </p>
       </div>
 
